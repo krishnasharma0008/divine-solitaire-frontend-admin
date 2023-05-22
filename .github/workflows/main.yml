@@ -23,9 +23,10 @@ jobs:
 
           script: |
             cd ${{ secrets.WORK_DIR }} # we move into our app's folder
+            forever stop 1
             git pull # we pull any changes from git
             export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
             source ~/.nvm/nvm.sh
             npx pnpm install # we install any missing dependencies
             npx pnpm build # we build our app
-            # pm2 reload office-site # we reload the app via PM2
+            forever start 1
