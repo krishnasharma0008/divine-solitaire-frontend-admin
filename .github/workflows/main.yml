@@ -1,19 +1,31 @@
-name: Staging
-on:
-  push:
-    branches: [ master ]
+name: Node.js CI/CD
+
+on: [push] # tells github to run this on any push to the repository
 
 jobs:
-  deploy:    
+  deploy:
     runs-on: ubuntu-latest
+    #needs: test # this job depends on "test" having finished
+    #if: github.ref ‘refs/heads/master' # we tell Github to only execute this step if we're on our master branch (so we don't put unfinished branches in production)
+
+    strategy:
+      fail-fast: false # tells github to not run further steps if this one fails
+      matrix:
+        node-version: [16.x] # sets the version of node we want to use, should be what you have on your server 
     steps:
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }}{% endraw%} >> ~/.ssh/known_hosts
-      - uses: actions/checkout@v2
-      - name: Deploy with rsync
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORK_DIR }}
+      - name: Deploying to Digitalocean droplet
+        uses: appleboy/ssh-action@master # An action made to control Linux servers
+        with: # We set all our secrets here for the action, these won't be shown in the action logs
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          #port: ${{ secrets.PORT }}
+
+          script: |
+            cd /var/www/html/troniex # we move into our app's folder
+            git pull # we pull any changes from git
+            export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
+            source ~/.nvm/nvm.sh
+            npx pnpm install # we install any missing dependencies
+            npx pnpm build # we build our app
+            # pm2 reload office-site # we reload the app via PM2
