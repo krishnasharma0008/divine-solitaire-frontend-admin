@@ -29,4 +29,4 @@ jobs:
             source ~/.nvm/nvm.sh
             npx pnpm install # we install any missing dependencies
             npx pnpm build # we build our app
-            forever start 1
+            forever start -c "npx pnpm start" ./
