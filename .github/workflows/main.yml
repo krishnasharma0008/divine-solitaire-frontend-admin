@@ -22,7 +22,7 @@ jobs:
           #port: ${{ secrets.PORT }}
 
           script: |
-            cd /var/www/html/troniex # we move into our app's folder
+            cd ${{ secrets.WORK_DIR }} # we move into our app's folder
             git pull # we pull any changes from git
             export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
             source ~/.nvm/nvm.sh
