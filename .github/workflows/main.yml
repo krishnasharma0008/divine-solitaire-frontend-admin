@@ -18,7 +18,7 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: connect
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+      run: ssh -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
     - name: pull
       run: cd ${{ secrets.WORK_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && forever stop 1 && git pull && npx pnpm install && forever start 1
     - name: cleanup
