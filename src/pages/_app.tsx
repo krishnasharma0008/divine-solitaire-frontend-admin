@@ -7,13 +7,15 @@ import { useRouter } from "next/router";
 import { LayoutWrapper } from "@/wrapper";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
-  const { push } = useRouter();
+  const { push, asPath } = useRouter();
 
   useEffect(() => {
-    if (!getToken()) {
+    console.log(">>>>>>>>>", asPath);
+    if (!getToken() && asPath !== "/login") {
       push("/login");
     }
-  }, [push]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [asPath]);
 
   return (
     <>
