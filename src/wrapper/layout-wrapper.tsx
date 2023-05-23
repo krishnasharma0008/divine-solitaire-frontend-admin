@@ -51,14 +51,14 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
     }
   }, [asPath]);
 
-  if (!isLoggedIn || asPath==='/login') {
+  if (!isLoggedIn || asPath === "/login") {
     return <>{children}</>;
   }
   return (
     <>
       <div className="flex">
         <Sidebar {...sidebarProps} />
-        <div className="flex-initial w-full p-5 bg-gray-100">
+        <div className="w-5/6 fixed right-0 flex-initial p-5 bg-gray-100 overflow-y-auto	h-full">
           <Navbar />
           {children}
         </div>

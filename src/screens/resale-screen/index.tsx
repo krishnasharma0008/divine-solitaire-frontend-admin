@@ -79,6 +79,14 @@ export default function Resalelist() {
     },
   };
 
+    /* Custom Pagination*/
+  
+    const CustomPagination = {
+      rowsPerPageText : ' ', 
+      selectAllRowsItem: true, 
+      selectAllRowsItemText: 'All' 
+    }
+
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>
       <div className="bg-white  ">
@@ -95,6 +103,7 @@ export default function Resalelist() {
             selectableRowsHighlight
             highlightOnHover
             pointerOnHover
+            paginationComponentOptions={CustomPagination}
             actions={
               <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                 Download Excel

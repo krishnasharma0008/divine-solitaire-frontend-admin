@@ -30,14 +30,15 @@ export default function Insurancelist() {
     {
       name: "Sr. No.",
       cell: (row, index: number) => index + 1,
-      sortable: true,
-      reorder: true
+      reorder: true,
+      width : "70px"
     },
     {
       name: "UID",
       selector: (row) => row.id || "",
       sortable: true,
       reorder: true
+      
     },
     {
       name: "Status Request",
@@ -83,6 +84,7 @@ export default function Insurancelist() {
           Download
         </button>
       ),
+      width : "100px"
     },
   ];
 
@@ -99,10 +101,12 @@ export default function Insurancelist() {
   };
 
   /* Custom Pagination*/
-  // const paginationComponentOptions = {
-  //   selectAllRowsItem: true,
-  //   selectAllRowsItemText: "ALL"
-  // };
+  
+  const CustomPagination = {
+    rowsPerPageText : ' ', 
+    selectAllRowsItem: true, 
+    selectAllRowsItemText: 'All' 
+  }
 
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>
@@ -120,7 +124,7 @@ export default function Insurancelist() {
             selectableRowsHighlight
             highlightOnHover
             pointerOnHover
-            //paginationComponentOptions={paginationComponentOptions}
+            paginationComponentOptions={CustomPagination}
             actions={
               <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                 Download Excel

@@ -7,7 +7,10 @@ import { getUserDetail } from "@/api";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import DataTable from "react-data-table-component";
-import { portfolioColumns, wishlistColumns } from "./user-detail-screen-table-columns";
+import {
+  portfolioColumns,
+  wishlistColumns,
+} from "./user-detail-screen-table-columns";
 import Link from "next/link";
 
 interface UserDetailAction {
@@ -92,7 +95,11 @@ const UserDetailScreen: React.FC = () => {
   // };
 
   const CustomStyles = {
-
+    header: {
+      style: {
+        justifyContent: "flex-start",
+      },
+    },
     headRow: {
       style: {
         borderBottomWidth: "0",
@@ -103,11 +110,13 @@ const UserDetailScreen: React.FC = () => {
         "&:not(:last-of-type)": {
           borderBottomWidth: "0",
           borderBottomColor: "white",
-          justifyContent: "center",
+          justifyContent: "flex-center",
         },
       },
     },
   };
+
+  //const actions = styled.div`justify-content: flex-end;`;
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -230,17 +239,20 @@ const UserDetailScreen: React.FC = () => {
         <SectionContainer className="flex-1 pt-5 mt-6">
           <div className="flex-1 w-full">
             <div className="bg-white ">
-              <div>                
+              <div>
                 <DataTable
-                  //title={concat("Portfolio           Total Portfolio Value - ₹ " , `${calculateTotalPortfolioAmt(portfolio)}`)}
-                  title = "Portfolio"
+                  title={
+                    <>
+                      <span className="inline-block">Portfolio</span>
+                      <span className="inline-block pl-3 select-none text-gray-500 text-left sm:text-sm">
+                        Total Portfolio Value - ₹{" "}
+                        {calculateTotalPortfolioAmt(portfolio)}
+                      </span>
+                    </>
+                  }
                   columns={portfolioColumns}
                   data={portfolio}
                   customStyles={CustomStyles}
-                  subHeader
-                  subHeaderComponent={
-                    <span className="flex select-none text-gray-500 text-left sm:text-sm">Total Portfolio Value - ₹ {calculateTotalPortfolioAmt(portfolio)}</span>
-                  }
                 />
               </div>
             </div>
@@ -266,7 +278,7 @@ const UserDetailScreen: React.FC = () => {
 
       <SectionContainer className="mt-6">
         <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
-          <Link href="/admin/user" >
+          <Link href="/admin/user">
             <button
               type="submit"
               //onClick={onSubmitHandler}

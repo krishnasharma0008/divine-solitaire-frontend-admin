@@ -60,6 +60,14 @@ export default function User() {
     },
   };
 
+    /* Custom Pagination*/
+  
+    const CustomPagination = {
+      rowsPerPageText : ' ', 
+      selectAllRowsItem: true, 
+      selectAllRowsItemText: 'All' 
+    }
+
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>
       <div className="bg-white  ">
@@ -77,6 +85,7 @@ export default function User() {
             selectableRowsHighlight
             highlightOnHover
             pointerOnHover
+            paginationComponentOptions={CustomPagination}
           />
         </div>
       </div>
