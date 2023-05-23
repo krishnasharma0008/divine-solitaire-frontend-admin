@@ -79,8 +79,7 @@ export default function Resalelist() {
     },
   };
 
-    /* Custom Pagination*/
-  
+    /* Custom Pagination*/  
     const CustomPagination = {
       rowsPerPageText : ' ', 
       selectAllRowsItem: true, 

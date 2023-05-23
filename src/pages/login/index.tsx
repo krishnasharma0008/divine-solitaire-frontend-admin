@@ -1,9 +1,9 @@
 import { login } from "@/api";
 import InputText from "@/components/common/input-text";
-import { setToken } from "@/local-storage";
+import { getToken, setToken } from "@/local-storage";
 import Image from "next/image";
 import { ChangeEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function LoginPage() {
@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const changeHandler = (fn: (str: string) => void) => (e: ChangeEvent) =>
     fn((e.target as HTMLInputElement).value);
-
+    
   const onClickHandler = () => {
     login(email, password)
       .then((res) => {
@@ -22,6 +22,12 @@ export default function LoginPage() {
       })
       .catch((err) => console.log("ERRRR", err));
   };
+
+  useEffect(() => {
+    if (getToken()) {
+      push("/");
+    }
+  }, []);
 
   return (
     <div className="flex flex-col items-center md:flex-row flex-row min-h-screen max-h-screen bg-Lbgimg">

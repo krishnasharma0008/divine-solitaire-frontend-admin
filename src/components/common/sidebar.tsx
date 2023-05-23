@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { SvgIconProps } from "../icons/";
 import Link from "next/link";
-
 interface SidebarItem {
   title: string;
   url?: string;
   icon: string | React.FC<SvgIconProps>;
+  onClick?:()=> void;
 }
 
 export interface SidebarProps {
@@ -29,14 +29,14 @@ const Sidebar: React.FC<SidebarProps> = ({ items }) => {
         </span>
       </div>
       <hr />
-      <div className="center font-normal">
+      <div className="center font-normal max-h-[calc(100vh_-_64px)] overflow-y-auto ">
         <ul className="">
-          {items.map(({ title, icon: Icon, url }) => {
+          {items.map(({ title, icon: Icon, url, onClick: onclick }) => {
             return (
-              <Link href={url || "#"} key={url}>
+              <Link href={url || "#"} key={url}  onClick={onclick}>
                 <li className="flex p-4 cursor-pointer text-white h-16 text-left align-middle  hover:text-black hover:bg-white hover:align-middle items-center [&>svg]:hover:stroke-black">
                   {Icon && <Icon />}
-                  <span className="ml-6 text-base leading-5">{title}</span>
+                  <span className="ml-6 text-base leading-5" >{title}</span>
                 </li>
               </Link>
             );

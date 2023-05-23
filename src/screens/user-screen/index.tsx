@@ -14,7 +14,6 @@ export default function User() {
     try {
       const result = await getUserList();
       setUser(result.data.data);
-      // setfilteredPolicy(result.data.data);
     } catch (error) {
       console.log(error);
     }

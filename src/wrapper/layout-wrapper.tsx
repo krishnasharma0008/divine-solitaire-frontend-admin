@@ -16,7 +16,7 @@ import {
   UserIcon,
 } from "@/components/icons";
 import PriceRequestIcon from "@/components/icons/price-request-icon";
-import { getToken } from "@/local-storage";
+import { getToken,deleteToken } from "@/local-storage";
 import { useRouter } from "next/router";
 
 const sidebarProps: SidebarProps = {
@@ -31,7 +31,7 @@ const sidebarProps: SidebarProps = {
     { title: "Special Products", icon: SpecialProductsIcon },
     { title: "Active Notifications", icon: ActiveNotificationsIcon },
     { title: "PYDS", icon: PYDSIcon },
-    { title: "Log Out", icon: SignOutIcon },
+    { title: "Log Out" , url: "/login", icon: SignOutIcon , onClick:(()=> deleteToken()) },
     { title: "Help", icon: QuestionIcon },
   ],
 };
