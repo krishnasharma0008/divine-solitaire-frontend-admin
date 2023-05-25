@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="h-12 flex border-b-2 border-b-stone-200 border-solid items-center text-sm text-neutral-600 bg-white mb-10">
+    <div className="h-12 flex border-b-2 border-b-stone-200 border-solid items-center text-sm text-neutral-600 bg-white mb-10 rounded">
       <div className="w-full p-5 flex items-center justify-between">
         <div className="p-5 flex items-center p-1">Dashboard</div>
         <div className="flex items-center">

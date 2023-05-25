@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const changeHandler = (fn: (str: string) => void) => (e: ChangeEvent) =>
     fn((e.target as HTMLInputElement).value);
-    
+
   const onClickHandler = () => {
     login(email, password)
       .then((res) => {
@@ -27,6 +27,7 @@ export default function LoginPage() {
     if (getToken()) {
       push("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
