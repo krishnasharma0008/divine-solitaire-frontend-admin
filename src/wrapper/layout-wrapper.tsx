@@ -16,8 +16,9 @@ import {
   UserIcon,
 } from "@/components/icons";
 import PriceRequestIcon from "@/components/icons/price-request-icon";
-import { getToken,deleteToken } from "@/local-storage";
+import { getToken, deleteToken } from "@/local-storage";
 import { useRouter } from "next/router";
+import { Breadcrumbs } from "@/interface/breadcrumbs";
 
 const sidebarProps: SidebarProps = {
   items: [
@@ -31,16 +32,24 @@ const sidebarProps: SidebarProps = {
     { title: "Special Products", icon: SpecialProductsIcon },
     { title: "Active Notifications", icon: ActiveNotificationsIcon },
     { title: "PYDS", icon: PYDSIcon },
-    { title: "Log Out" , url: "/login", icon: SignOutIcon , onClick:(()=> deleteToken()) },
+    {
+      title: "Log Out",
+      url: "/login",
+      icon: SignOutIcon,
+      onClick: () => deleteToken(),
+    },
     { title: "Help", icon: QuestionIcon },
   ],
 };
 
-export interface LayoutWrapperProps {
+export interface LayoutWrapperProps extends Breadcrumbs {
   children: React.ReactNode;
 }
 
-const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
+const LayoutWrapper: React.FC<LayoutWrapperProps> = ({
+  breadcrumbs,
+  children,
+}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const { asPath } = useRouter();
@@ -59,7 +68,7 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
       <div className="flex">
         <Sidebar {...sidebarProps} />
         <div className="w-5/6 fixed right-0 flex-initial p-5 bg-gray-100 overflow-y-auto	h-full">
-          <Navbar />
+          <Navbar breadcrumbs={breadcrumbs} />
           {children}
         </div>
       </div>

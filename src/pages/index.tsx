@@ -1,9 +1,21 @@
+import { breadcrumbList, URLs } from "@/constants";
+import { AppCommon } from "@/interface";
 import { DashboardScreen } from "@/screens";
+import BreadcrumbWrapper from "@/wrapper/breadcrumb-wrapper";
 
-export default function Homepage() {
+type HomepageProps = AppCommon;
+
+const Homepage: React.FC<HomepageProps> = ({ setBreadcrumbs }) => {
   return (
-    <div className="flex">
-      <DashboardScreen />
-    </div>
+    <BreadcrumbWrapper
+      breadcrumbs={breadcrumbList[URLs.DASHBOARD]}
+      setBreadcrumbs={setBreadcrumbs}
+    >
+      <div className="flex">
+        <DashboardScreen />
+      </div>
+    </BreadcrumbWrapper>
   );
-}
+};
+
+export default Homepage;

@@ -1,12 +1,14 @@
 import "../globals.css";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "@/local-storage";
 import { useRouter } from "next/router";
 import { LayoutWrapper } from "@/wrapper";
+import { BreadCrumb } from "@/constants";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { push, asPath } = useRouter();
+  const [breadcrumbs, setBreadcrumbs] = useState<Array<BreadCrumb>>([]);
 
   useEffect(() => {
     if (!getToken() && asPath !== "/login") {
@@ -18,8 +20,8 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <div className="text-sm">
-        <LayoutWrapper>
-          <Component {...pageProps} />
+        <LayoutWrapper breadcrumbs={breadcrumbs}>
+          <Component {...pageProps} setBreadcrumbs={setBreadcrumbs} />
         </LayoutWrapper>
       </div>
     </>

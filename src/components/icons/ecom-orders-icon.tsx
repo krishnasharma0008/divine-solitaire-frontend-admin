@@ -1,7 +1,7 @@
 import { SvgIconProps } from "./icon-props";
 
 const EcomOrdersIcon: React.FC<SvgIconProps> = () => (
-  <svg width="24" height="24" fill="none">
+  <svg width="24" height="24">
     <g clip-path="url(#A)" stroke="#fff">
       <g stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 11.25v5.25m5.25-8.25l-5.25-6-5.25 6" />

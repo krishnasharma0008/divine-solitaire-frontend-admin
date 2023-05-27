@@ -1,7 +1,7 @@
 import { SvgIconProps } from "./icon-props";
 
 const ActiveNotificationsIcon: React.FC<SvgIconProps> = () => (
-  <svg width="24" height="24" fill="none">
+  <svg width="24" height="24">
     <g clip-path="url(#A)" stroke="#fff" stroke-linejoin="round">
       <path
         d="M19.5 12v7.5a.75.75 0 0 1-.75.75H4.5a.75.75 0 0 1-.75-.75V5.25a.75.75 0 0 1 .75-.75H12"

@@ -4,8 +4,11 @@ import { TriangleDownIcon } from "../icons";
 import { useState } from "react";
 import { deleteToken } from "@/local-storage";
 import { useRouter } from "next/router";
+import { Breadcrumbs } from "@/interface/breadcrumbs";
 
-const Navbar: React.FC = () => {
+type NavbarProps = Breadcrumbs;
+
+const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
   const [open, setOpen] = useState<boolean>(false);
   const { push } = useRouter();
   const openUserDropdown = () => setOpen((oldVal) => !oldVal);
@@ -16,18 +19,27 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div className="h-12 flex border-b-2 border-b-stone-200 border-solid items-center text-sm text-neutral-600 bg-white mb-10 rounded">
-      <div className="w-full p-5 flex items-center justify-between">
-        <div className="p-5 flex items-center p-1">Dashboard</div>
-        <div className="flex items-center">
+    <div className="flex items-center text-sm text-neutral-600 bg-white mb-10 rounded py-3.5">
+      <div className="w-full flex items-center px-4">
+        <div className="inline-block w-5/6">
+          {breadcrumbs.map((item, idx) => (
+            <a className="font-normal leading-4" href={item.url} key={item.url}>
+              {item.text}
+              {idx < breadcrumbs.length - 1 && (
+                <span className="pl-2.5 mr-2.5">{">"}</span>
+              )}
+            </a>
+          ))}
+        </div>
+        <div className="flex items-center w-1/6 justify-end">
           <div className="mr-5 relative">Users</div>
           <div className="mr-5 relative">
             <Image
               src="https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2250&q=80"
               alt=""
               className="w-8 h-8 rounded-full"
-              width={30}
-              height={30}
+              width={36}
+              height={36}
             />
           </div>
           <span onClick={openUserDropdown}>
