@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DataTable, { TableColumn } from "react-data-table-component";
+import DataTable, {
+  TableColumn,
+  TableStyles,
+} from "react-data-table-component";
 
 import getUserList from "@/api/user";
 import { User } from "@/interface";
@@ -34,7 +37,10 @@ export default function User() {
     {
       name: "Name",
       //cell: (row: { fname : any; id: number }) => ( <a href={`/resale-detail/${row.id}`}></a> ),
-      selector: (row) => ((row.fname === null ? " " :   row.fname) + " " + (row.lname=== null ? " " :   row.lname)),
+      selector: (row) =>
+        (row.fname === null ? " " : row.fname) +
+        " " +
+        (row.lname === null ? " " : row.lname),
       sortable: true,
     },
     {
@@ -51,21 +57,22 @@ export default function User() {
     getlistdata();
   }, []);
 
-  const CustomStyles = {
+  const CustomStyles: TableStyles = {
     headRow: {
       style: {
         backgroundColor: "#00A0B6",
+        color: "white",
       },
     },
   };
 
-    /* Custom Pagination*/
-  
-    const CustomPagination = {
-      rowsPerPageText : ' ', 
-      selectAllRowsItem: true, 
-      selectAllRowsItemText: 'All' 
-    }
+  /* Custom Pagination*/
+
+  const CustomPagination = {
+    rowsPerPageText: " ",
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "All",
+  };
 
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>

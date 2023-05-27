@@ -1,18 +1,19 @@
 import { AppCommon, Breadcrumbs } from "@/interface";
 import { useEffect } from "react";
 
-interface BreadcrumbWrapperProps extends AppCommon, Breadcrumbs {
+type BreadcrumbsMod = Omit<Breadcrumbs, "breadcrumbs">;
+interface BreadcrumbWrapperProps extends AppCommon, BreadcrumbsMod {
   children: React.ReactNode;
 }
 
 const BreadcrumbWrapper: React.FC<BreadcrumbWrapperProps> = ({
-  breadcrumbs,
   children,
-  setBreadcrumbs,
+  pageName,
+  setPageName,
 }) => {
   useEffect(() => {
-    setBreadcrumbs(breadcrumbs);
-  }, [breadcrumbs, setBreadcrumbs]);
+    setPageName(pageName);
+  }, [pageName, setPageName]);
 
   return <>{children}</>;
 };

@@ -19,26 +19,46 @@ import PriceRequestIcon from "@/components/icons/price-request-icon";
 import { getToken, deleteToken } from "@/local-storage";
 import { useRouter } from "next/router";
 import { Breadcrumbs } from "@/interface/breadcrumbs";
+import { URLs } from "@/constants";
 
-const sidebarProps: SidebarProps = {
+const sidebarProps: Omit<SidebarProps, "pageName"> = {
   items: [
-    { title: "Users", url: "/admin/user", icon: UserIcon },
-    { title: "Secondary Sale", icon: SecondarySaleIcon },
-    { title: "Insurance", url: "/admin/insurance", icon: InsuranceIcon },
-    { title: "Price Request", icon: PriceRequestIcon },
-    { title: "Resale", url: "/admin/resale", icon: ResaleIcon },
-    { title: "Ecom Orders", icon: EcomOrdersIcon },
-    { title: "Store Locator", icon: StoreLocatorIcon },
-    { title: "Special Products", icon: SpecialProductsIcon },
-    { title: "Active Notifications", icon: ActiveNotificationsIcon },
-    { title: "PYDS", icon: PYDSIcon },
+    { title: "Users", url: "/admin/user", icon: UserIcon, name: URLs.USER },
+    { title: "Secondary Sale", icon: SecondarySaleIcon, name: URLs.DASHBOARD },
+    {
+      title: "Insurance",
+      url: "/admin/insurance",
+      icon: InsuranceIcon,
+      name: URLs.INSURANCE,
+    },
+    { title: "Price Request", icon: PriceRequestIcon, name: URLs.USER_DETAIL },
+    {
+      title: "Resale",
+      url: "/admin/resale",
+      icon: ResaleIcon,
+      name: URLs.RESALE,
+    },
+    { title: "Ecom Orders", icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
+    { title: "Store Locator", icon: StoreLocatorIcon, name: URLs.USER_DETAIL },
+    {
+      title: "Special Products",
+      icon: SpecialProductsIcon,
+      name: URLs.USER_DETAIL,
+    },
+    {
+      title: "Active Notifications",
+      icon: ActiveNotificationsIcon,
+      name: URLs.USER_DETAIL,
+    },
+    { title: "PYDS", icon: PYDSIcon, name: URLs.USER_DETAIL },
     {
       title: "Log Out",
       url: "/login",
       icon: SignOutIcon,
       onClick: () => deleteToken(),
+      name: URLs.USER_DETAIL,
     },
-    { title: "Help", icon: QuestionIcon },
+    { title: "Help", icon: QuestionIcon, name: URLs.USER_DETAIL },
   ],
 };
 
@@ -49,6 +69,7 @@ export interface LayoutWrapperProps extends Breadcrumbs {
 const LayoutWrapper: React.FC<LayoutWrapperProps> = ({
   breadcrumbs,
   children,
+  pageName,
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -66,7 +87,7 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({
   return (
     <>
       <div className="flex">
-        <Sidebar {...sidebarProps} />
+        <Sidebar {...sidebarProps} pageName={pageName} />
         <div className="w-5/6 fixed right-0 flex-initial p-5 bg-gray-100 overflow-y-auto	h-full">
           <Navbar breadcrumbs={breadcrumbs} />
           {children}

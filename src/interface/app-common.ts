@@ -1,7 +1,7 @@
-import { BreadCrumb } from "@/constants";
+import { URLs } from "@/constants";
 
 interface AppCommon {
-  setBreadcrumbs: (breadcrumbs: Array<BreadCrumb>) => void;
+  setPageName: (pageName: URLs) => void;
 }
 
 export { type AppCommon };

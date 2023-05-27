@@ -81,20 +81,6 @@ const UserDetailScreen: React.FC = () => {
       });
   }, [query?.id]);
 
-  // const onSubmitHandler = () => {
-  //   // TODO: submit the form
-  //   // Take reference from insurance-detail-screen
-  //   push("/admin/user");
-  // };
-
-  // const onChangeHandlerCreator = (fieldname: string) => {
-  //   return (e: React.ChangeEvent<HTMLInputElement>) =>
-  //     dispatch({
-  //       type: fieldname,
-  //       payload: (e.target as HTMLInputElement).value,
-  //     });
-  // };
-
   const CustomStyles = {
     header: {
       style: {
@@ -144,11 +130,9 @@ const UserDetailScreen: React.FC = () => {
 
       <SectionContainer className="mt-6">
         <div>
-          <h1 className="py-2 font-medium text-base pl-5">
-            Personal Details :
-          </h1>
+          <h1 className="py-2 font-medium text-base">Personal Details :</h1>
         </div>
-        <div className="flex-row pt-5 mx-4">
+        <div className="flex-row pt-5">
           <InputText
             className="w-full"
             label="Name"
@@ -183,7 +167,7 @@ const UserDetailScreen: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-row pt-5 mx-4">
+        <div className="flex-row pt-5">
           <InputText
             className="w-full"
             label="Address"

@@ -2,14 +2,11 @@
 import React from "react";
 import { ResaleScreen } from "@/screens";
 import { AppCommon } from "@/interface";
-import { breadcrumbList, URLs } from "@/constants";
+import { URLs } from "@/constants";
 import BreadcrumbWrapper from "@/wrapper/breadcrumb-wrapper";
 
-const Resale: React.FC<AppCommon> = ({ setBreadcrumbs }) => (
-  <BreadcrumbWrapper
-    breadcrumbs={breadcrumbList[URLs.RESALE]}
-    setBreadcrumbs={setBreadcrumbs}
-  >
+const Resale: React.FC<AppCommon> = ({ setPageName }) => (
+  <BreadcrumbWrapper pageName={URLs.RESALE} setPageName={setPageName}>
     <ResaleScreen />
   </BreadcrumbWrapper>
 );

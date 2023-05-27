@@ -153,11 +153,9 @@ const ResaleDetailScreen: React.FC = () => {
 
       <SectionContainer className="mt-6">
         <div>
-          <h1 className="py-2 font-medium text-base pl-5">
-            Personal Details :
-          </h1>
+          <h1 className="py-2 font-medium text-base">Personal Details :</h1>
         </div>
-        <div className="flex-row pt-5 mx-4">
+        <div className="flex-row pt-5">
           <InputText
             className="w-full"
             label="Name"
@@ -192,7 +190,7 @@ const ResaleDetailScreen: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-row pt-5 mx-4">
+        <div className="flex-row pt-5">
           <InputText
             className="w-full"
             label="Address"

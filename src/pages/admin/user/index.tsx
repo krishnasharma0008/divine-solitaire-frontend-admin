@@ -3,13 +3,10 @@ import React from "react";
 import { UserScreen } from "@/screens";
 import { AppCommon } from "@/interface";
 import BreadcrumbWrapper from "@/wrapper/breadcrumb-wrapper";
-import { breadcrumbList, URLs } from "@/constants";
+import { URLs } from "@/constants";
 
-const User: React.FC<AppCommon> = ({ setBreadcrumbs }) => (
-  <BreadcrumbWrapper
-    breadcrumbs={breadcrumbList[URLs.USER]}
-    setBreadcrumbs={setBreadcrumbs}
-  >
+const User: React.FC<AppCommon> = ({ setPageName }) => (
+  <BreadcrumbWrapper pageName={URLs.USER} setPageName={setPageName}>
     <UserScreen />
   </BreadcrumbWrapper>
 );

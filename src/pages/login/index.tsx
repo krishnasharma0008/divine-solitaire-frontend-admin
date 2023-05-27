@@ -45,15 +45,15 @@ export default function LoginPage() {
           </span>
         </div>
 
-        <div className="w-full bg-gray-50 flex flex-col sm:justify-center items-center pt-6 sm:pt-0 h-full">
-          <div className="w-full max-w-md space-y-8 flex items-center justify-center">
-            <div>
-              <p className="mt-2 text-gray-600 font-medium">
-                Welcome to Divine Solitaires...
-              </p>
+        <div className="w-full bg-gray-50 flex flex-col sm:justify-center items-center pt-6 sm:pt-0 h-full px-28">
+          <div className="w-2/3 h-5/6 flex flex-col justify-center">
+            <div className="w-full max-w-md space-y-8 flex items-center justify-center text-xl leading-6 mb-6">
+              <div>
+                <p className="mt-2 text-gray-600 font-medium">
+                  Welcome to Divine Solitaires...
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="w-full sm:max-w-md p-5 mx-auto">
             <InputText
               className="w-full"
               htmlFor="email"
@@ -97,13 +97,13 @@ export default function LoginPage() {
                 Log In
               </button>
             </div>
-            <div className="mt-6 text-center align-baseline">
-              <p>
-                For queries reach out to{" "}
-                <strong>it@divinesolitaires.com</strong> or
-                <strong> customercare@divinesolitaires.com</strong>{" "}
-              </p>
-            </div>
+          </div>
+          <div className="mt-6 text-center h-10 w-2/3">
+            <p>
+              For queries reach out to <strong>it@divinesolitaires.com</strong>{" "}
+              or
+              <strong> customercare@divinesolitaires.com</strong>{" "}
+            </p>
           </div>
         </div>
       </div>

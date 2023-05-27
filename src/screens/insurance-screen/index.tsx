@@ -31,51 +31,56 @@ export default function Insurancelist() {
       name: "Sr. No.",
       cell: (row, index: number) => index + 1,
       reorder: true,
-      width : "70px"
+      width: "70px",
     },
     {
       name: "UID",
       selector: (row) => row.id || "",
       sortable: true,
-      reorder: true
-      
+      reorder: true,
     },
     {
       name: "Status Request",
       cell: (row) => (
         //<Link href={`/admin/insurance-detail/${row.id}`}>
-          <button className={`text-white font-bold py-2 px-4 rounded ${row.polstatus ? "bg-light-muted-azure " : "bg-red-400 "}`}>
-            {row.polstatus ? "Open" : "Close"}
-          </button>
+        <button
+          className={`text-white font-bold py-2 px-4 rounded ${
+            row.polstatus ? "bg-light-muted-azure " : "bg-red-400 "
+          }`}
+        >
+          {row.polstatus ? "Open" : "Close"}
+        </button>
         //</Link>
       ),
       selector: (row) => row.polstatus,
       sortable: true,
-      reorder: true
+      reorder: true,
     },
     {
       name: "Request No.",
       selector: (row) => row.requestno || "",
       sortable: true,
-      reorder: true
+      reorder: true,
     },
     {
       name: "Date of Request",
-      selector: (row) => row.polstart !== null ? dayjs(row.polstart).format("DD MMM,YYYY") : "",
+      selector: (row) =>
+        row.polstart !== null ? dayjs(row.polstart).format("DD MMM,YYYY") : "",
       sortable: true,
-      reorder: true
+      reorder: true,
     },
     {
       name: "Date of Renewal",
-      selector: (row) => row.polend !== null ? dayjs(row.polend).format("DD MMM,YYYY") : "",
+      selector: (row) =>
+        row.polend !== null ? dayjs(row.polend).format("DD MMM,YYYY") : "",
       sortable: true,
-      reorder: true
+      reorder: true,
     },
     {
       name: "Name",
       selector: (row) => row.phname,
       sortable: true,
-      reorder: true
+      reorder: true,
     },
     {
       name: "Download",
@@ -84,7 +89,7 @@ export default function Insurancelist() {
           Download
         </button>
       ),
-      width : "100px"
+      width: "100px",
     },
   ];
 
@@ -96,17 +101,18 @@ export default function Insurancelist() {
     headRow: {
       style: {
         backgroundColor: "#00A0B6",
+        color: "white",
       },
     },
   };
 
   /* Custom Pagination*/
-  
+
   const CustomPagination = {
-    rowsPerPageText : ' ', 
-    selectAllRowsItem: true, 
-    selectAllRowsItemText: 'All' 
-  }
+    rowsPerPageText: " ",
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "All",
+  };
 
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>

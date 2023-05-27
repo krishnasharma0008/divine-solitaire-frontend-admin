@@ -41,7 +41,11 @@ export default function Resalelist() {
       name: "Status Request",
       cell: (row) => (
         // <a href={`/admin/resale-detail/${row.id}`}>
-        <button className={`text-white font-bold py-2 px-4 rounded ${row.polstatus ? "bg-light-muted-azure " : "bg-red-400 "}`}>
+        <button
+          className={`text-white font-bold py-2 px-4 rounded ${
+            row.polstatus ? "bg-light-muted-azure " : "bg-red-400 "
+          }`}
+        >
           {row.polstatus ? "Open" : "Close"}
         </button>
         // </a>
@@ -75,16 +79,17 @@ export default function Resalelist() {
     headRow: {
       style: {
         backgroundColor: "#00A0B6",
+        color: "white",
       },
     },
   };
 
-    /* Custom Pagination*/  
-    const CustomPagination = {
-      rowsPerPageText : ' ', 
-      selectAllRowsItem: true, 
-      selectAllRowsItemText: 'All' 
-    }
+  /* Custom Pagination*/
+  const CustomPagination = {
+    rowsPerPageText: " ",
+    selectAllRowsItem: true,
+    selectAllRowsItemText: "All",
+  };
 
   return (
     <div className="flex-1 w-full pt-5" style={{ height: "500px" }}>

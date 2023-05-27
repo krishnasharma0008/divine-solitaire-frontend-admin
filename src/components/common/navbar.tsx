@@ -6,7 +6,7 @@ import { deleteToken } from "@/local-storage";
 import { useRouter } from "next/router";
 import { Breadcrumbs } from "@/interface/breadcrumbs";
 
-type NavbarProps = Breadcrumbs;
+type NavbarProps = Omit<Breadcrumbs, "pageName">;
 
 const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
   const [open, setOpen] = useState<boolean>(false);

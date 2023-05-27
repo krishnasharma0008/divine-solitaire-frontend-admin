@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { getToken } from "@/local-storage";
 import { useRouter } from "next/router";
 import { LayoutWrapper } from "@/wrapper";
-import { BreadCrumb } from "@/constants";
+import { URLs, breadcrumbList } from "@/constants";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { push, asPath } = useRouter();
-  const [breadcrumbs, setBreadcrumbs] = useState<Array<BreadCrumb>>([]);
+  const [pageName, setPageName] = useState<URLs>(URLs.DASHBOARD);
 
   useEffect(() => {
     if (!getToken() && asPath !== "/login") {
@@ -20,8 +20,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <div className="text-sm">
-        <LayoutWrapper breadcrumbs={breadcrumbs}>
-          <Component {...pageProps} setBreadcrumbs={setBreadcrumbs} />
+        <LayoutWrapper
+          breadcrumbs={breadcrumbList[pageName]}
+          pageName={pageName}
+        >
+          <Component {...pageProps} setPageName={setPageName} />
         </LayoutWrapper>
       </div>
     </>
