@@ -25,8 +25,8 @@ jobs:
 
           script: |
             cd ${{ secrets.WORK_DIR }} # we move into our app's folder
-            forever stop staging-app
-            lsof -i:3000 -t | xargs kill -9
+            forever stop staging-app -t
+            # lsof -i:3000 -t | xargs kill -9
             git pull # we pull any changes from git
             export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
             source ~/.nvm/nvm.sh
