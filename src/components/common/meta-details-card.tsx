@@ -16,7 +16,7 @@ const MetaDetailsCard: React.FC<MetaDetailsCardProps> = ({ label, fields }) => (
     </div>
     <div className="flex justify-between">
       {fields.map(({ name, value }) => (
-        <div className="flex flex-col" key={name}>
+        <div className="flex flex-col items-center" key={name}>
           <div>{name}</div>
           <div className="text-center">{value}</div>
         </div>
