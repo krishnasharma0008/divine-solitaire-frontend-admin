@@ -1,5 +1,0 @@
-{
-  "id": "staging-app",
-  "command": "pnpm start",
-  "script": "./"
-}
