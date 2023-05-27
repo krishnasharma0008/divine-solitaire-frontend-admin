@@ -7,6 +7,7 @@ import { createInsurance, getInsuranceDetail } from "@/api";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { formatByCurrency } from "@/util";
 
 interface InsuranceDetailAction {
   type: string;
@@ -114,7 +115,7 @@ const InsuranceDetailScreen: React.FC = () => {
             { name: "UID", value: "12233" },
             { name: "Status", value: "12233" },
             { name: "Date of request", value: "12233" },
-            { name: "Retail price", value: "1,00,000" },
+            { name: "Retail price", value: formatByCurrency(100000) },
           ]}
         />
       </SectionContainer>
@@ -145,6 +146,7 @@ const InsuranceDetailScreen: React.FC = () => {
             />
             <InputText
               className="w-full"
+              containerClass="w-1/4"
               label="Email"
               name="email"
               onChange={onChangeHandlerCreator("phemail")}
@@ -154,6 +156,7 @@ const InsuranceDetailScreen: React.FC = () => {
             />
             <InputText
               className="w-full"
+              containerClass="w-1/4"
               label="Mobile No."
               name="mno"
               onChange={onChangeHandlerCreator("phcontactno")}
@@ -216,8 +219,8 @@ const InsuranceDetailScreen: React.FC = () => {
               name="iamt"
               onChange={onChangeHandlerCreator("invval")}
               placeholder="Invoice Amount"
-              type="number"
-              value={state.invval}
+              type="text"
+              value={formatByCurrency(parseFloat(state.invval))}
             />
 
             <InputText

@@ -12,6 +12,7 @@ import {
   wishlistColumns,
 } from "./user-detail-screen-table-columns";
 import Link from "next/link";
+import { formatByCurrency } from "@/util";
 
 interface UserDetailAction {
   type: string;
@@ -132,7 +133,9 @@ const UserDetailScreen: React.FC = () => {
             { name: "Last Activity Date", value: "18th Jan,2023" },
             {
               name: "Purchase Amount",
-              value: `${calculateTotalPortfolioAmt(portfolio || [])}`,
+              value: formatByCurrency(
+                parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)
+              ),
             },
             { name: "Active request", value: "Yes" },
           ]}
@@ -159,6 +162,7 @@ const UserDetailScreen: React.FC = () => {
           <div className="flex justify-between pt-5 ">
             <InputText
               className="w-full"
+              containerClass="w-1/4"
               label="Email"
               name="email"
               placeholder="Email"
@@ -168,6 +172,7 @@ const UserDetailScreen: React.FC = () => {
             />
             <InputText
               className="w-full"
+              containerClass="w-1/4"
               label="Mobile No."
               name="mno"
               placeholder="Mobile No."
@@ -245,8 +250,9 @@ const UserDetailScreen: React.FC = () => {
                     <>
                       <span className="inline-block">Portfolio</span>
                       <span className="inline-block pl-3 select-none text-gray-500 text-left sm:text-sm">
-                        Total Portfolio Value - ₹{" "}
-                        {calculateTotalPortfolioAmt(portfolio)}
+                        {`Total Portfolio Value - ${formatByCurrency(
+                          calculateTotalPortfolioAmt(portfolio)
+                        )}`}
                       </span>
                     </>
                   }

@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 
 export interface InputTextProps {
   className?: string;
+  containerClass?: string;
   htmlFor?: string;
   id?: string;
   label: string;
@@ -14,6 +15,7 @@ export interface InputTextProps {
 
 const InputText: React.FC<InputTextProps> = ({
   className,
+  containerClass,
   htmlFor,
   id,
   label,
@@ -24,7 +26,7 @@ const InputText: React.FC<InputTextProps> = ({
   value,
 }) => {
   return (
-    <div className="mb-4">
+    <div className={`mb-4 ${containerClass}`}>
       <label className="block mb-1" htmlFor={htmlFor}>
         {label}
       </label>

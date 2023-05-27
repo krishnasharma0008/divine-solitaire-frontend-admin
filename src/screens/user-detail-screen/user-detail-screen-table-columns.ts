@@ -1,4 +1,5 @@
 import { Portfolio, Wishlist } from "@/interface";
+import { formatByCurrency } from "@/util";
 import { TableColumn } from "react-data-table-component";
 
 export const portfolioColumns: Array<TableColumn<Portfolio>> = [
@@ -25,7 +26,7 @@ export const portfolioColumns: Array<TableColumn<Portfolio>> = [
   },
   {
     name: "Current Value",
-    selector: (row) => row.current_price,
+    selector: (row) => formatByCurrency(row.current_price),
   },
 ];
 
@@ -53,6 +54,6 @@ export const wishlistColumns: Array<TableColumn<Wishlist>> = [
   },
   {
     name: "Current Value",
-    selector: (row) => row.current_price,
+    selector: (row) => formatByCurrency(row.current_price),
   },
 ];
