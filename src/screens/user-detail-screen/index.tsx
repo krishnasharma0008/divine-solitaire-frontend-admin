@@ -132,7 +132,7 @@ const UserDetailScreen: React.FC = () => {
             { name: "Last Activity Date", value: "18th Jan,2023" },
             {
               name: "Purchase Amount",
-              value: `${calculateTotalPortfolioAmt(portfolio)}`,
+              value: `${calculateTotalPortfolioAmt(portfolio || [])}`,
             },
             { name: "Active request", value: "Yes" },
           ]}
