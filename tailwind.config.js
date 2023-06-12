@@ -18,6 +18,8 @@ module.exports = {
         tomato: "#FF5757",
         "custom-grey": "#1e1e1e",
         snow: "#F9F9F9",
+        green : "#00AC00",
+        "Inactive" : "#B3B3B3",
       },
       backgroundColor: {
         "light-muted-azure": "#5599FF",

@@ -45,3 +45,18 @@ export const createUserEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
   url: "/api/secadmin/user/",
 };
+
+export const getSpecialProductsListEndpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: "/api/secadmin/designprice/",
+};
+
+export const createSpecialProductsEndpoint: Endpoint = {
+  method: HTTP_METHOD.PUT,
+  url: "/api/secadmin/designprice/",
+};
+
+// export const updateSpecialProductsEndpoint: Endpoint = {
+//   method: HTTP_METHOD.PUT,
+//   url: "/api/secadmin/designprice/",
+// };

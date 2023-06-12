@@ -8,3 +8,5 @@ export { type ResaleDetail } from "./resale-detail";
 export { type User } from "./user";
 export { type UserDetail } from "./user-detail";
 export { type Wishlist } from "./wishlist";
+export { type SpecialProducts } from "./specialproducts";
+export { type SpecialProductsDetail } from "./specialproducts-detail";

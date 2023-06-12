@@ -5,6 +5,8 @@ enum URLs {
   INSURANCE = "/admin/insurance",
   INSURANCE_DETAIL = "/admin/insurance-detail",
   RESALE = "/admin/resale",
+  SPECIALPRODUCTS = "/admin/specialproducts",
+  SPECIALPRODUCTS_DETAIL = "/admin/specialproducts-detail",
   DASHBOARD_CLICKED = "/#",
 }
 
@@ -18,6 +20,7 @@ interface Page {
   USER: BreadCrumb;
   INSURANCE: BreadCrumb;
   RESALE: BreadCrumb;
+  SPECIALPRODUCTS:BreadCrumb;
 }
 
 const PAGES: Page = {
@@ -25,6 +28,7 @@ const PAGES: Page = {
   USER: { text: "User", url: URLs.USER },
   INSURANCE: { text: "Insurance", url: URLs.INSURANCE },
   RESALE: { text: "Resale", url: URLs.RESALE },
+  SPECIALPRODUCTS:{text:"Special Products", url:  URLs.SPECIALPRODUCTS},
 };
 
 const breadcrumbList: {
@@ -37,6 +41,8 @@ const breadcrumbList: {
   [URLs.INSURANCE]: [PAGES.DASHBOARD, PAGES.INSURANCE],
   [URLs.INSURANCE_DETAIL]: [PAGES.DASHBOARD, PAGES.INSURANCE],
   [URLs.RESALE]: [PAGES.DASHBOARD, PAGES.RESALE],
+  [URLs.SPECIALPRODUCTS]:[PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
+  [URLs.SPECIALPRODUCTS_DETAIL]:[PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
 };
 
 export default breadcrumbList;

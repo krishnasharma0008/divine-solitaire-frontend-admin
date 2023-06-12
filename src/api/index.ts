@@ -4,3 +4,4 @@ export { default as login } from "./login";
 export * from "./insurance-detail";
 export * from './resale-detail';
 export * from './user-detail';
+export * from './specialproducts-detail';
