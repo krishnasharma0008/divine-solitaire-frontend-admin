@@ -1,4 +1,4 @@
-import { SvgIconProps } from "./icon-props";
+import { SvgIconProps } from './icon-props'
 
 const PriceRequestIcon: React.FC<SvgIconProps> = () => (
   <svg width="24" height="24" fill="none">
@@ -12,6 +12,6 @@ const PriceRequestIcon: React.FC<SvgIconProps> = () => (
       </clipPath>
     </defs>
   </svg>
-);
+)
 
-export default PriceRequestIcon;
+export default PriceRequestIcon

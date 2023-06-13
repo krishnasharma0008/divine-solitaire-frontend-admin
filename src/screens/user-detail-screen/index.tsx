@@ -1,107 +1,101 @@
-import { MetaDetailsCard } from "@/components/common";
-import SectionContainer from "./sub-components/section-container";
-import InputText from "@/components/common/input-text";
-import { useEffect, useReducer, useState } from "react";
-import { Portfolio, User, Wishlist } from "@/interface";
-import { getUserDetail } from "@/api";
-import { useRouter } from "next/router";
-import dayjs from "dayjs";
-import DataTable from "react-data-table-component";
-import {
-  portfolioColumns,
-  wishlistColumns,
-} from "./user-detail-screen-table-columns";
-import Link from "next/link";
-import { formatByCurrency } from "@/util";
+import { MetaDetailsCard } from '@/components/common'
+import SectionContainer from './sub-components/section-container'
+import InputText from '@/components/common/input-text'
+import { useEffect, useReducer, useState } from 'react'
+import { Portfolio, User, Wishlist } from '@/interface'
+import { getUserDetail } from '@/api'
+import { useRouter } from 'next/router'
+import dayjs from 'dayjs'
+import DataTable from 'react-data-table-component'
+import { portfolioColumns, wishlistColumns } from './user-detail-screen-table-columns'
+import Link from 'next/link'
+import { formatByCurrency } from '@/util'
 
 interface UserDetailAction {
-  type: string;
-  payload: User | string;
+  type: string
+  payload: User | string
 }
 
 const initialState: User = {
-  aadhar: "",
-  address: "",
-  ceatedat: "",
-  city: "",
-  contactno: "",
-  doanniv: "",
-  dob: "",
-  drivinglic: "",
-  email: "",
-  fname: "",
+  aadhar: '',
+  address: '',
+  ceatedat: '',
+  city: '',
+  contactno: '',
+  doanniv: '',
+  dob: '',
+  drivinglic: '',
+  email: '',
+  fname: '',
   id: 0,
-  lactivity: "",
-  lactivityat: "",
-  lname: "",
-  pan: "",
-  pfimage: "",
-  pincode: "",
-  state: "",
-  vsource: "",
-};
+  lactivity: '',
+  lactivityat: '',
+  lname: '',
+  pan: '',
+  pfimage: '',
+  pincode: '',
+  state: '',
+  vsource: '',
+}
 
 const UserDetailReducer = (state: User, action: UserDetailAction) => {
-  if (action.type === "ALL") {
-    return { ...state, ...(action.payload as unknown as User) };
+  if (action.type === 'ALL') {
+    return { ...state, ...(action.payload as unknown as User) }
   }
-  return { ...state, [action.type]: action.payload };
-};
+  return { ...state, [action.type]: action.payload }
+}
 
 const calculateTotalPortfolioAmt = (portfolio: Array<Portfolio>): number =>
-  portfolio.reduce(
-    (acc: number, item: { current_price: number }) => acc + item.current_price,
-    0
-  );
+  portfolio.reduce((acc: number, item: { current_price: number }) => acc + item.current_price, 0)
 
 const UserDetailScreen: React.FC = () => {
-  const [state, dispatch] = useReducer(UserDetailReducer, initialState);
-  const [portfolio, setPortfolio] = useState<Array<Portfolio>>([]);
-  const [wishlist, setWishlist] = useState<Array<Wishlist>>([]);
+  const [state, dispatch] = useReducer(UserDetailReducer, initialState)
+  const [portfolio, setPortfolio] = useState<Array<Portfolio>>([])
+  const [wishlist, setWishlist] = useState<Array<Wishlist>>([])
 
-  const { query } = useRouter();
+  const { query } = useRouter()
 
   useEffect(() => {
     if (!query.id) {
-      return;
+      return
     }
 
     getUserDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
-          type: "ALL",
+          type: 'ALL',
           payload: { ...res.data.data.userInfo },
-        });
-        setPortfolio(res.data.data.portfolio);
-        setWishlist(res.data.data.Wishlist);
+        })
+        setPortfolio(res.data.data.portfolio)
+        setWishlist(res.data.data.Wishlist)
       })
 
       .catch((err) => {
-        console.log("errr", err);
-      });
-  }, [query?.id]);
+        console.log('errr', err)
+      })
+  }, [query?.id])
 
   const CustomStyles = {
     header: {
       style: {
-        justifyContent: "flex-start",
+        justifyContent: 'flex-start',
       },
     },
     headRow: {
       style: {
-        borderBottomWidth: "0",
+        borderBottomWidth: '0',
       },
     },
     rows: {
       style: {
-        "&:not(:last-of-type)": {
-          borderBottomWidth: "0",
-          borderBottomColor: "white",
-          justifyContent: "flex-center",
+        '&:not(:last-of-type)': {
+          borderBottomWidth: '0',
+          borderBottomColor: 'white',
+          justifyContent: 'flex-center',
         },
       },
     },
-  };
+  }
 
   //const actions = styled.div`justify-content: flex-end;`;
 
@@ -111,19 +105,17 @@ const UserDetailScreen: React.FC = () => {
         <MetaDetailsCard
           label="User Activity :"
           fields={[
-            { name: "Source", value: state?.vsource },
+            { name: 'Source', value: state?.vsource },
             {
-              name: "Date of sign Up",
-              value: "18th Jan,2023",
+              name: 'Date of sign Up',
+              value: '18th Jan,2023',
             } /*value: dayjs(state.etype).format("YYYY-MM-DD")*/,
-            { name: "Last Activity Date", value: "18th Jan,2023" },
+            { name: 'Last Activity Date', value: '18th Jan,2023' },
             {
-              name: "Purchase Amount",
-              value: formatByCurrency(
-                parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)
-              ),
+              name: 'Purchase Amount',
+              value: formatByCurrency(parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)),
             },
-            { name: "Active request", value: "Yes" },
+            { name: 'Active request', value: 'Yes' },
           ]}
         />
       </SectionContainer>
@@ -139,7 +131,7 @@ const UserDetailScreen: React.FC = () => {
             name="name"
             placeholder="Name"
             type="text"
-            value={state?.fname || ""}
+            value={state?.fname || ''}
             // onChange={onChangeHandlerCreator("fname")}
           />
 
@@ -152,7 +144,7 @@ const UserDetailScreen: React.FC = () => {
               placeholder="Email"
               type="text"
               // onChange={onChangeHandlerCreator("email")}
-              value={state?.email || ""}
+              value={state?.email || ''}
             />
             <InputText
               className="w-full"
@@ -162,7 +154,7 @@ const UserDetailScreen: React.FC = () => {
               placeholder="Mobile No."
               type="text"
               // onChange={onChangeHandlerCreator("contactno")}
-              value={state?.contactno || ""}
+              value={state?.contactno || ''}
             />
           </div>
         </div>
@@ -175,7 +167,7 @@ const UserDetailScreen: React.FC = () => {
             placeholder="Address"
             type="text"
             // onChange={onChangeHandlerCreator("address")}
-            value={state?.address || ""}
+            value={state?.address || ''}
           />
 
           <div className="flex justify-between pt-5 ">
@@ -185,14 +177,14 @@ const UserDetailScreen: React.FC = () => {
               placeholder="State"
               type="text"
               // onChange={onChangeHandlerCreator("state")}
-              value={state?.state || ""}
+              value={state?.state || ''}
             />
             <InputText
               label="City"
               name="city"
               placeholder="City"
               type="text"
-              value={state?.city || ""}
+              value={state?.city || ''}
               // onChange={onChangeHandlerCreator("city")}
             />
             <InputText
@@ -201,7 +193,7 @@ const UserDetailScreen: React.FC = () => {
               placeholder="Pin Code"
               type="text"
               // onChange={onChangeHandlerCreator("pincode")}
-              value={state?.pincode || ""}
+              value={state?.pincode || ''}
             />
           </div>
           <div className="flex justify-between pt-5 ">
@@ -210,7 +202,7 @@ const UserDetailScreen: React.FC = () => {
               name="dob"
               placeholder="Date Of Birth"
               type="date"
-              value={dayjs(state?.dob).format("YYYY-MM-DD")}
+              value={dayjs(state?.dob).format('YYYY-MM-DD')}
               // onChange={onChangeHandlerCreator("dob")}
             />
             <InputText
@@ -218,7 +210,7 @@ const UserDetailScreen: React.FC = () => {
               name="doanniv"
               placeholder="Date Of Anniversary"
               type="date"
-              value={dayjs(state?.doanniv).format("YYYY-MM-DD")}
+              value={dayjs(state?.doanniv).format('YYYY-MM-DD')}
               // onChange={onChangeHandlerCreator("doanniv")}
             />
           </div>
@@ -234,9 +226,7 @@ const UserDetailScreen: React.FC = () => {
                     <>
                       <span className="inline-block">Portfolio</span>
                       <span className="inline-block pl-3 select-none text-gray-500 text-left sm:text-sm">
-                        {`Total Portfolio Value - ${formatByCurrency(
-                          calculateTotalPortfolioAmt(portfolio)
-                        )}`}
+                        {`Total Portfolio Value - ${formatByCurrency(calculateTotalPortfolioAmt(portfolio))}`}
                       </span>
                     </>
                   }
@@ -254,12 +244,7 @@ const UserDetailScreen: React.FC = () => {
           <div className="flex-1 w-full">
             <div className="bg-white ">
               <div className="">
-                <DataTable
-                  title="Wishlist"
-                  columns={wishlistColumns}
-                  data={wishlist}
-                  customStyles={CustomStyles}
-                />
+                <DataTable title="Wishlist" columns={wishlistColumns} data={wishlist} customStyles={CustomStyles} />
               </div>
             </div>
           </div>
@@ -280,7 +265,7 @@ const UserDetailScreen: React.FC = () => {
         </div>
       </SectionContainer>
     </div>
-  );
-};
+  )
+}
 
-export default UserDetailScreen;
+export default UserDetailScreen

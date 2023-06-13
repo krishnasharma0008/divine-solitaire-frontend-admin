@@ -1,4 +1,4 @@
-import { SvgIconProps } from "./icon-props";
+import { SvgIconProps } from './icon-props'
 
 const ResaleIcon: React.FC<SvgIconProps> = () => (
   <svg width={24} height={24}>
@@ -7,6 +7,6 @@ const ResaleIcon: React.FC<SvgIconProps> = () => (
       fill="#fff"
     />
   </svg>
-);
+)
 
-export default ResaleIcon;
+export default ResaleIcon

@@ -1,70 +1,64 @@
-import SectionContainer from "./sub-components/section-container";
-import InputText from "@/components/common/input-text";
-import { useEffect, useReducer } from "react";
-import { SpecialProductsDetail } from "@/interface";
-import { createSpecialProducts, getSpecialProductsDetail } from "@/api";
-import { useRouter } from "next/router";
+import SectionContainer from './sub-components/section-container'
+import InputText from '@/components/common/input-text'
+import { useEffect, useReducer } from 'react'
+import { SpecialProductsDetail } from '@/interface'
+import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
+import { useRouter } from 'next/router'
 
 interface SpecialProductsDetailAction {
-  type: string;
-  payload?: string | SpecialProductsDetail;
+  type: string
+  payload?: string | SpecialProductsDetail
 }
 
 const initialState: SpecialProductsDetail = {
   //isactive: false,
-  design_type: "",
-  design_no: "",
-  price: "",
-  solitaire_details: "",
-  mount_details: "",
-  gross_weight: "",
-  net_weight: "",
-};
+  design_type: '',
+  design_no: '',
+  price: '',
+  solitaire_details: '',
+  mount_details: '',
+  gross_weight: '',
+  net_weight: '',
+}
 
-const SpecialProductsDetailReducer = (
-  state: SpecialProductsDetail,
-  action: SpecialProductsDetailAction
-) => {
-  if (action.type === "ALL") {
+const SpecialProductsDetailReducer = (state: SpecialProductsDetail, action: SpecialProductsDetailAction) => {
+  if (action.type === 'ALL') {
     return {
       ...state,
       ...(action.payload as unknown as SpecialProductsDetail),
-    };
+    }
   }
-  return { ...state, [action.type]: action.payload };
-};
+  return { ...state, [action.type]: action.payload }
+}
 
 const SpecialProductDetailScreen: React.FC = () => {
-  const [state, dispatch] = useReducer(
-    SpecialProductsDetailReducer,
-    initialState
-  );
+  const [state, dispatch] = useReducer(SpecialProductsDetailReducer, initialState)
 
-  const { query, push } = useRouter();
+  const { query, push } = useRouter()
   useEffect(() => {
-    if (!query.id || query.id === "new") {
-      return;
+    if (!query.id || query.id === 'new') {
+      return
     }
     /**/
     getSpecialProductsDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
-          type: "ALL",
+          type: 'ALL',
           payload: { ...(res.data.data as unknown as SpecialProductsDetail) },
-        });
+        })
       })
       .catch((err) => {
-        console.log("errr", err);
-      });
-  }, [query?.id]);
+        console.log('errr', err)
+      })
+  }, [query?.id])
 
   const onChangeHandlerCreator = (fieldname: string) => {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
       dispatch({
         type: fieldname,
         payload: (e.target as HTMLInputElement).value,
-      });
-  };
+      })
+  }
 
   const onSubmitHandler = () => {
     const payload: SpecialProductsDetail = {
@@ -77,19 +71,19 @@ const SpecialProductDetailScreen: React.FC = () => {
       mount_details: state.mount_details,
       gross_weight: state.gross_weight,
       net_weight: state.net_weight,
-    };
+    }
 
     if (query?.id) {
-      payload.id = query.id as unknown as number;
+      payload.id = query.id as unknown as number
     }
 
     createSpecialProducts(payload)
       .then(() => {
-        console.log("It is successfully created");
-        push("/admin/resale");
+        console.log('It is successfully created')
+        push('/admin/resale')
       })
-      .catch((err) => console.log("Error", err));
-  };
+      .catch((err) => console.log('Error', err))
+  }
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -104,7 +98,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Mount Details"
               name="mountdetail"
-              onChange={onChangeHandlerCreator("mount_details")}
+              onChange={onChangeHandlerCreator('mount_details')}
               placeholder="Mount Details"
               type="text"
               value={state.mount_details}
@@ -114,7 +108,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Solitaire Details"
               name="solitairedetail"
-              onChange={onChangeHandlerCreator("solitaire_details")}
+              onChange={onChangeHandlerCreator('solitaire_details')}
               placeholder="Solitaire Details"
               type="text"
               value={state.solitaire_details}
@@ -128,7 +122,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Product Description"
               name="designtype"
-              onChange={onChangeHandlerCreator("design_type")}
+              onChange={onChangeHandlerCreator('design_type')}
               placeholder="Product Description"
               type="text"
               value={state.design_type}
@@ -138,7 +132,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Retail Price"
               name="price"
-              onChange={onChangeHandlerCreator("price")}
+              onChange={onChangeHandlerCreator('price')}
               placeholder="Retail Price"
               type="number"
               value={state.price}
@@ -152,7 +146,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Design no:"
               name="designno"
-              onChange={onChangeHandlerCreator("design_no")}
+              onChange={onChangeHandlerCreator('design_no')}
               placeholder="Design no:"
               type="text"
               value={state.design_no}
@@ -162,7 +156,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Status"
               name="status"
-              onChange={onChangeHandlerCreator("isactive")}
+              onChange={onChangeHandlerCreator('isactive')}
               placeholder="Status"
               type="number"
               //value={state.isactive}
@@ -177,7 +171,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Gross Weight (in gms)"
               name="grossweight"
-              onChange={onChangeHandlerCreator("gross_weight")}
+              onChange={onChangeHandlerCreator('gross_weight')}
               placeholder="Gross Weight (in gms)"
               type="number"
               value={state.gross_weight}
@@ -187,7 +181,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               containerClass="w-96"
               label="Net Weight (in gms)"
               name="netweight"
-              onChange={onChangeHandlerCreator("net_weight")}
+              onChange={onChangeHandlerCreator('net_weight')}
               placeholder="Status"
               type="number"
               value={state.net_weight}
@@ -207,7 +201,7 @@ const SpecialProductDetailScreen: React.FC = () => {
         </div>
       </SectionContainer>
     </div>
-  );
-};
+  )
+}
 
-export default SpecialProductDetailScreen;
+export default SpecialProductDetailScreen

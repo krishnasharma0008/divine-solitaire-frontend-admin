@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 
-import Sidebar, { SidebarProps } from "@/components/common/sidebar";
-import Navbar from "@/components/common/navbar";
+import Sidebar, { SidebarProps } from '@/components/common/sidebar'
+import Navbar from '@/components/common/navbar'
 import {
   ActiveNotificationsIcon,
   EcomOrdersIcon,
@@ -14,76 +14,72 @@ import {
   SpecialProductsIcon,
   StoreLocatorIcon,
   UserIcon,
-} from "@/components/icons";
-import PriceRequestIcon from "@/components/icons/price-request-icon";
-import { getToken, deleteToken } from "@/local-storage";
-import { useRouter } from "next/router";
-import { Breadcrumbs } from "@/interface/breadcrumbs";
-import { URLs } from "@/constants";
+} from '@/components/icons'
+import PriceRequestIcon from '@/components/icons/price-request-icon'
+import { getToken, deleteToken } from '@/local-storage'
+import { useRouter } from 'next/router'
+import { Breadcrumbs } from '@/interface/breadcrumbs'
+import { URLs } from '@/constants'
 
-const sidebarProps: Omit<SidebarProps, "pageName"> = {
+const sidebarProps: Omit<SidebarProps, 'pageName'> = {
   items: [
-    { title: "Users", url: "/admin/user", icon: UserIcon, name: URLs.USER },
-    { title: "Secondary Sale", icon: SecondarySaleIcon, name: URLs.DASHBOARD },
+    { title: 'Users', url: '/admin/user', icon: UserIcon, name: URLs.USER },
+    { title: 'Secondary Sale', icon: SecondarySaleIcon, name: URLs.DASHBOARD },
     {
-      title: "Insurance",
-      url: "/admin/insurance",
+      title: 'Insurance',
+      url: '/admin/insurance',
       icon: InsuranceIcon,
       name: URLs.INSURANCE,
     },
-    { title: "Price Request", icon: PriceRequestIcon, name: URLs.USER_DETAIL },
+    { title: 'Price Request', icon: PriceRequestIcon, name: URLs.USER_DETAIL },
     {
-      title: "Resale",
-      url: "/admin/resale",
+      title: 'Resale',
+      url: '/admin/resale',
       icon: ResaleIcon,
       name: URLs.RESALE,
     },
-    { title: "Ecom Orders", icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
-    { title: "Store Locator", icon: StoreLocatorIcon, name: URLs.USER_DETAIL },
+    { title: 'Ecom Orders', icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
+    { title: 'Store Locator', icon: StoreLocatorIcon, name: URLs.USER_DETAIL },
     {
-      title: "Special Products",
-      url: "/admin/special-products",
+      title: 'Special Products',
+      url: '/admin/special-products',
       icon: SpecialProductsIcon,
       name: URLs.SPECIAL_PRODUCTS,
     },
     {
-      title: "Active Notifications",
+      title: 'Active Notifications',
       icon: ActiveNotificationsIcon,
       name: URLs.USER_DETAIL,
     },
-    { title: "PYDS", icon: PYDSIcon, name: URLs.USER_DETAIL },
+    { title: 'PYDS', icon: PYDSIcon, name: URLs.USER_DETAIL },
     {
-      title: "Log Out",
-      url: "/login",
+      title: 'Log Out',
+      url: '/login',
       icon: SignOutIcon,
       onClick: () => deleteToken(),
       name: URLs.USER_DETAIL,
     },
-    { title: "Help", icon: QuestionIcon, name: URLs.USER_DETAIL },
+    { title: 'Help', icon: QuestionIcon, name: URLs.USER_DETAIL },
   ],
-};
-
-export interface LayoutWrapperProps extends Breadcrumbs {
-  children: React.ReactNode;
 }
 
-const LayoutWrapper: React.FC<LayoutWrapperProps> = ({
-  breadcrumbs,
-  children,
-  pageName,
-}) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export interface LayoutWrapperProps extends Breadcrumbs {
+  children: React.ReactNode
+}
 
-  const { asPath } = useRouter();
+const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ breadcrumbs, children, pageName }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  const { asPath } = useRouter()
 
   useEffect(() => {
     if (getToken()) {
-      setIsLoggedIn(true);
+      setIsLoggedIn(true)
     }
-  }, [asPath]);
+  }, [asPath])
 
-  if (!isLoggedIn || asPath === "/login") {
-    return <>{children}</>;
+  if (!isLoggedIn || asPath === '/login') {
+    return <>{children}</>
   }
   return (
     <>
@@ -95,7 +91,7 @@ const LayoutWrapper: React.FC<LayoutWrapperProps> = ({
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default LayoutWrapper;
+export default LayoutWrapper

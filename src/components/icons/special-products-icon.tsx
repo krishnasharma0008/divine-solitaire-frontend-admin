@@ -1,4 +1,4 @@
-import { SvgIconProps } from "./icon-props";
+import { SvgIconProps } from './icon-props'
 
 const SpecialProductsIcon: React.FC<SvgIconProps> = () => (
   <svg width="24" height="24" fill="none" stroke="#fff" stroke-linejoin="round">
@@ -9,6 +9,6 @@ const SpecialProductsIcon: React.FC<SvgIconProps> = () => (
       <path d="M18 13.322v4.5m-12-4.5v4.5" />
     </g>
   </svg>
-);
+)
 
-export default SpecialProductsIcon;
+export default SpecialProductsIcon

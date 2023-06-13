@@ -1,26 +1,17 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react'
 
 export interface InputTextProps {
-  className?: string;
-  htmlFor?: string;
-  id?: string;
-  label: string;
-  name: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type: "radio";
-  value: string;
+  className?: string
+  htmlFor?: string
+  id?: string
+  label: string
+  name: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  type: 'radio'
+  value: string
 }
 
-const InputRadio: React.FC<InputTextProps> = ({
-  className,
-  htmlFor,
-  id,
-  label,
-  name,
-  onChange,
-  type,
-  value,
-}) => {
+const InputRadio: React.FC<InputTextProps> = ({ className, htmlFor, id, label, name, onChange, type, value }) => {
   return (
     <div className="flex justify-between mb-4">
       <input
@@ -35,7 +26,7 @@ const InputRadio: React.FC<InputTextProps> = ({
         {label}
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default InputRadio;
+export default InputRadio

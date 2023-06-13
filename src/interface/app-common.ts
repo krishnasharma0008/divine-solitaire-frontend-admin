@@ -1,7 +1,7 @@
-import { URLs } from "@/constants";
+import { URLs } from '@/constants'
 
 interface AppCommon {
-  setPageName: (pageName: URLs) => void;
+  setPageName: (pageName: URLs) => void
 }
 
-export { type AppCommon };
+export { type AppCommon }

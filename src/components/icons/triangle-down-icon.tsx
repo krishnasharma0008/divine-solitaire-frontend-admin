@@ -1,4 +1,4 @@
-import { SvgIconProps } from "./icon-props";
+import { SvgIconProps } from './icon-props'
 
 const TriangleDownIcon: React.FC<SvgIconProps> = ({ className }) => (
   <svg fill="none" viewBox="0 0 15 12" className={className}>
@@ -7,6 +7,6 @@ const TriangleDownIcon: React.FC<SvgIconProps> = ({ className }) => (
       fill="#161616"
     />
   </svg>
-);
+)
 
-export default TriangleDownIcon;
+export default TriangleDownIcon

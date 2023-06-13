@@ -1,21 +1,19 @@
-import { AxiosResponse } from "axios";
-import { getSpecialProductsListEndpoint } from "./endpoints";
-import callWebService from "./web-service";
-import { getToken } from "@/local-storage";
-import { SpecialProducts } from "@/interface";
+import { AxiosResponse } from 'axios'
+import { getSpecialProductsListEndpoint } from './endpoints'
+import callWebService from './web-service'
+import { getToken } from '@/local-storage'
+import { SpecialProducts } from '@/interface'
 
 export interface GetSpecialProductsListResponse {
-  data: Array<SpecialProducts>;
+  data: Array<SpecialProducts>
 }
 
-const getSpecialProductsList = (): Promise<
-  AxiosResponse<GetSpecialProductsListResponse>
-> =>
+const getSpecialProductsList = (): Promise<AxiosResponse<GetSpecialProductsListResponse>> =>
   callWebService(getSpecialProductsListEndpoint.url, {
     method: getSpecialProductsListEndpoint.method,
     headers: {
-      Authorization: "Bearer " + getToken(),
+      Authorization: 'Bearer ' + getToken(),
     },
-  });
+  })
 
-export default getSpecialProductsList;
+export default getSpecialProductsList
