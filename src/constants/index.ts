@@ -1,2 +1,2 @@
-export { default as breadcrumbList } from "./breadcrumb-list";
-export * from "./breadcrumb-list";
+export { default as breadcrumbList } from './breadcrumb-list'
+export * from './breadcrumb-list'

@@ -1,34 +1,33 @@
-import { login } from "@/api";
-import InputText from "@/components/common/input-text";
-import { getToken, setToken } from "@/local-storage";
-import Image from "next/image";
-import { ChangeEvent } from "react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { login } from '@/api'
+import InputText from '@/components/common/input-text'
+import { getToken, setToken } from '@/local-storage'
+import Image from 'next/image'
+import { ChangeEvent } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { push } = useRouter();
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const { push } = useRouter()
 
-  const changeHandler = (fn: (str: string) => void) => (e: ChangeEvent) =>
-    fn((e.target as HTMLInputElement).value);
+  const changeHandler = (fn: (str: string) => void) => (e: ChangeEvent) => fn((e.target as HTMLInputElement).value)
 
   const onClickHandler = () => {
     login(email, password)
       .then((res) => {
-        setToken(res.data.token);
-        push("/");
+        setToken(res.data.token)
+        push('/')
       })
-      .catch((err) => console.log("ERRRR", err));
-  };
+      .catch((err) => console.log('ERRRR', err))
+  }
 
   useEffect(() => {
     if (getToken()) {
-      push("/");
+      push('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <div className="flex flex-col items-center md:flex-row flex-row min-h-screen max-h-screen bg-Lbgimg">
@@ -36,12 +35,7 @@ export default function LoginPage() {
       <div className="flex flex-col	w-full max-w bg-white h-screen basis-1/2">
         <div className="flex h-28 items-center justify-center bg-Chinese-Black-sidebar">
           <span className="font-bold text-sm">
-            <Image
-              src="/Logowhite 1.svg"
-              alt="Divine Logo"
-              height={"36"}
-              width={"102"}
-            />
+            <Image src="/Logowhite 1.svg" alt="Divine Logo" height={'36'} width={'102'} />
           </span>
         </div>
 
@@ -49,21 +43,10 @@ export default function LoginPage() {
           <div className="w-2/3 h-5/6 flex flex-col justify-center">
             <div className="w-full max-w-md space-y-8 flex items-center justify-center text-xl leading-6 mb-6">
               <div>
-                <p className="mt-2 text-gray-600 font-medium">
-                  Welcome to Divine Solitaires...
-                </p>
+                <p className="mt-2 text-gray-600 font-medium">Welcome to Divine Solitaires...</p>
               </div>
             </div>
-            <InputText
-              className="w-full"
-              htmlFor="email"
-              id="email"
-              label="Email"
-              name="email"
-              onChange={changeHandler(setEmail)}
-              type="text"
-              value={email}
-            />
+            <InputText className="w-full" htmlFor="email" id="email" label="Email" name="email" onChange={changeHandler(setEmail)} type="text" value={email} />
             <InputText
               className="w-full"
               htmlFor="password"
@@ -81,10 +64,7 @@ export default function LoginPage() {
                   type="checkbox"
                   className="border border-gray-300 text-red-600 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
                 />
-                <label
-                  htmlFor="remember_me"
-                  className="ml-2 block text-sm leading-5 text-gray-900"
-                >
+                <label htmlFor="remember_me" className="ml-2 block text-sm leading-5 text-gray-900">
                   Remember Me
                 </label>
               </div>
@@ -100,13 +80,12 @@ export default function LoginPage() {
           </div>
           <div className="mt-6 text-center h-10 w-2/3">
             <p>
-              For queries reach out to <strong>it@divinesolitaires.com</strong>{" "}
-              or
-              <strong> customercare@divinesolitaires.com</strong>{" "}
+              For queries reach out to <strong>it@divinesolitaires.com</strong> or
+              <strong> customercare@divinesolitaires.com</strong>{' '}
             </p>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

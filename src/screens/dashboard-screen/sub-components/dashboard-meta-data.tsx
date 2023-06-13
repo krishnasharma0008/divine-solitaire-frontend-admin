@@ -1,19 +1,16 @@
-import PostCard from "@/components/common/post-card";
+import PostCard from '@/components/common/post-card'
 
 interface Item {
-  title: string;
-  content: string;
+  title: string
+  content: string
 }
 
 interface DashboardMetaDataProps {
-  title: string;
-  items: Array<Item>;
+  title: string
+  items: Array<Item>
 }
 
-const DashboardMetaData: React.FC<DashboardMetaDataProps> = ({
-  items,
-  title,
-}) => (
+const DashboardMetaData: React.FC<DashboardMetaDataProps> = ({ items, title }) => (
   <div>
     <div className="flex text-xl leading-6 font-medium">
       <span>{title}</span>
@@ -25,6 +22,6 @@ const DashboardMetaData: React.FC<DashboardMetaDataProps> = ({
       ))}
     </div>
   </div>
-);
+)
 
-export default DashboardMetaData;
+export default DashboardMetaData

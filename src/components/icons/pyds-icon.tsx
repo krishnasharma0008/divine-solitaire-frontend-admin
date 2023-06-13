@@ -1,4 +1,4 @@
-import { SvgIconProps } from "./icon-props";
+import { SvgIconProps } from './icon-props'
 
 const PYDSIcon: React.FC<SvgIconProps> = () => (
   <svg width="24" height="24" fill="none">
@@ -16,14 +16,10 @@ const PYDSIcon: React.FC<SvgIconProps> = () => (
         <path fill="#fff" d="M0 0h24v24H0z" />
       </clipPath>
       <clipPath id="B">
-        <path
-          fill="#fff"
-          transform="translate(12 12.75)"
-          d="M0 0h11.25v11.25H0z"
-        />
+        <path fill="#fff" transform="translate(12 12.75)" d="M0 0h11.25v11.25H0z" />
       </clipPath>
     </defs>
   </svg>
-);
+)
 
-export default PYDSIcon;
+export default PYDSIcon

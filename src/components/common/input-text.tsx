@@ -1,30 +1,19 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react'
 
 export interface InputTextProps {
-  className?: string;
-  containerClass?: string;
-  htmlFor?: string;
-  id?: string;
-  label: string;
-  name: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  type: "file" | "number" | "date" | "text" | "password";
-  value: string;
+  className?: string
+  containerClass?: string
+  htmlFor?: string
+  id?: string
+  label: string
+  name: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  placeholder?: string
+  type: 'file' | 'number' | 'date' | 'text' | 'password'
+  value: string
 }
 
-const InputText: React.FC<InputTextProps> = ({
-  className,
-  containerClass,
-  htmlFor,
-  id,
-  label,
-  name,
-  onChange,
-  placeholder,
-  type,
-  value,
-}) => {
+const InputText: React.FC<InputTextProps> = ({ className, containerClass, htmlFor, id, label, name, onChange, placeholder, type, value }) => {
   return (
     <div className={`mb-4 ${containerClass}`}>
       <label className="block mb-1" htmlFor={htmlFor}>
@@ -40,7 +29,7 @@ const InputText: React.FC<InputTextProps> = ({
         value={value}
       />
     </div>
-  );
-};
+  )
+}
 
-export default InputText;
+export default InputText

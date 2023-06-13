@@ -1,9 +1,9 @@
-import { URLs } from "@/constants";
-import { AppCommon } from "@/interface";
-import { DashboardScreen } from "@/screens";
-import BreadcrumbWrapper from "@/wrapper/breadcrumb-wrapper";
+import { URLs } from '@/constants'
+import { AppCommon } from '@/interface'
+import { DashboardScreen } from '@/screens'
+import BreadcrumbWrapper from '@/wrapper/breadcrumb-wrapper'
 
-type HomepageProps = AppCommon;
+type HomepageProps = AppCommon
 
 const Homepage: React.FC<HomepageProps> = ({ setPageName }) => {
   return (
@@ -12,7 +12,7 @@ const Homepage: React.FC<HomepageProps> = ({ setPageName }) => {
         <DashboardScreen />
       </div>
     </BreadcrumbWrapper>
-  );
-};
+  )
+}
 
-export default Homepage;
+export default Homepage

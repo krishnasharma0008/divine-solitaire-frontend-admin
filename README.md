@@ -1,14 +1,17 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). using PNPM
 
 ## Getting Started
-First check if PNPM is installed in your system. 
+
+First check if PNPM is installed in your system.
 If not installed then run
 npm i -g pnpm
 
 Now run
+
 ```bash
 pnpm install
 ```
+
 Now, run the development server:
 
 ```bash

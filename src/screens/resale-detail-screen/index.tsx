@@ -1,86 +1,83 @@
-import { MetaDetailsCard } from "@/components/common";
-import SectionContainer from "./sub-components/section-container";
-import InputText from "@/components/common/input-text";
-import { useEffect, useReducer } from "react";
-import { ResaleDetail } from "@/interface";
-import { createResale, getResaleDetail } from "@/api";
-import { useRouter } from "next/router";
-import dayjs from "dayjs";
-import Link from "next/link";
-import { formatByCurrency } from "@/util";
+import { MetaDetailsCard } from '@/components/common'
+import SectionContainer from './sub-components/section-container'
+import InputText from '@/components/common/input-text'
+import { useEffect, useReducer } from 'react'
+import { ResaleDetail } from '@/interface'
+import { createResale, getResaleDetail } from '@/api'
+import { useRouter } from 'next/router'
+import dayjs from 'dayjs'
+import Link from 'next/link'
+import { formatByCurrency } from '@/util'
 
 interface ResaleDetailAction {
-  type: string;
-  payload?: string | ResaleDetail;
+  type: string
+  payload?: string | ResaleDetail
 }
 
 const initialState: ResaleDetail = {
-  uid: "",
-  polstatus: "",
-  requestno: "",
-  etype: "",
-  invdate: "",
-  phname: "",
-  phcontactno: "",
-  userid: "",
-  phemail: "",
-  phaddress: "",
-  phcity: "",
-  phpincode: "",
-  phdob: "",
-  invno: "",
-  invval: "",
-  docname: "",
-  currentval: "",
-  newval: "",
-  jewelname: "",
-};
+  uid: '',
+  polstatus: '',
+  requestno: '',
+  etype: '',
+  invdate: '',
+  phname: '',
+  phcontactno: '',
+  userid: '',
+  phemail: '',
+  phaddress: '',
+  phcity: '',
+  phpincode: '',
+  phdob: '',
+  invno: '',
+  invval: '',
+  docname: '',
+  currentval: '',
+  newval: '',
+  jewelname: '',
+}
 
-const resaleDetailReducer = (
-  state: ResaleDetail,
-  action: ResaleDetailAction
-) => {
-  if (action.type === "ALL") {
-    return { ...state, ...(action.payload as unknown as ResaleDetail) };
+const resaleDetailReducer = (state: ResaleDetail, action: ResaleDetailAction) => {
+  if (action.type === 'ALL') {
+    return { ...state, ...(action.payload as unknown as ResaleDetail) }
   }
-  return { ...state, [action.type]: action.payload };
-};
+  return { ...state, [action.type]: action.payload }
+}
 
 const ResaleDetailScreen: React.FC = () => {
-  const [state, dispatch] = useReducer(resaleDetailReducer, initialState);
+  const [state, dispatch] = useReducer(resaleDetailReducer, initialState)
 
-  const { query, push } = useRouter();
+  const { query, push } = useRouter()
   useEffect(() => {
     if (!query.id) {
-      return;
+      return
     }
     /**/
     getResaleDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
-          type: "ALL",
+          type: 'ALL',
           payload: { ...(res.data.data as unknown as ResaleDetail) },
-        });
+        })
       })
       .catch((err) => {
-        console.log("errr", err);
-      });
-  }, [query?.id]);
+        console.log('errr', err)
+      })
+  }, [query?.id])
 
   const onChangeHandlerCreator = (fieldname: string) => {
-    if (fieldname == "samestore") {
-      if (fieldname == "samestore") {
+    if (fieldname == 'samestore') {
+      if (fieldname == 'samestore') {
         return () =>
           dispatch({
-            type: "issamestore",
-            payload: "true",
-          });
+            type: 'issamestore',
+            payload: 'true',
+          })
       } else {
         return () =>
           dispatch({
-            type: "issamestore",
-            payload: "false",
-          });
+            type: 'issamestore',
+            payload: 'false',
+          })
       }
     }
     //alert(issamestore.toISOString());
@@ -88,15 +85,15 @@ const ResaleDetailScreen: React.FC = () => {
       dispatch({
         type: fieldname,
         payload: (e.target as HTMLInputElement).value,
-      });
-  };
+      })
+  }
 
   const onSubmitHandler = () => {
     const payload: ResaleDetail = {
       //...state,
       id: state.id,
       uid: state.uid,
-      polstatus: "Open",
+      polstatus: 'Open',
       requestno: state.requestno,
       etype: state.etype,
       invdate: new Date(state.invdate || Date.now()).toISOString(),
@@ -115,19 +112,19 @@ const ResaleDetailScreen: React.FC = () => {
       newval: state.newval,
       jewelname: state.jewelname,
       issamestore: state.issamestore,
-    };
+    }
 
     if (query?.id) {
-      payload.id = query.id as unknown as number;
+      payload.id = query.id as unknown as number
     }
 
     createResale(payload)
       .then(() => {
-        console.log("It is successfully created");
-        push("/admin/resale");
+        console.log('It is successfully created')
+        push('/admin/resale')
       })
-      .catch((err) => console.log("Error", err));
-  };
+      .catch((err) => console.log('Error', err))
+  }
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -135,16 +132,16 @@ const ResaleDetailScreen: React.FC = () => {
         <MetaDetailsCard
           label="Details :"
           fields={[
-            { name: "Request No.", value: state.requestno },
-            { name: "Request Type.", value: state.etype },
-            { name: "UID", value: state.uid },
-            { name: "Status", value: state.polstatus },
+            { name: 'Request No.', value: state.requestno },
+            { name: 'Request Type.', value: state.etype },
+            { name: 'UID', value: state.uid },
+            { name: 'Status', value: state.polstatus },
             {
-              name: "Date of request",
-              value: dayjs(state.invdate).format("YYYY-MM-DD"),
+              name: 'Date of request',
+              value: dayjs(state.invdate).format('YYYY-MM-DD'),
             },
             {
-              name: "Retail price",
+              name: 'Retail price',
               value: formatByCurrency(parseFloat(state.currentval)),
             },
           ]}
@@ -160,7 +157,7 @@ const ResaleDetailScreen: React.FC = () => {
             className="w-full"
             label="Name"
             name="name"
-            onChange={onChangeHandlerCreator("phname")}
+            onChange={onChangeHandlerCreator('phname')}
             placeholder="Name"
             type="text"
             value={state.phname}
@@ -172,7 +169,7 @@ const ResaleDetailScreen: React.FC = () => {
               containerClass="w-1/4"
               label="Email"
               name="email"
-              onChange={onChangeHandlerCreator("phemail")}
+              onChange={onChangeHandlerCreator('phemail')}
               placeholder="Email"
               type="text"
               value={state.phemail}
@@ -182,7 +179,7 @@ const ResaleDetailScreen: React.FC = () => {
               containerClass="w-1/4"
               label="Mobile No."
               name="mno"
-              onChange={onChangeHandlerCreator("phcontactno")}
+              onChange={onChangeHandlerCreator('phcontactno')}
               placeholder="Mobile No."
               type="text"
               value={state.phcontactno}
@@ -195,25 +192,18 @@ const ResaleDetailScreen: React.FC = () => {
             className="w-full"
             label="Address"
             name="address"
-            onChange={onChangeHandlerCreator("phaddress")}
+            onChange={onChangeHandlerCreator('phaddress')}
             placeholder="Address"
             type="text"
             value={state.phaddress}
           />
 
           <div className="flex justify-between pt-5 ">
-            <InputText
-              label="City"
-              name="city"
-              onChange={onChangeHandlerCreator("phcity")}
-              placeholder="City"
-              type="text"
-              value={state.phcity}
-            />
+            <InputText label="City" name="city" onChange={onChangeHandlerCreator('phcity')} placeholder="City" type="text" value={state.phcity} />
             <InputText
               label="Pin Code"
               name="pincode"
-              onChange={onChangeHandlerCreator("phpincode")}
+              onChange={onChangeHandlerCreator('phpincode')}
               placeholder="Pin Code"
               type="text"
               value={state.phpincode}
@@ -221,17 +211,17 @@ const ResaleDetailScreen: React.FC = () => {
             <InputText
               label="Date of Birth"
               name="dob"
-              onChange={onChangeHandlerCreator("phdob")}
+              onChange={onChangeHandlerCreator('phdob')}
               placeholder="Date Of Birth"
               type="date"
-              value={dayjs(state.phdob).format("YYYY-MM-DD")}
+              value={dayjs(state.phdob).format('YYYY-MM-DD')}
             />
           </div>
           <InputText
             className="w-full"
             label="Jeweller Name"
             name="jewelname"
-            onChange={onChangeHandlerCreator("jewelname")}
+            onChange={onChangeHandlerCreator('jewelname')}
             placeholder="Jeweller Name"
             type="text"
             value={state.jewelname}
@@ -240,7 +230,7 @@ const ResaleDetailScreen: React.FC = () => {
       </SectionContainer>
 
       <SectionContainer className="mt-6">
-        {state.etype !== "buyback" ? (
+        {state.etype !== 'buyback' ? (
           <div>
             <div>
               <h1 className="py-2 font-medium text-base">Buyback Through :</h1>
@@ -254,14 +244,11 @@ const ResaleDetailScreen: React.FC = () => {
                       name="buyback-through"
                       type="radio"
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      value={state.issamestore === true ? "true" : "false"}
+                      value={state.issamestore === true ? 'true' : 'false'}
                       checked={state.issamestore === true}
-                      onChange={onChangeHandlerCreator("samestore")}
+                      onChange={onChangeHandlerCreator('samestore')}
                     />
-                    <label
-                      htmlFor="samestore"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
+                    <label htmlFor="samestore" className="block text-sm font-medium leading-6 text-gray-900">
                       Same Store
                     </label>
                     <input
@@ -271,7 +258,7 @@ const ResaleDetailScreen: React.FC = () => {
                       autoComplete="Same Store"
                       className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
                       placeholder="1,00,000"
-                      value={state.issamestore === true ? state.newval : ""}
+                      value={state.issamestore === true ? state.newval : ''}
                     />
                   </div>
                   <div className="flex items-center gap-x-3">
@@ -280,14 +267,11 @@ const ResaleDetailScreen: React.FC = () => {
                       name="buyback-through"
                       type="radio"
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      value={state.issamestore === false ? "true" : "false"}
+                      value={state.issamestore === false ? 'true' : 'false'}
                       checked={state.issamestore === false}
-                      onChange={onChangeHandlerCreator("diffstore")}
+                      onChange={onChangeHandlerCreator('diffstore')}
                     />
-                    <label
-                      htmlFor="diffstore"
-                      className="block text-sm font-medium leading-6 text-gray-900"
-                    >
+                    <label htmlFor="diffstore" className="block text-sm font-medium leading-6 text-gray-900">
                       Different Store
                     </label>
                     <input
@@ -297,7 +281,7 @@ const ResaleDetailScreen: React.FC = () => {
                       autoComplete="Different Store"
                       className="pl-5 py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
                       placeholder="1,00,000"
-                      value={state.issamestore === false ? state.newval : ""}
+                      value={state.issamestore === false ? state.newval : ''}
                     />
                   </div>
                 </div>
@@ -310,7 +294,7 @@ const ResaleDetailScreen: React.FC = () => {
               className="w-full"
               label="Upgrade Amount"
               name="pugradeamt"
-              onChange={onChangeHandlerCreator("newval")}
+              onChange={onChangeHandlerCreator('newval')}
               placeholder="Upgrade Amount"
               type="text"
               value={state.newval}
@@ -322,7 +306,7 @@ const ResaleDetailScreen: React.FC = () => {
             <InputText
               label="Invoice Number"
               name="iamt"
-              onChange={onChangeHandlerCreator("invno")}
+              onChange={onChangeHandlerCreator('invno')}
               placeholder="Invoice Number"
               type="number"
               value={state.invno}
@@ -330,7 +314,7 @@ const ResaleDetailScreen: React.FC = () => {
             <InputText
               label="Invoice Amount"
               name="iamt"
-              onChange={onChangeHandlerCreator("invval")}
+              onChange={onChangeHandlerCreator('invval')}
               placeholder="Invoice Amount"
               type="text"
               value={formatByCurrency(parseFloat(state.invval))}
@@ -338,10 +322,10 @@ const ResaleDetailScreen: React.FC = () => {
             <InputText
               label="Invoice Date"
               name="idate"
-              onChange={onChangeHandlerCreator("invdate")}
+              onChange={onChangeHandlerCreator('invdate')}
               placeholder="Invoice Date"
               type="text"
-              value={dayjs(state.invdate).format("YYYY-MM-DD")}
+              value={dayjs(state.invdate).format('YYYY-MM-DD')}
             />
           </div>
         </div>
@@ -350,13 +334,10 @@ const ResaleDetailScreen: React.FC = () => {
 
       <SectionContainer className="mt-6">
         <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
-          <Link href={"/admin/resale"}>
-            <button
-              type="button"
-              className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
-            >
-              {" "}
-              Cancel{" "}
+          <Link href={'/admin/resale'}>
+            <button type="button" className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md">
+              {' '}
+              Cancel{' '}
             </button>
           </Link>
           <button
@@ -369,7 +350,7 @@ const ResaleDetailScreen: React.FC = () => {
         </div>
       </SectionContainer>
     </div>
-  );
-};
+  )
+}
 
-export default ResaleDetailScreen;
+export default ResaleDetailScreen

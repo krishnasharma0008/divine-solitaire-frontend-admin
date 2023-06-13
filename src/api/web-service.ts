@@ -1,24 +1,21 @@
-import { API_CONFIG } from "@/config";
-import { deleteToken } from "@/local-storage";
-import { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-import axios from "axios";
+import { API_CONFIG } from '@/config'
+import { deleteToken } from '@/local-storage'
+import { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
+import axios from 'axios'
 
 const callWebService: AxiosInstance = axios.create({
   baseURL: API_CONFIG.host,
   timeout: API_CONFIG.timeout,
-});
+})
 
-const successInterceptor = (response: AxiosResponse) => response;
+const successInterceptor = (response: AxiosResponse) => response
 const failureInterceptor = (errorResponse: AxiosError) => {
   if (errorResponse.response?.status === 401) {
-    deleteToken();
+    deleteToken()
   }
-  return errorResponse;
-};
+  return errorResponse
+}
 
-callWebService.interceptors.response.use(
-  successInterceptor,
-  failureInterceptor
-);
+callWebService.interceptors.response.use(successInterceptor, failureInterceptor)
 
-export default callWebService;
+export default callWebService

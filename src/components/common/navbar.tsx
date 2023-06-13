@@ -1,22 +1,22 @@
-import React from "next";
-import Image from "next/image";
-import { TriangleDownIcon } from "../icons";
-import { useState } from "react";
-import { deleteToken } from "@/local-storage";
-import { useRouter } from "next/router";
-import { Breadcrumbs } from "@/interface/breadcrumbs";
+import React from 'next'
+import Image from 'next/image'
+import { TriangleDownIcon } from '../icons'
+import { useState } from 'react'
+import { deleteToken } from '@/local-storage'
+import { useRouter } from 'next/router'
+import { Breadcrumbs } from '@/interface/breadcrumbs'
 
-type NavbarProps = Omit<Breadcrumbs, "pageName">;
+type NavbarProps = Omit<Breadcrumbs, 'pageName'>
 
 const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { push } = useRouter();
-  const openUserDropdown = () => setOpen((oldVal) => !oldVal);
+  const [open, setOpen] = useState<boolean>(false)
+  const { push } = useRouter()
+  const openUserDropdown = () => setOpen((oldVal) => !oldVal)
 
   const logout = () => {
-    deleteToken();
-    push("/login");
-  };
+    deleteToken()
+    push('/login')
+  }
 
   return (
     <div className="flex items-center text-sm text-neutral-600 bg-white mb-10 rounded py-3.5">
@@ -25,9 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
           {breadcrumbs.map((item, idx) => (
             <a className="font-normal leading-4" href={item.url} key={item.url}>
               {item.text}
-              {idx < breadcrumbs.length - 1 && (
-                <span className="pl-2.5 mr-2.5">{">"}</span>
-              )}
+              {idx < breadcrumbs.length - 1 && <span className="pl-2.5 mr-2.5">{'>'}</span>}
             </a>
           ))}
         </div>
@@ -47,10 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
           </span>
           {open && (
             <div className="fixed w-24 h-12 bg-white p-1.5 float-right top-12 right-0 border-2">
-              <button
-                className=" hover:bg-white-700 font-bold py-2 px-4 rounded shadow"
-                onClick={logout}
-              >
+              <button className=" hover:bg-white-700 font-bold py-2 px-4 rounded shadow" onClick={logout}>
                 Logout
               </button>
             </div>
@@ -58,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

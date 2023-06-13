@@ -1,11 +1,11 @@
 interface Field {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }
 
 export interface MetaDetailsCardProps {
-  label: string;
-  fields: Array<Field>;
+  label: string
+  fields: Array<Field>
 }
 
 const MetaDetailsCard: React.FC<MetaDetailsCardProps> = ({ label, fields }) => (
@@ -24,6 +24,6 @@ const MetaDetailsCard: React.FC<MetaDetailsCardProps> = ({ label, fields }) => (
     </div>
   </>
   // </div>
-);
+)
 
-export default MetaDetailsCard;
+export default MetaDetailsCard
