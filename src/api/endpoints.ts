@@ -30,16 +30,15 @@ export const getResaleListEndpoint: Endpoint = {
   url: "/api/secadmin/resale/",
 };
 
-
 export const createResaleEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
   url: "/api/secadmin/resale/",
 };
 
-export const getUserListEndpoint : Endpoint = {
-  method:HTTP_METHOD.GET,
-  url : "/api/secadmin/user/",
-}
+export const getUserListEndpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: "/api/secadmin/user/",
+};
 
 export const createUserEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,

@@ -4,7 +4,6 @@ import callWebService from "./web-service";
 import { getToken } from "@/local-storage";
 import { Insurance } from "@/interface";
 
-
 export interface GetInsuranceListResponse {
   data: Array<Insurance>;
 }
@@ -18,4 +17,3 @@ const getInsuranceList = (): Promise<AxiosResponse<GetInsuranceListResponse>> =>
   });
 
 export default getInsuranceList;
-

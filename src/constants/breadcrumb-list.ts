@@ -4,9 +4,9 @@ enum URLs {
   USER_DETAIL = "/admin/user-detail",
   INSURANCE = "/admin/insurance",
   INSURANCE_DETAIL = "/admin/insurance-detail",
+  SPECIAL_PRODUCTS = "/admin/special-products",
   RESALE = "/admin/resale",
-  SPECIALPRODUCTS = "/admin/specialproducts",
-  SPECIALPRODUCTS_DETAIL = "/admin/specialproducts-detail",
+  SPECIAL_PRODUCTS_DETAIL = "/admin/specialproducts-detail",
   DASHBOARD_CLICKED = "/#",
 }
 
@@ -20,7 +20,7 @@ interface Page {
   USER: BreadCrumb;
   INSURANCE: BreadCrumb;
   RESALE: BreadCrumb;
-  SPECIALPRODUCTS:BreadCrumb;
+  SPECIALPRODUCTS: BreadCrumb;
 }
 
 const PAGES: Page = {
@@ -28,7 +28,7 @@ const PAGES: Page = {
   USER: { text: "User", url: URLs.USER },
   INSURANCE: { text: "Insurance", url: URLs.INSURANCE },
   RESALE: { text: "Resale", url: URLs.RESALE },
-  SPECIALPRODUCTS:{text:"Special Products", url:  URLs.SPECIALPRODUCTS},
+  SPECIALPRODUCTS: { text: "Special Products", url: URLs.SPECIAL_PRODUCTS },
 };
 
 const breadcrumbList: {
@@ -41,8 +41,8 @@ const breadcrumbList: {
   [URLs.INSURANCE]: [PAGES.DASHBOARD, PAGES.INSURANCE],
   [URLs.INSURANCE_DETAIL]: [PAGES.DASHBOARD, PAGES.INSURANCE],
   [URLs.RESALE]: [PAGES.DASHBOARD, PAGES.RESALE],
-  [URLs.SPECIALPRODUCTS]:[PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
-  [URLs.SPECIALPRODUCTS_DETAIL]:[PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
+  [URLs.SPECIAL_PRODUCTS]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
+  [URLs.SPECIAL_PRODUCTS_DETAIL]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
 };
 
 export default breadcrumbList;

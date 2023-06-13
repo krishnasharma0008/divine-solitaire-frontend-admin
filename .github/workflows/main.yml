@@ -3,7 +3,7 @@ name: Staging Deployment
 on:
   push:
     branches:
-      - 'master'
+      - "master"
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false # tells github to not run further steps if this one fails
       matrix:
-        node-version: [16.x] # sets the version of node we want to use, should be what you have on your server 
+        node-version: [16.x] # sets the version of node we want to use, should be what you have on your server
     steps:
       - name: Deploying to Divine Server
         uses: appleboy/ssh-action@master # An action made to control Linux servers

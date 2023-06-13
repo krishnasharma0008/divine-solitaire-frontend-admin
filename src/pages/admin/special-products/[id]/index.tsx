@@ -6,7 +6,7 @@ import BreadcrumbWrapper from "@/wrapper/breadcrumb-wrapper";
 import { URLs } from "@/constants";
 
 const SpecialProductsDetail: React.FC<AppCommon> = ({ setPageName }) => (
-  <BreadcrumbWrapper pageName={URLs.SPECIALPRODUCTS} setPageName={setPageName}>
+  <BreadcrumbWrapper pageName={URLs.SPECIAL_PRODUCTS} setPageName={setPageName}>
     <SpecialProductsDetailScreen />
   </BreadcrumbWrapper>
 );

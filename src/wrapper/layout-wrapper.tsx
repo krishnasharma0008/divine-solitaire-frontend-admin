@@ -42,9 +42,9 @@ const sidebarProps: Omit<SidebarProps, "pageName"> = {
     { title: "Store Locator", icon: StoreLocatorIcon, name: URLs.USER_DETAIL },
     {
       title: "Special Products",
-      url:"/admin/specialproducts",
+      url: "/admin/special-products",
       icon: SpecialProductsIcon,
-      name: URLs.USER_DETAIL,
+      name: URLs.SPECIAL_PRODUCTS,
     },
     {
       title: "Active Notifications",

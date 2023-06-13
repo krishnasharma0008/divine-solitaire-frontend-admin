@@ -4,7 +4,6 @@ import callWebService from "./web-service";
 import { getToken } from "@/local-storage";
 import { User } from "@/interface";
 
-
 export interface GetUserListResponse {
   data: Array<User>;
 }
@@ -18,4 +17,3 @@ const getUserList = (): Promise<AxiosResponse<GetUserListResponse>> =>
   });
 
 export default getUserList;
-

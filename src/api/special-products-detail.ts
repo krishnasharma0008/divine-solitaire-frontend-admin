@@ -1,9 +1,12 @@
 import { AxiosResponse } from "axios";
 import get from "lodash/get";
-import { createResaleEndpoint, getSpecialProductsListEndpoint } from "./endpoints";
+import {
+  createResaleEndpoint,
+  getSpecialProductsListEndpoint,
+} from "./endpoints";
 import callWebService from "./web-service";
 import { getToken } from "@/local-storage";
-import { SpecialProducts, SpecialProductsDetail } from "@/interface";
+import { SpecialProductsDetail } from "@/interface";
 
 export interface GetSpecialProductsDetailResponse {
   data: Array<SpecialProductsDetail>;
@@ -19,7 +22,9 @@ const getSpecialProductsDetail = (
     },
   });
 
-const createSpecialProducts = (payload: SpecialProductsDetail): Promise<AxiosResponse<void>> => {
+const createSpecialProducts = (
+  payload: SpecialProductsDetail
+): Promise<AxiosResponse<void>> => {
   const formData = new FormData();
   Object.keys(payload).forEach((key: string) =>
     formData.append(key, get(payload, key))

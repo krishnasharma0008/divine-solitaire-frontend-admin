@@ -4,7 +4,6 @@ import callWebService from "./web-service";
 import { getToken } from "@/local-storage";
 import { Resale } from "@/interface";
 
-
 export interface GetResaleListResponse {
   data: Array<Resale>;
 }
@@ -18,4 +17,3 @@ const getResaleList = (): Promise<AxiosResponse<GetResaleListResponse>> =>
   });
 
 export default getResaleList;
-

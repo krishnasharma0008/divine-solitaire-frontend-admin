@@ -4,12 +4,13 @@ import callWebService from "./web-service";
 import { getToken } from "@/local-storage";
 import { SpecialProducts } from "@/interface";
 
-
 export interface GetSpecialProductsListResponse {
   data: Array<SpecialProducts>;
 }
 
-const getSpecialProductsList = (): Promise<AxiosResponse<GetSpecialProductsListResponse>> =>
+const getSpecialProductsList = (): Promise<
+  AxiosResponse<GetSpecialProductsListResponse>
+> =>
   callWebService(getSpecialProductsListEndpoint.url, {
     method: getSpecialProductsListEndpoint.method,
     headers: {
@@ -18,4 +19,3 @@ const getSpecialProductsList = (): Promise<AxiosResponse<GetSpecialProductsListR
   });
 
 export default getSpecialProductsList;
-
