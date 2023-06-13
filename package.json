@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint -- --fix  --ext .ts,.tsx",
-    "format": "pnpm tsc --noEmit && pnpm eslint . && pnpm prettier --write ."
+    "format": "pnpm tsc --noEmit && pnpm eslint . && pnpm prettier --write .",
+    "deploy:staging": "next build && pm2 startOrRestart ecosystem.config.js"
   },
   "dependencies": {
     "@types/lodash": "^4.14.194",

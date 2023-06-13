@@ -25,16 +25,14 @@ jobs:
 
           script: |
             cd ${{ secrets.WORK_DIR }} # we move into our app's folder
-            pm2 stop 'pnpm start'
             # Stopping process running on port
             kill-port 3000
             rm -rf ./node_modules
             rm -rf .next
             git pull # we pull any changes from git
             export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
-            source ~/.nvm/nvm.sh
+            # source ~/.nvm/nvm.sh
             pnpm install # we install any missing dependencies
             pnpm build # we build our app
-            pm2 start 'pnpm start'
-            pm2 status
+            pnpm deploy:staging # Start the app again
             echo "service is running now"
