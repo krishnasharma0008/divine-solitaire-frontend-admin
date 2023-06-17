@@ -1,8 +1,10 @@
 import { AxiosResponse } from 'axios'
+
+import { Insurance } from '@/interface'
+import { getToken } from '@/local-storage'
+
 import { getInsuranceListEndpoint } from './endpoints'
 import callWebService from './web-service'
-import { getToken } from '@/local-storage'
-import { Insurance } from '@/interface'
 
 export interface GetInsuranceListResponse {
   data: Array<Insurance>

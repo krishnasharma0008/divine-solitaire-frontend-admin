@@ -1,7 +1,9 @@
 import Image from 'next/image'
-import { SvgIconProps } from '../icons/'
 import Link from 'next/link'
+
 import { URLs } from '@/constants'
+
+import { SvgIconProps } from '../icons/'
 interface SidebarItem {
   title: string
   url?: string

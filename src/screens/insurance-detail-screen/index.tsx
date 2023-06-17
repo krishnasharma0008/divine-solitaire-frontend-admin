@@ -1,13 +1,15 @@
-import { InputFile, MetaDetailsCard } from '@/components/common'
-import SectionContainer from './sub-components/section-container'
-import InputText from '@/components/common/input-text'
-import { useEffect, useReducer } from 'react'
-import { InsuranceDetail } from '@/interface'
-import { createInsurance, getInsuranceDetail } from '@/api'
-import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useReducer } from 'react'
+
+import { createInsurance, getInsuranceDetail } from '@/api'
+import { InputFile, MetaDetailsCard } from '@/components/common'
+import InputText from '@/components/common/input-text'
+import { InsuranceDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
+
+import SectionContainer from './sub-components/section-container'
 
 interface InsuranceDetailAction {
   type: string
@@ -19,6 +21,7 @@ const initialState: InsuranceDetail = {
   phemail: '',
   phcontactno: '',
   phaddress: '',
+  phstate: '',
   phcity: '',
   phpincode: '',
   phdob: '',
@@ -27,13 +30,15 @@ const initialState: InsuranceDetail = {
   invval: '',
   purstore: '',
   polcomp: '',
-  // polno: "",
+  polno: '',
   polstart: '',
   polend: '',
   polstatus: 'Open',
   rendate: '',
+  requestno: '',
   polfile: '',
   invfile: '',
+  uid: '',
 }
 
 const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailAction) => {
@@ -80,7 +85,7 @@ const InsuranceDetailScreen: React.FC = () => {
       })
   }
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = (ActionType: string) => () => {
     const payload: InsuranceDetail = {
       ...state,
       phdob: new Date(state.phdob || Date.now()).toISOString(),
@@ -88,6 +93,7 @@ const InsuranceDetailScreen: React.FC = () => {
       polstart: new Date(state.polstart || Date.now()).toISOString(),
       polend: new Date(state.polend || Date.now()).toISOString(),
       rendate: new Date(state.rendate || Date.now()).toISOString(),
+      polstatus: ActionType,
     }
 
     if (query?.id) {
@@ -108,11 +114,19 @@ const InsuranceDetailScreen: React.FC = () => {
         <MetaDetailsCard
           label="Details :"
           fields={[
-            { name: 'Request No.', value: '123' },
-            { name: 'UID', value: '12233' },
-            { name: 'Status', value: '12233' },
-            { name: 'Date of request', value: '12233' },
-            { name: 'Retail price', value: formatByCurrency(100000) },
+            { name: 'Request No.', value: state.requestno },
+            { name: 'UID', value: state.uid },
+            {
+              name: 'Status',
+              value: (
+                <button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
+                  {state.polstatus ? 'Open' : 'Close'}
+                </button>
+              ),
+            },
+
+            { name: 'Date of request', value: dayjs(state.invdate).format('YYYY-MM-DD') },
+            { name: 'Retail price', value: formatByCurrency(1000000) }, //add state.invval
           ]}
         />
       </SectionContainer>
@@ -176,6 +190,7 @@ const InsuranceDetailScreen: React.FC = () => {
           />
 
           <div className="flex justify-between pt-5 ">
+            <InputText label="State" name="state" onChange={onChangeHandlerCreator('phstate')} placeholder="State" type="text" value={state.phstate} />
             <InputText label="City" name="city" onChange={onChangeHandlerCreator('phcity')} placeholder="City" type="text" value={state.phcity} />
             <InputText
               label="Pin Code"
@@ -242,21 +257,31 @@ const InsuranceDetailScreen: React.FC = () => {
           </h1>
         </div>
         <div className="flex-row py-5">
-          <div className="my-4">
+          {/* <div className="my-4">
             <label htmlFor="pnum">Policy Number : </label>
             <label htmlFor="pnum"> PO013564</label>
+          </div> */}
+          <div className="flex justify-between">
+            <InputText
+              containerClass="w-2/3"
+              className="w-full"
+              label="Insurance Provider Name *"
+              name="polcomp"
+              onChange={onChangeHandlerCreator('polcomp')}
+              placeholder="Insurance Provider Name *"
+              type="text"
+              value={state.polcomp}
+            />
+
+            <InputText
+              label="Policy Number*"
+              name="polno"
+              onChange={onChangeHandlerCreator('polno')}
+              placeholder="Policy Number "
+              type="text"
+              value={state.polno}
+            />
           </div>
-
-          <InputText
-            className="w-full"
-            label="Insurance Provider Name *"
-            name="address"
-            onChange={onChangeHandlerCreator('polcomp')}
-            placeholder="Insurance Provider Name *"
-            type="text"
-            value={state.polcomp}
-          />
-
           <div className="flex justify-between pt-5 ">
             <InputText
               label="Start Date"
@@ -289,17 +314,20 @@ const InsuranceDetailScreen: React.FC = () => {
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5 gap-6">
-          <Link href="/admin/insurance">
-            <button type="button" className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md">
-              Cancel
-            </button>
-          </Link>
+          <Link href="/admin/insurance">Cancel</Link>
           <button
             type="submit"
-            onClick={onSubmitHandler}
+            onClick={onSubmitHandler('Reject')}
+            className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
+          >
+            Reject
+          </button>
+          <button
+            type="submit"
+            onClick={onSubmitHandler('Approve')}
             className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
           >
-            Submit
+            Approve
           </button>
         </div>
       </SectionContainer>

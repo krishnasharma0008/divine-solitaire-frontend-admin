@@ -1,8 +1,9 @@
 'use client'
 import React from 'react'
-import { SpecialProductsScreen } from '@/screens'
-import { AppCommon } from '@/interface'
+
 import { URLs } from '@/constants'
+import { AppCommon } from '@/interface'
+import { SpecialProductsScreen } from '@/screens'
 import BreadcrumbWrapper from '@/wrapper/breadcrumb-wrapper'
 
 const SpecialProducts: React.FC<AppCommon> = ({ setPageName }) => (

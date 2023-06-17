@@ -1,9 +1,9 @@
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn, TableStyles } from 'react-data-table-component'
 
 import getUserList from '@/api/user'
 import { User } from '@/interface'
-import { useRouter } from 'next/router'
 
 export default function User() {
   const [user, setUser] = useState<Array<User>>([])

@@ -1,11 +1,13 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
-import { createUserEndpoint, getUserListEndpoint } from './endpoints'
-import callWebService from './web-service'
-import { getToken } from '@/local-storage'
+
 import { User, UserDetail } from '@/interface'
 import { Portfolio } from '@/interface/portfolio'
 import { Wishlist } from '@/interface/wishlist'
+import { getToken } from '@/local-storage'
+
+import { createUserEndpoint, getUserListEndpoint } from './endpoints'
+import callWebService from './web-service'
 
 export interface GetUserDetailResponse {
   data: {

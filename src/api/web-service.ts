@@ -1,7 +1,8 @@
-import { API_CONFIG } from '@/config'
-import { deleteToken } from '@/local-storage'
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 import axios from 'axios'
+
+import { API_CONFIG } from '@/config'
+import { deleteToken } from '@/local-storage'
 
 const callWebService: AxiosInstance = axios.create({
   baseURL: API_CONFIG.host,

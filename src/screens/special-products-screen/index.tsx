@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getSpecialProductsList from '@/api/special-products'
 import { SpecialProducts } from '@/interface'
-import { useRouter } from 'next/router'
 
 const columns: TableColumn<SpecialProducts>[] = [
   {

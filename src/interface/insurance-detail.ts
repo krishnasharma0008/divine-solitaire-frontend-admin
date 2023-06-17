@@ -3,6 +3,7 @@ export interface InsuranceDetail {
   phemail: string
   phcontactno: string
   phaddress: string
+  phstate: string
   phcity: string
   phpincode: string
   phdob: string
@@ -11,12 +12,14 @@ export interface InsuranceDetail {
   invval: string
   purstore: string
   polcomp: string
-  polno?: string
+  polno: string
   polstart: string
   polend: string
   polstatus: string
   rendate: string
+  requestno: string
   polfile: string
   invfile: string
+  uid: string
   id?: number
 }

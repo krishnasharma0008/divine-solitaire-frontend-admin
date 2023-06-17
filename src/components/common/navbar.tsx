@@ -1,10 +1,12 @@
 import React from 'next'
 import Image from 'next/image'
-import { TriangleDownIcon } from '../icons'
-import { useState } from 'react'
-import { deleteToken } from '@/local-storage'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+
 import { Breadcrumbs } from '@/interface/breadcrumbs'
+import { deleteToken } from '@/local-storage'
+
+import { TriangleDownIcon } from '../icons'
 
 type NavbarProps = Omit<Breadcrumbs, 'pageName'>
 
