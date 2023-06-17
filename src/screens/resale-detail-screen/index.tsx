@@ -131,11 +131,21 @@ const ResaleDetailScreen: React.FC = () => {
       <SectionContainer>
         <MetaDetailsCard
           label="Details :"
+          containerClass="bg-[#28A0B0] w-full"
+          className=" ml-4 my-2.5 text-white"
           fields={[
             { name: 'Request No.', value: state.requestno },
             { name: 'Request Type.', value: state.etype },
             { name: 'UID', value: state.uid },
-            { name: 'Status', value: state.polstatus },
+            {
+              name: 'Status',
+              value: (
+                <button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
+                  {state.polstatus ? 'Open' : 'Close'}
+                </button>
+              ),
+            },
+
             {
               name: 'Date of request',
               value: dayjs(state.invdate).format('YYYY-MM-DD'),
@@ -149,8 +159,11 @@ const ResaleDetailScreen: React.FC = () => {
       </SectionContainer>
 
       <SectionContainer className="mt-6">
-        <div>
+        {/* <div>
           <h1 className="py-2 font-medium text-base">Personal Details :</h1>
+        </div> */}
+        <div className="bg-[#28A0B0] w-full">
+          <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Personal Details:</h1>
         </div>
         <div className="flex-row pt-5">
           <InputText
