@@ -1,13 +1,15 @@
-import { InputFile, MetaDetailsCard } from '@/components/common'
-import SectionContainer from './sub-components/section-container'
-import InputText from '@/components/common/input-text'
-import { useEffect, useReducer } from 'react'
-import { InsuranceDetail } from '@/interface'
-import { createInsurance, getInsuranceDetail } from '@/api'
-import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useReducer } from 'react'
+
+import { createInsurance, getInsuranceDetail } from '@/api'
+import { InputFile, MetaDetailsCard } from '@/components/common'
+import InputText from '@/components/common/input-text'
+import { InsuranceDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
+
+import SectionContainer from './sub-components/section-container'
 
 interface InsuranceDetailAction {
   type: string
@@ -83,7 +85,7 @@ const InsuranceDetailScreen: React.FC = () => {
       })
   }
 
-  const onSubmitHandler = (ActionType: string) => {
+  const onSubmitHandler = (ActionType: string) => () => {
     const payload: InsuranceDetail = {
       ...state,
       phdob: new Date(state.phdob || Date.now()).toISOString(),
@@ -315,14 +317,14 @@ const InsuranceDetailScreen: React.FC = () => {
           <Link href="/admin/insurance">Cancel</Link>
           <button
             type="submit"
-            onClick={() => onSubmitHandler('Reject')}
+            onClick={onSubmitHandler('Reject')}
             className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
           >
             Reject
           </button>
           <button
             type="submit"
-            onClick={() => onSubmitHandler('Approve')}
+            onClick={onSubmitHandler('Approve')}
             className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
           >
             Approve

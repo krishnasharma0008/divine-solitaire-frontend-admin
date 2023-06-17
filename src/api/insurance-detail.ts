@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
+
+import { Insurance, InsuranceDetail } from '@/interface'
+import { getToken } from '@/local-storage'
+
 import { createInsuranceEndpoint, getInsuranceListEndpoint } from './endpoints'
 import callWebService from './web-service'
-import { getToken } from '@/local-storage'
-import { Insurance, InsuranceDetail } from '@/interface'
 
 export interface GetInsuranceDetailResponse {
   data: Insurance

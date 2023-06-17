@@ -1,15 +1,17 @@
-import { MetaDetailsCard } from '@/components/common'
-import SectionContainer from './sub-components/section-container'
-import InputText from '@/components/common/input-text'
-import { useEffect, useReducer, useState } from 'react'
-import { Portfolio, User, Wishlist } from '@/interface'
-import { getUserDetail } from '@/api'
-import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
-import DataTable from 'react-data-table-component'
-import { portfolioColumns, wishlistColumns } from './user-detail-screen-table-columns'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useReducer, useState } from 'react'
+import DataTable from 'react-data-table-component'
+
+import { getUserDetail } from '@/api'
+import { MetaDetailsCard } from '@/components/common'
+import InputText from '@/components/common/input-text'
+import { Portfolio, User, Wishlist } from '@/interface'
 import { formatByCurrency } from '@/util'
+
+import SectionContainer from './sub-components/section-container'
+import { portfolioColumns, wishlistColumns } from './user-detail-screen-table-columns'
 
 interface UserDetailAction {
   type: string

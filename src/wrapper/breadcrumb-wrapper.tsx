@@ -1,5 +1,6 @@
-import { AppCommon, Breadcrumbs } from '@/interface'
 import { useEffect } from 'react'
+
+import { AppCommon, Breadcrumbs } from '@/interface'
 
 type BreadcrumbsMod = Omit<Breadcrumbs, 'breadcrumbs'>
 interface BreadcrumbWrapperProps extends AppCommon, BreadcrumbsMod {

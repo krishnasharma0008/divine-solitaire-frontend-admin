@@ -1,13 +1,15 @@
-import { MetaDetailsCard } from '@/components/common'
-import SectionContainer from './sub-components/section-container'
-import InputText from '@/components/common/input-text'
-import { useEffect, useReducer } from 'react'
-import { ResaleDetail } from '@/interface'
-import { createResale, getResaleDetail } from '@/api'
-import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useEffect, useReducer } from 'react'
+
+import { createResale, getResaleDetail } from '@/api'
+import { MetaDetailsCard } from '@/components/common'
+import InputText from '@/components/common/input-text'
+import { ResaleDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
+
+import SectionContainer from './sub-components/section-container'
 
 interface ResaleDetailAction {
   type: string

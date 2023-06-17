@@ -1,9 +1,11 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
+
+import { Resale, ResaleDetail } from '@/interface'
+import { getToken } from '@/local-storage'
+
 import { createResaleEndpoint, getResaleListEndpoint } from './endpoints'
 import callWebService from './web-service'
-import { getToken } from '@/local-storage'
-import { Resale, ResaleDetail } from '@/interface'
 
 export interface GetResaleDetailResponse {
   data: Array<Resale>

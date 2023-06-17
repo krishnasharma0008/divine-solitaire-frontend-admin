@@ -1,9 +1,11 @@
-import SectionContainer from './sub-components/section-container'
-import InputText from '@/components/common/input-text'
-import { useEffect, useReducer } from 'react'
-import { SpecialProductsDetail } from '@/interface'
-import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
 import { useRouter } from 'next/router'
+import { useEffect, useReducer } from 'react'
+
+import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
+import InputText from '@/components/common/input-text'
+import { SpecialProductsDetail } from '@/interface'
+
+import SectionContainer from './sub-components/section-container'
 
 interface SpecialProductsDetailAction {
   type: string

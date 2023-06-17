@@ -1,9 +1,10 @@
 'use client'
 import React from 'react'
-import { InsuranceScreen } from '@/screens'
-import { AppCommon } from '@/interface'
-import BreadcrumbWrapper from '@/wrapper/breadcrumb-wrapper'
+
 import { URLs } from '@/constants'
+import { AppCommon } from '@/interface'
+import { InsuranceScreen } from '@/screens'
+import BreadcrumbWrapper from '@/wrapper/breadcrumb-wrapper'
 
 const Insurance: React.FC<AppCommon> = ({ setPageName }) => (
   <BreadcrumbWrapper pageName={URLs.INSURANCE} setPageName={setPageName}>

@@ -1,6 +1,7 @@
+import { TableColumn } from 'react-data-table-component'
+
 import { Portfolio, Wishlist } from '@/interface'
 import { formatByCurrency } from '@/util'
-import { TableColumn } from 'react-data-table-component'
 
 export const portfolioColumns: Array<TableColumn<Portfolio>> = [
   {

@@ -1,8 +1,10 @@
 import { AxiosResponse } from 'axios'
+
+import { Resale } from '@/interface'
+import { getToken } from '@/local-storage'
+
 import { getResaleListEndpoint } from './endpoints'
 import callWebService from './web-service'
-import { getToken } from '@/local-storage'
-import { Resale } from '@/interface'
 
 export interface GetResaleListResponse {
   data: Array<Resale>

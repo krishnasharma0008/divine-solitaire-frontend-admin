@@ -1,8 +1,10 @@
 import { AxiosResponse } from 'axios'
+
+import { User } from '@/interface'
+import { getToken } from '@/local-storage'
+
 import { getUserListEndpoint } from './endpoints'
 import callWebService from './web-service'
-import { getToken } from '@/local-storage'
-import { User } from '@/interface'
 
 export interface GetUserListResponse {
   data: Array<User>

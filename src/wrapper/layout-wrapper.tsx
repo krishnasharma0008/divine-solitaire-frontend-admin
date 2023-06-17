@@ -1,7 +1,8 @@
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
-import Sidebar, { SidebarProps } from '@/components/common/sidebar'
 import Navbar from '@/components/common/navbar'
+import Sidebar, { SidebarProps } from '@/components/common/sidebar'
 import {
   ActiveNotificationsIcon,
   EcomOrdersIcon,
@@ -16,10 +17,9 @@ import {
   UserIcon,
 } from '@/components/icons'
 import PriceRequestIcon from '@/components/icons/price-request-icon'
-import { getToken, deleteToken } from '@/local-storage'
-import { useRouter } from 'next/router'
-import { Breadcrumbs } from '@/interface/breadcrumbs'
 import { URLs } from '@/constants'
+import { Breadcrumbs } from '@/interface/breadcrumbs'
+import { getToken, deleteToken } from '@/local-storage'
 
 const sidebarProps: Omit<SidebarProps, 'pageName'> = {
   items: [

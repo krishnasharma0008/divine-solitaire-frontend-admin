@@ -1,10 +1,11 @@
 import '../globals.css'
 import type { AppProps } from 'next/app'
-import { useEffect, useState } from 'react'
-import { getToken } from '@/local-storage'
 import { useRouter } from 'next/router'
-import { LayoutWrapper } from '@/wrapper'
+import { useEffect, useState } from 'react'
+
 import { URLs, breadcrumbList } from '@/constants'
+import { getToken } from '@/local-storage'
+import { LayoutWrapper } from '@/wrapper'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { push, asPath } = useRouter()
