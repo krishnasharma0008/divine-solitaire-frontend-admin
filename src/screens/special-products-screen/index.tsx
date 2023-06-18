@@ -107,7 +107,12 @@ const SpecialProductsList: React.FC = () => {
               </Button>
             }
           />
-          <button type="button" className="bg-black text-white px-10 py-3 rounded block" style={{ marginTop: -40 }} onClick={addProductClickHandler}>
+          <button
+            type="button"
+            className="bg-black text-white px-10 py-3 rounded block"
+            style={{ marginTop: resale.length ? -40 : 0 }}
+            onClick={addProductClickHandler}
+          >
             Add Product<span className="ml-2">+</span>
           </button>
         </div>
