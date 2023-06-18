@@ -1,5 +1,8 @@
+import withMT from '@material-tailwind/react/utils/withMT'
+import colors from 'tailwindcss/colors'
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default withMT({
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
     './node_modules/tailwind-datepicker-react/dist/**/*.js', // <--- Add this line for date picker
@@ -12,6 +15,7 @@ module.exports = {
         Lbgimg: "url('/Rectangle32.png')",
       },
       colors: {
+        ...colors,
         'Chinese-Black-sidebar': '#161616',
         'light-white': '#FFFFFF',
         tomato: '#FF5757',
@@ -30,4 +34,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+})

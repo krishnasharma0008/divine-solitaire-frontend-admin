@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
@@ -19,7 +20,9 @@ const columns: TableColumn<SpecialProducts>[] = [
   {
     name: 'Status',
     cell: (row) => (
-      <button className={`text-white font-bold py-2 px-4 rounded ${row.isactive ? 'bg-green' : 'bg-Inactive '}`}>{row.isactive ? 'Active' : 'Inactive'}</button>
+      <Button className={`w-24 text-white font-bold py-2 px-4 rounded ${row.isactive ? 'bg-green' : 'bg-Inactive '}`}>
+        {row.isactive ? 'Active' : 'Inactive'}
+      </Button>
     ),
     selector: (row) => row.isactive || '',
     sortable: true,
@@ -99,7 +102,9 @@ const SpecialProductsList: React.FC = () => {
             pointerOnHover
             paginationComponentOptions={CustomPagination}
             actions={
-              <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Download Excel</button>
+              <Button color="white" className="capitalize">
+                Download Excel
+              </Button>
             }
           />
           <button type="button" className="bg-black text-white px-10 py-3 rounded block" style={{ marginTop: -40 }} onClick={addProductClickHandler}>

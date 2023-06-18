@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
+import { Dropdown } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import { SPECIAL_PRODUCTS_STATUS } from '@/enums'
 import { SpecialProductsDetail } from '@/interface'
 
 import SectionContainer from './sub-components/section-container'
@@ -35,6 +37,7 @@ const SpecialProductsDetailReducer = (state: SpecialProductsDetail, action: Spec
 
 const SpecialProductDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(SpecialProductsDetailReducer, initialState)
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const { query, push } = useRouter()
   useEffect(() => {
@@ -82,10 +85,12 @@ const SpecialProductDetailScreen: React.FC = () => {
     createSpecialProducts(payload)
       .then(() => {
         console.log('It is successfully created')
-        push('/admin/resale')
+        push('/admin/special-products')
       })
       .catch((err) => console.log('Error', err))
   }
+
+  const onEditClickHandler = () => setEditMode(true)
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -104,6 +109,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Mount Details"
               type="text"
               value={state.mount_details}
+              disabled={!editMode}
             />
             <InputText
               className="w-96"
@@ -114,6 +120,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Solitaire Details"
               type="text"
               value={state.solitaire_details}
+              disabled={!editMode}
             />
           </div>
         </div>
@@ -128,6 +135,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Product Description"
               type="text"
               value={state.design_type}
+              disabled={!editMode}
             />
             <InputText
               className="w-96"
@@ -138,6 +146,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Retail Price"
               type="number"
               value={state.price}
+              disabled={!editMode}
             />
           </div>
         </div>
@@ -152,17 +161,13 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Design no:"
               type="text"
               value={state.design_no}
+              disabled={!editMode}
             />
-            <InputText
-              className="w-96"
-              containerClass="w-96"
+            <Dropdown
+              options={Object.values(SPECIAL_PRODUCTS_STATUS)}
               label="Status"
-              name="status"
-              onChange={onChangeHandlerCreator('isactive')}
-              placeholder="Status"
-              type="number"
-              //value={state.isactive}
-              value="false"
+              value={state.isactive ? SPECIAL_PRODUCTS_STATUS.ACTIVE : SPECIAL_PRODUCTS_STATUS.INACTIVE}
+              disabled={!editMode}
             />
           </div>
         </div>
@@ -177,6 +182,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Gross Weight (in gms)"
               type="number"
               value={state.gross_weight}
+              disabled={!editMode}
             />
             <InputText
               className="w-96"
@@ -187,18 +193,29 @@ const SpecialProductDetailScreen: React.FC = () => {
               placeholder="Status"
               type="number"
               value={state.net_weight}
+              disabled={!editMode}
             />
           </div>
         </div>
         <div className="mt-6">
           <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
-            <button
-              type="submit"
-              onClick={onSubmitHandler}
-              className=" w-72 rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
-            >
-              Submit
-            </button>
+            {editMode ? (
+              <button
+                type="submit"
+                onClick={onSubmitHandler}
+                className=" w-72 rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onEditClickHandler}
+                className=" w-72 rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+              >
+                Edit
+              </button>
+            )}
           </div>
         </div>
       </SectionContainer>
