@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -41,9 +42,7 @@ export default function Resalelist() {
       name: 'Status Request',
       cell: (row) => (
         // <a href={`/admin/resale-detail/${row.id}`}>
-        <button className={`text-white font-bold py-2 px-4 rounded ${row.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
-          {row.polstatus ? 'Open' : 'Close'}
-        </button>
+        <Button color="gray">{row.polstatus ? 'Open' : 'Close'}</Button>
         // </a>
       ),
       selector: (row) => row.polstatus || '',
@@ -105,7 +104,9 @@ export default function Resalelist() {
             pointerOnHover
             paginationComponentOptions={CustomPagination}
             actions={
-              <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Download Excel</button>
+              <Button color="white" className="capitalize">
+                Download Excel
+              </Button>
             }
           />
         </div>

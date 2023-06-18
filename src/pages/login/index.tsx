@@ -47,10 +47,18 @@ export default function LoginPage() {
                 <p className="mt-2 text-gray-600 font-medium">Welcome to Divine Solitaires...</p>
               </div>
             </div>
-            <InputText className="w-full" htmlFor="email" id="email" label="Email" name="email" onChange={changeHandler(setEmail)} type="text" value={email} />
+            <InputText
+              containerClass="mb-8"
+              className="w-full"
+              id="email"
+              label="Email"
+              name="email"
+              onChange={changeHandler(setEmail)}
+              type="text"
+              value={email}
+            />
             <InputText
               className="w-full"
-              htmlFor="password"
               id="password"
               label="Password"
               name="password"

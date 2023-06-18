@@ -1,4 +1,5 @@
 import '../globals.css'
+import { ThemeProvider } from '@material-tailwind/react'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -29,4 +30,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   )
 }
 
-export default App
+const WrappedApp: React.FC<AppProps> = (props) => (
+  <ThemeProvider>
+    <App {...props} />
+  </ThemeProvider>
+)
+
+export default WrappedApp

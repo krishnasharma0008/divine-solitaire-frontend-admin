@@ -1,3 +1,4 @@
+import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -119,9 +120,9 @@ const InsuranceDetailScreen: React.FC = () => {
             {
               name: 'Status',
               value: (
-                <button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
+                <Button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
                   {state.polstatus ? 'Open' : 'Close'}
-                </button>
+                </Button>
               ),
             },
 
@@ -206,7 +207,7 @@ const InsuranceDetailScreen: React.FC = () => {
 
       <SectionContainer className="mt-6">
         <div>
-          <h1 className="py-2 font-medium text-base">Transaction Details :</h1>
+          <h1 className="py-2 font-medium text-base mb-6">Transaction Details :</h1>
         </div>
         <InputText
           className="w-full"

@@ -1,3 +1,4 @@
+import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -42,11 +43,9 @@ export default function Insurancelist() {
     {
       name: 'Status Request',
       cell: (row) => (
-        //<Link href={`/admin/insurance-detail/${row.id}`}>
-        <button className={`text-white font-bold py-2 px-4 rounded ${row.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
+        <Button className={`text-white font-bold py-2 px-4 rounded ${row.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
           {row.polstatus ? 'Open' : 'Close'}
-        </button>
-        //</Link>
+        </Button>
       ),
       selector: (row) => row.polstatus,
       sortable: true,
@@ -126,7 +125,9 @@ export default function Insurancelist() {
             pointerOnHover
             paginationComponentOptions={CustomPagination}
             actions={
-              <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">Download Excel</button>
+              <Button color="white" className="capitalize">
+                Download Excel
+              </Button>
             }
           />
         </div>

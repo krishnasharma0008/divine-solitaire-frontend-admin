@@ -1,9 +1,9 @@
-import React, { ChangeEvent } from 'react'
+import { Input, InputProps } from '@material-tailwind/react'
+import React from 'react'
 
-export interface InputTextProps {
+export interface InputTextProps extends InputProps {
   className?: string
   containerClass?: string
-  htmlFor?: string
   id?: string
   label: string
   name: string
@@ -13,20 +13,19 @@ export interface InputTextProps {
   value: string
 }
 
-const InputText: React.FC<InputTextProps> = ({ className, containerClass, htmlFor, id, label, name, onChange, placeholder, type, value }) => {
+const InputText: React.FC<InputTextProps> = ({ className, containerClass, id, label, onChange, type, value, disabled }) => {
   return (
-    <div className={`mb-4 ${containerClass}`}>
-      <label className="block mb-1" htmlFor={htmlFor}>
-        {label}
-      </label>
-      <input
-        className={`py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block ${className}`}
-        id={id}
-        name={name}
+    <div className={`mb-4 ${containerClass} [&>div>label]:peer-focus:text-black font-[Montserrat]`}>
+      <Input
+        variant="static"
+        className={`border rounded !border-black [&+label]:-mt-3.5 px-2 !pt-2 [&+label]:!text-black [&+label]:focus:!text-black ${className}`}
+        color="gray"
+        label={label}
         onChange={onChange}
-        placeholder={placeholder}
+        id={id}
         type={type}
         value={value}
+        disabled={disabled}
       />
     </div>
   )

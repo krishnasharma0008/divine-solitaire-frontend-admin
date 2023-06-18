@@ -2,3 +2,4 @@ export { type MetaDetailsCardProps, default as MetaDetailsCard } from './meta-de
 
 export { default as InputFile } from './input-file'
 export { default as InputRadio } from './input-radio'
+export { default as Dropdown } from './dropdown'
