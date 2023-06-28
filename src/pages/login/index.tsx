@@ -1,17 +1,19 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useContext } from 'react'
 import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 
 import { login } from '@/api'
 import InputText from '@/components/common/input-text'
+import { NOTIFICATION_MESSAGES } from '@/config'
+import NotificationContext from '@/context/notification-context'
 import { getToken, setToken } from '@/local-storage'
 
 export default function LoginPage() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { push } = useRouter()
+  const { notify, notifyErr } = useContext(NotificationContext)
 
   const changeHandler = (fn: (str: string) => void) => (e: ChangeEvent) => fn((e.target as HTMLInputElement).value)
 
@@ -21,17 +23,12 @@ export default function LoginPage() {
         if (!res.data) {
           throw new Error('Login Failed')
         }
-        toast('Login Successful', {
-          position: 'bottom-center',
-        })
+        notify(NOTIFICATION_MESSAGES.LOGIN_SUCESS)
         setToken(res.data.token)
         push('/')
       })
       .catch((err) => {
-        toast('Login Failed! Please Try Again', {
-          type: 'error',
-          position: 'bottom-center',
-        })
+        notifyErr('Login Failed! Please Try Again')
         console.log('ERRRR', err)
       })
   }
@@ -79,18 +76,6 @@ export default function LoginPage() {
               type="password"
               value={password}
             />
-            <div className="mt-6 flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  type="checkbox"
-                  className="border border-gray-300 text-red-600 shadow-sm focus:border-red-300 focus:ring focus:ring-red-200 focus:ring-opacity-50"
-                />
-                <label htmlFor="remember_me" className="ml-2 block text-sm leading-5 text-gray-900">
-                  Remember Me
-                </label>
-              </div>
-            </div>
             <div className="mt-6">
               <button
                 onClick={onClickHandler}

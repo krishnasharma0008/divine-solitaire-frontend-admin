@@ -214,16 +214,16 @@ const ResaleDetailScreen: React.FC = () => {
           />
 
           <div className="flex justify-between pt-5 ">
-            <InputText 
-              label="City" 
-              name="city" 
-              onChange={onChangeHandlerCreator('phcity')} 
-              placeholder="City" 
-              type="text" 
+            <InputText
+              label="City"
+              name="city"
+              onChange={onChangeHandlerCreator('phcity')}
+              placeholder="City"
+              type="text"
               value={state.phcity}
               className="w-full"
               containerClass="w-1/4"
-             />
+            />
             <InputText
               label="Pin Code"
               name="pincode"
