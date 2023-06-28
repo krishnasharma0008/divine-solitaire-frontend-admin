@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { login } from '@/api'
 import InputText from '@/components/common/input-text'
@@ -17,10 +18,22 @@ export default function LoginPage() {
   const onClickHandler = () => {
     login(email, password)
       .then((res) => {
+        if (!res.data) {
+          throw new Error('Login Failed')
+        }
+        toast('Login Successful', {
+          position: 'bottom-center',
+        })
         setToken(res.data.token)
         push('/')
       })
-      .catch((err) => console.log('ERRRR', err))
+      .catch((err) => {
+        toast('Login Failed! Please Try Again', {
+          type: 'error',
+          position: 'bottom-center',
+        })
+        console.log('ERRRR', err)
+      })
   }
 
   useEffect(() => {
