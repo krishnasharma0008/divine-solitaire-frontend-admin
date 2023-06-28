@@ -214,7 +214,16 @@ const ResaleDetailScreen: React.FC = () => {
           />
 
           <div className="flex justify-between pt-5 ">
-            <InputText label="City" name="city" onChange={onChangeHandlerCreator('phcity')} placeholder="City" type="text" value={state.phcity} />
+            <InputText
+              label="City"
+              name="city"
+              onChange={onChangeHandlerCreator('phcity')}
+              placeholder="City"
+              type="text"
+              value={state.phcity}
+              className="w-full"
+              containerClass="w-1/4"
+            />
             <InputText
               label="Pin Code"
               name="pincode"
@@ -222,6 +231,8 @@ const ResaleDetailScreen: React.FC = () => {
               placeholder="Pin Code"
               type="text"
               value={state.phpincode}
+              className="w-full"
+              containerClass="w-1/4"
             />
             <InputText
               label="Date of Birth"
@@ -230,6 +241,8 @@ const ResaleDetailScreen: React.FC = () => {
               placeholder="Date Of Birth"
               type="date"
               value={dayjs(state.phdob).format('YYYY-MM-DD')}
+              className="w-full"
+              containerClass="w-1/4"
             />
           </div>
           <InputText
@@ -325,6 +338,8 @@ const ResaleDetailScreen: React.FC = () => {
               placeholder="Invoice Number"
               type="number"
               value={state.invno}
+              className="w-full"
+              containerClass="w-1/4"
             />
             <InputText
               label="Invoice Amount"
@@ -333,14 +348,18 @@ const ResaleDetailScreen: React.FC = () => {
               placeholder="Invoice Amount"
               type="text"
               value={formatByCurrency(parseFloat(state.invval))}
+              className="w-full"
+              containerClass="w-1/4"
             />
             <InputText
               label="Invoice Date"
               name="idate"
               onChange={onChangeHandlerCreator('invdate')}
               placeholder="Invoice Date"
-              type="text"
+              type="date"
               value={dayjs(state.invdate).format('YYYY-MM-DD')}
+              className="w-full"
+              containerClass="w-1/4"
             />
           </div>
         </div>

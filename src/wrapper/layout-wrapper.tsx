@@ -7,7 +7,7 @@ import {
   ActiveNotificationsIcon,
   EcomOrdersIcon,
   InsuranceIcon,
-  PYDSIcon,
+  // PYDSIcon,
   QuestionIcon,
   ResaleIcon,
   SecondarySaleIcon,
@@ -51,7 +51,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       icon: ActiveNotificationsIcon,
       name: URLs.USER_DETAIL,
     },
-    { title: 'PYDS', icon: PYDSIcon, name: URLs.USER_DETAIL },
+    // { title: 'PYDS', icon: PYDSIcon, name: URLs.USER_DETAIL },
     {
       title: 'Log Out',
       url: '/login',
