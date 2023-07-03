@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
-import { useEffect, useReducer, useState } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 
 import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
 import { Dropdown } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import { NOTIFICATION_MESSAGES } from '@/config'
+import NotificationContext from '@/context/notification-context'
 import { SPECIAL_PRODUCTS_STATUS } from '@/enums'
 import { SpecialProductsDetail } from '@/interface'
 
@@ -36,12 +38,14 @@ const SpecialProductsDetailReducer = (state: SpecialProductsDetail, action: Spec
 }
 
 const SpecialProductDetailScreen: React.FC = () => {
-  const [state, dispatch] = useReducer(SpecialProductsDetailReducer, initialState)
-  const [editMode, setEditMode] = useState<boolean>(false)
-
   const { query, push } = useRouter()
+  const [state, dispatch] = useReducer(SpecialProductsDetailReducer, initialState)
+  const [editMode, setEditMode] = useState<boolean>(query?.id === 'new')
+  const { notify, notifyErr } = useContext(NotificationContext)
+
   useEffect(() => {
     if (!query.id || query.id === 'new') {
+      setEditMode(true)
       return
     }
     /**/
@@ -82,28 +86,30 @@ const SpecialProductDetailScreen: React.FC = () => {
 
   const onSubmitHandler = () => {
     const payload: SpecialProductsDetail = {
-      //...state,
-      id: state.id,
       design_type: state.design_type,
       design_no: state.design_no,
-      price: state.price,
+      price: parseInt(`${state.price || 0}`, 10),
       solitaire_details: state.solitaire_details,
       mount_details: state.mount_details,
-      gross_weight: state.gross_weight,
-      net_weight: state.net_weight,
+      gross_weight: parseInt(`${state.gross_weight || 0}`, 10),
+      net_weight: parseInt(`${state.net_weight || 0}`, 10),
       isactive: state.isactive,
     }
 
-    if (query?.id) {
+    if (query?.id && query?.id !== 'new') {
       payload.id = parseInt(`${query.id}`, 10) as unknown as number
     }
-
     createSpecialProducts(payload)
       .then(() => {
         console.log('It is successfully created')
+        notify(query?.id === 'new' ? NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_CREATE_SUCCESS : NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_UPDATE_SUCCESS)
         push('/admin/special-products')
       })
-      .catch((err) => console.log('Error', err))
+      .catch((err) => {
+        notifyErr(query?.id === 'new' ? NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_CREATE_FAILED : NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_UPDATE_FAILED)
+
+        console.log('Error', err)
+      })
   }
 
   const onEditClickHandler = () => setEditMode(true)
@@ -161,7 +167,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('price')}
               placeholder="Retail Price"
               type="number"
-              value={state.price}
+              value={`${state.price}`}
               disabled={!editMode}
             />
           </div>
@@ -198,7 +204,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('gross_weight')}
               placeholder="Gross Weight (in gms)"
               type="number"
-              value={state.gross_weight}
+              value={`${state.gross_weight}`}
               disabled={!editMode}
             />
             <InputText
@@ -209,7 +215,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('net_weight')}
               placeholder="Status"
               type="number"
-              value={state.net_weight}
+              value={`${state.net_weight}`}
               disabled={!editMode}
             />
           </div>

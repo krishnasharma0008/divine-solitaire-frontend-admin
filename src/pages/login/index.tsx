@@ -23,7 +23,7 @@ export default function LoginPage() {
         if (!res.data) {
           throw new Error('Login Failed')
         }
-        notify(NOTIFICATION_MESSAGES.LOGIN_SUCESS)
+        notify(NOTIFICATION_MESSAGES.LOGIN_SUCCESS)
         setToken(res.data.token)
         push('/')
       })

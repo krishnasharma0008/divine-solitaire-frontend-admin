@@ -3,9 +3,9 @@ export interface SpecialProductsDetail {
   isactive?: boolean
   design_type: string
   design_no: string
-  price: string
+  price: number | string
   solitaire_details: string
   mount_details: string
-  gross_weight: string
-  net_weight: string
+  gross_weight: number | string
+  net_weight: number | string
 }
