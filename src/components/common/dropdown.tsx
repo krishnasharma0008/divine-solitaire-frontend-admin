@@ -5,7 +5,7 @@ export interface InputTextProps extends Omit<SelectProps, 'children'> {
   options: Array<string>
 }
 
-const Dropdown: React.FC<InputTextProps> = ({ options, label, disabled, value }) => {
+const Dropdown: React.FC<InputTextProps> = ({ options, label, disabled, selected, onChange }) => {
   return (
     <div className="mb-4 [&>div>ul>li]:!text-black [&>div>button]:!border-black">
       <Select
@@ -14,7 +14,8 @@ const Dropdown: React.FC<InputTextProps> = ({ options, label, disabled, value })
         color="gray"
         disabled={disabled}
         variant="static"
-        value={value}
+        selected={selected}
+        onChange={onChange}
       >
         {options.map((item) => (
           <Option key={item}>{item}</Option>

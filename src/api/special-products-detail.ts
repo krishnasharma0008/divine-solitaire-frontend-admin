@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import { SpecialProductsDetail } from '@/interface'
 import { getToken } from '@/local-storage'
 
-import { createResaleEndpoint, getSpecialProductsListEndpoint } from './endpoints'
+import { createSpecialProductsEndpoint, getSpecialProductsListEndpoint } from './endpoints'
 import callWebService from './web-service'
 
 export interface GetSpecialProductsDetailResponse {
@@ -23,8 +23,8 @@ const createSpecialProducts = (payload: SpecialProductsDetail): Promise<AxiosRes
   const formData = new FormData()
   Object.keys(payload).forEach((key: string) => formData.append(key, get(payload, key)))
 
-  return callWebService(createResaleEndpoint.url, {
-    method: createResaleEndpoint.method,
+  return callWebService(createSpecialProductsEndpoint.url, {
+    method: createSpecialProductsEndpoint.method,
     headers: {
       Authorization: 'Bearer ' + getToken(),
       'Content-Type': 'multipart/form-data',

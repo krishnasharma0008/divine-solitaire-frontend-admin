@@ -11,11 +11,11 @@ import SectionContainer from './sub-components/section-container'
 
 interface SpecialProductsDetailAction {
   type: string
-  payload?: string | SpecialProductsDetail
+  payload?: string | boolean | SpecialProductsDetail
 }
 
 const initialState: SpecialProductsDetail = {
-  //isactive: false,
+  isactive: true,
   design_type: '',
   design_no: '',
   price: '',
@@ -65,6 +65,21 @@ const SpecialProductDetailScreen: React.FC = () => {
       })
   }
 
+  const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
+    const newVal = Object.values(SPECIAL_PRODUCTS_STATUS)[idx || 0]
+    if (!!(newVal === SPECIAL_PRODUCTS_STATUS.ACTIVE) !== state.isactive) {
+      dispatch({
+        type: 'isactive',
+        payload: !!(newVal === SPECIAL_PRODUCTS_STATUS.ACTIVE),
+      })
+    }
+    if (newVal === undefined) {
+      return SPECIAL_PRODUCTS_STATUS.ACTIVE
+    }
+    // if(newVal)
+    return newVal
+  }
+
   const onSubmitHandler = () => {
     const payload: SpecialProductsDetail = {
       //...state,
@@ -76,6 +91,7 @@ const SpecialProductDetailScreen: React.FC = () => {
       mount_details: state.mount_details,
       gross_weight: state.gross_weight,
       net_weight: state.net_weight,
+      isactive: state.isactive,
     }
 
     if (query?.id) {
@@ -168,6 +184,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               label="Status"
               value={state.isactive ? SPECIAL_PRODUCTS_STATUS.ACTIVE : SPECIAL_PRODUCTS_STATUS.INACTIVE}
               disabled={!editMode}
+              selected={changeProductStatus}
             />
           </div>
         </div>
