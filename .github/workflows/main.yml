@@ -29,7 +29,8 @@ jobs:
             kill-port 3000
             rm -rf ./node_modules
             rm -rf .next
-            git pull # we pull any changes from git
+            git reset --hard
+            git pull --force # we pull any changes from git
             export NVM _DIR=~/.nvm #get the nvm envirorment to run npm commands
             # source ~/.nvm/nvm.sh
             pnpm install # we install any missing dependencies
