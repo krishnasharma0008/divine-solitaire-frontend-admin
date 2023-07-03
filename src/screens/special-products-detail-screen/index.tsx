@@ -66,17 +66,17 @@ const SpecialProductDetailScreen: React.FC = () => {
   }
 
   const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
+    if (idx === -1) {
+      return state.isactive ? SPECIAL_PRODUCTS_STATUS.ACTIVE : SPECIAL_PRODUCTS_STATUS.INACTIVE
+    }
     const newVal = Object.values(SPECIAL_PRODUCTS_STATUS)[idx || 0]
-    if (!!(newVal === SPECIAL_PRODUCTS_STATUS.ACTIVE) !== state.isactive) {
+    const newStatus = !!(newVal === SPECIAL_PRODUCTS_STATUS.ACTIVE) !== state.isactive
+    if (newStatus) {
       dispatch({
         type: 'isactive',
         payload: !!(newVal === SPECIAL_PRODUCTS_STATUS.ACTIVE),
       })
     }
-    if (newVal === undefined) {
-      return SPECIAL_PRODUCTS_STATUS.ACTIVE
-    }
-    // if(newVal)
     return newVal
   }
 
@@ -95,7 +95,7 @@ const SpecialProductDetailScreen: React.FC = () => {
     }
 
     if (query?.id) {
-      payload.id = query.id as unknown as number
+      payload.id = parseInt(`${query.id}`, 10) as unknown as number
     }
 
     createSpecialProducts(payload)
