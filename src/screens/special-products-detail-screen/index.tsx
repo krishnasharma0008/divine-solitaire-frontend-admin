@@ -88,11 +88,11 @@ const SpecialProductDetailScreen: React.FC = () => {
     const payload: SpecialProductsDetail = {
       design_type: state.design_type,
       design_no: state.design_no,
-      price: parseInt(`${state.price || 0}`, 10),
+      price: parseFloat(`${state.price || 0}`),
       solitaire_details: state.solitaire_details,
       mount_details: state.mount_details,
-      gross_weight: parseInt(`${state.gross_weight || 0}`, 10),
-      net_weight: parseInt(`${state.net_weight || 0}`, 10),
+      gross_weight: parseFloat(`${state.gross_weight || 0}`),
+      net_weight: parseFloat(`${state.net_weight || 0}`),
       isactive: state.isactive,
     }
 
