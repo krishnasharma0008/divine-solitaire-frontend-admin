@@ -26,6 +26,7 @@ const InputText: React.FC<InputTextProps> = ({ className, containerClass, id, la
         type={type}
         value={value}
         disabled={disabled}
+        step="0.001"
       />
     </div>
   )
