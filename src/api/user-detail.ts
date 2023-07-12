@@ -11,7 +11,7 @@ import callWebService from './web-service'
 
 export interface GetUserDetailResponse {
   data: {
-    userInfo: User
+    userinfo: User
     portfolio: Array<Portfolio>
     Wishlist: Array<Wishlist>
   }

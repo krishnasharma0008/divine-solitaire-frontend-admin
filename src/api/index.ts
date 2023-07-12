@@ -5,3 +5,5 @@ export * from './insurance-detail'
 export * from './resale-detail'
 export * from './user-detail'
 export * from './special-products-detail'
+export * from "./store-locator"
+export * from "./store-locator-detail"
