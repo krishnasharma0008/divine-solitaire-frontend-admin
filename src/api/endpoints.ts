@@ -55,7 +55,12 @@ export const createSpecialProductsEndpoint: Endpoint = {
   url: '/api/secadmin/designprice/',
 }
 
-// export const updateSpecialProductsEndpoint: Endpoint = {
-//   method: HTTP_METHOD.PUT,
-//   url: "/api/secadmin/designprice/",
-// };
+export const getStoreLocatorListEndpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: '/api/secadmin/store/list',
+}
+
+export const getStoreLocatorDetailEndpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: '/api/secadmin/store/',
+}

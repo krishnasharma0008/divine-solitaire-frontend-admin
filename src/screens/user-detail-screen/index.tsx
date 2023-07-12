@@ -66,8 +66,9 @@ const UserDetailScreen: React.FC = () => {
       .then((res) => {
         dispatch({
           type: 'ALL',
-          payload: { ...res.data.data.userInfo },
+          payload: { ...(res.data.data.userinfo as unknown as User) },
         })
+        console.log(res.data.data)
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
       })
@@ -110,14 +111,14 @@ const UserDetailScreen: React.FC = () => {
             { name: 'Source', value: state?.vsource },
             {
               name: 'Date of sign Up',
-              value: '18th Jan,2023',
+              value: dayjs(state?.ceatedat).format('YYYY-MM-DD'),
             } /*value: dayjs(state.etype).format("YYYY-MM-DD")*/,
-            { name: 'Last Activity Date', value: '18th Jan,2023' },
+            { name: 'Last Activity Date', value: state?.lactivityat ? dayjs(state?.lactivityat).format('YYYY-MM-DD') : '-' },
             {
               name: 'Purchase Amount',
               value: formatByCurrency(parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)),
             },
-            { name: 'Active request', value: 'Yes' },
+            // { name: 'Active request', value: 'Yes' },
           ]}
         />
       </SectionContainer>

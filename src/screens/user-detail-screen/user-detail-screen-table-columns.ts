@@ -22,8 +22,9 @@ export const portfolioColumns: Array<TableColumn<Portfolio>> = [
     selector: (row) => row.product_type,
   },
   {
-    name: 'Jeweller’s Name',
-    selector: () => '',
+    //name: 'Jeweller’s Name',
+    name: 'Category',
+    selector: (row) => row.jewelcat,
   },
   {
     name: 'Current Value',

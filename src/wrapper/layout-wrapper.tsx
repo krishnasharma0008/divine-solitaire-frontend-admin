@@ -7,31 +7,33 @@ import {
   ActiveNotificationsIcon,
   EcomOrdersIcon,
   InsuranceIcon,
+  HomeIcon,
   // PYDSIcon,
   QuestionIcon,
   ResaleIcon,
-  SecondarySaleIcon,
+  //SecondarySaleIcon,
   SignOutIcon,
   SpecialProductsIcon,
   StoreLocatorIcon,
   UserIcon,
 } from '@/components/icons'
-import PriceRequestIcon from '@/components/icons/price-request-icon'
+//import PriceRequestIcon from '@/components/icons/price-request-icon'
 import { URLs } from '@/constants'
 import { Breadcrumbs } from '@/interface/breadcrumbs'
 import { getToken, deleteToken } from '@/local-storage'
 
 const sidebarProps: Omit<SidebarProps, 'pageName'> = {
   items: [
+    { title: 'Dashboard', url: '/', icon: HomeIcon, name: URLs.DASHBOARD },
     { title: 'Users', url: '/admin/user', icon: UserIcon, name: URLs.USER },
-    { title: 'Secondary Sale', icon: SecondarySaleIcon, name: URLs.DASHBOARD },
+    // { title: 'Secondary Sale', icon: SecondarySaleIcon, name: null },
     {
       title: 'Insurance',
       url: '/admin/insurance',
       icon: InsuranceIcon,
       name: URLs.INSURANCE,
     },
-    { title: 'Price Request', icon: PriceRequestIcon, name: URLs.USER_DETAIL },
+    //{ title: 'Price Request', icon: PriceRequestIcon, name: null },
     {
       title: 'Resale',
       url: '/admin/resale',
@@ -39,7 +41,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       name: URLs.RESALE,
     },
     { title: 'Ecom Orders', icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
-    { title: 'Store Locator', icon: StoreLocatorIcon, name: URLs.USER_DETAIL },
+    { title: 'Store Locator', url: '/admin/storelocator', icon: StoreLocatorIcon, name: URLs.STORE_LOCATOR },
     {
       title: 'Special Products',
       url: '/admin/special-products',

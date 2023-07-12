@@ -1,6 +1,7 @@
 export { default as ActiveNotificationsIcon } from './active-notifications-icon'
 export { default as CloudIcon } from './cloud-icon'
 export { default as EcomOrdersIcon } from './ecom-orders-icon'
+export { default as HomeIcon } from './home-icon'
 export { default as InsuranceIcon } from './insurance-icon'
 export { default as PriceRequest } from './price-request-icon'
 export { default as PYDSIcon } from './pyds-icon'
