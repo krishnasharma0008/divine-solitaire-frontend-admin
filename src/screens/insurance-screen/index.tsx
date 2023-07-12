@@ -15,7 +15,7 @@ export default function Insurancelist() {
   const getlistdata = async () => {
     try {
       const result = await getInsuranceList()
-      setPolicy(result.data.data)      
+      setPolicy(result.data.data)
     } catch (error) {
       console.log(error)
     }
@@ -38,16 +38,14 @@ export default function Insurancelist() {
       selector: (row) => row.id || '',
       sortable: true,
       reorder: true,
-
     },
     {
       name: 'Status Request',
       cell: (row) => (
-        <Button className={`text-white font-bold py-2 px-4 rounded 
-        ${
-          row.polstatus === "Cancelled" || row.polstatus === "Expired" ?('bg-red-400 ') : ('bg-light-muted-azure')
-
-          }`}>
+        <Button
+          className={`text-white font-bold py-2 px-4 rounded 
+        ${row.polstatus === 'Cancelled' || row.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'}`}
+        >
           {row.polstatus}
         </Button>
       ),

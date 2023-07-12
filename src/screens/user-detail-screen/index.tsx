@@ -40,10 +40,10 @@ const initialState: User = {
   vsource: '',
 }
 
-const UserDetailReducer = (state: User, action: UserDetailAction) => {  
+const UserDetailReducer = (state: User, action: UserDetailAction) => {
   if (action.type === 'ALL') {
     return { ...state, ...(action.payload as unknown as User) }
-  }  
+  }
   return { ...state, [action.type]: action.payload }
 }
 
@@ -66,10 +66,9 @@ const UserDetailScreen: React.FC = () => {
       .then((res) => {
         dispatch({
           type: 'ALL',
-          payload: { ...(res.data.data.userinfo as unknown as User)},
-          
+          payload: { ...(res.data.data.userinfo as unknown as User) },
         })
-        console.log(res.data.data);
+        console.log(res.data.data)
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
       })
@@ -114,7 +113,7 @@ const UserDetailScreen: React.FC = () => {
               name: 'Date of sign Up',
               value: dayjs(state?.ceatedat).format('YYYY-MM-DD'),
             } /*value: dayjs(state.etype).format("YYYY-MM-DD")*/,
-            { name: 'Last Activity Date', value: state?.lactivityat ? dayjs(state?.lactivityat).format('YYYY-MM-DD'): "-"},
+            { name: 'Last Activity Date', value: state?.lactivityat ? dayjs(state?.lactivityat).format('YYYY-MM-DD') : '-' },
             {
               name: 'Purchase Amount',
               value: formatByCurrency(parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)),

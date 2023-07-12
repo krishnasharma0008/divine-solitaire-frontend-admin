@@ -57,10 +57,10 @@ export const createSpecialProductsEndpoint: Endpoint = {
 
 export const getStoreLocatorListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: "/api/secadmin/store/list",
-};
+  url: '/api/secadmin/store/list',
+}
 
 export const getStoreLocatorDetailEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: "/api/secadmin/store/",
-};
+  url: '/api/secadmin/store/',
+}

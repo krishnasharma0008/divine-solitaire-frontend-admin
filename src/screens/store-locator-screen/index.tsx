@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
-import getStoreLocatorList from '@/api/store-locator';
+import getStoreLocatorList from '@/api/store-locator'
 import { StoreLocator } from '@/interface'
 
 const columns: TableColumn<StoreLocator>[] = [

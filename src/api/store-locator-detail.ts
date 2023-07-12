@@ -20,5 +20,4 @@ const getStoreLocatorDetail = (id: number): Promise<AxiosResponse<GetStoreLocato
     },
   })
 
-
 export { getStoreLocatorDetail }

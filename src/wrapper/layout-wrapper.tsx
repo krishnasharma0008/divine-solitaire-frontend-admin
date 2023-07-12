@@ -24,7 +24,7 @@ import { getToken, deleteToken } from '@/local-storage'
 
 const sidebarProps: Omit<SidebarProps, 'pageName'> = {
   items: [
-    { title: 'Dashboard',url: '/', icon: HomeIcon, name: URLs.DASHBOARD },
+    { title: 'Dashboard', url: '/', icon: HomeIcon, name: URLs.DASHBOARD },
     { title: 'Users', url: '/admin/user', icon: UserIcon, name: URLs.USER },
     // { title: 'Secondary Sale', icon: SecondarySaleIcon, name: null },
     {
@@ -41,7 +41,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       name: URLs.RESALE,
     },
     { title: 'Ecom Orders', icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
-    { title: 'Store Locator',url:'/admin/storelocator', icon: StoreLocatorIcon, name: URLs.STORE_LOCATOR },
+    { title: 'Store Locator', url: '/admin/storelocator', icon: StoreLocatorIcon, name: URLs.STORE_LOCATOR },
     {
       title: 'Special Products',
       url: '/admin/special-products',

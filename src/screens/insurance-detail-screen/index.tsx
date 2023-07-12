@@ -87,7 +87,6 @@ const InsuranceDetailScreen: React.FC = () => {
   }
 
   const onSubmitHandler = (ActionType: string) => () => {
-
     const payload: InsuranceDetail = {
       ...state,
       phdob: new Date(state.phdob || Date.now()).toISOString(),
@@ -121,7 +120,11 @@ const InsuranceDetailScreen: React.FC = () => {
             {
               name: 'Status',
               value: (
-                <Button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus === "Cancelled" || state.polstatus === "Expired" ?('bg-red-400 ') : ('bg-light-muted-azure')}`}>
+                <Button
+                  className={`text-white font-bold py-2 px-4 rounded ${
+                    state.polstatus === 'Cancelled' || state.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'
+                  }`}
+                >
                   {state.polstatus}
                 </Button>
               ),
