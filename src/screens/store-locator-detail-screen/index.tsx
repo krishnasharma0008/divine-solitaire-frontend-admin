@@ -5,6 +5,7 @@ import { useEffect, useReducer } from 'react'
 
 import { getStoreLocatorDetail } from '@/api'
 import InputText from '@/components/common/input-text'
+import TextArea from '@/components/common/input-text-area'
 import { StoreLocator } from '@/interface'
 
 import SectionContainer from './sub-components/section-container'
@@ -64,22 +65,14 @@ const StoreLocatorDetailScreen: React.FC = () => {
         </div>
         <div className="flex-row pt-5">
           <InputText className="w-full" label="Name" name="name" placeholder="Name" type="text" value={state?.name || ''} />
-          <div className="flex justify-between pt-5 ">
-            <InputText
-              className="w-full"
-              containerClass="w-1/3"
-              label="Mobile No."
-              name="mno"
-              placeholder="Mobile No."
-              type="text"
-              value={state?.contact_no || ''}
-            />
-            <InputText className="w-full" containerClass="w-1/3" label="Email" name="email" placeholder="Email" type="text" value={state?.email || ''} />
+          <div className="flex justify-between pt-5 pb-5">
+            <InputText className="w-full" containerClass="w-1/3" label="Mobile No." name="mno" type="text" value={state?.contact_no || ''} />
           </div>
+          <InputText className="w-full" label="Email" name="email" placeholder="Email" type="text" value={state?.email || ''} />
         </div>
 
         <div className="flex-row pt-5">
-          <InputText className="w-full" label="Address" name="address" placeholder="Address" type="text" value={state?.address || ''} />
+          <TextArea className="w-full" label="Address" name="address" placeholder="Address" rows={3} value={state?.address || ''} />
           <div className="flex justify-between pt-5 ">
             <InputText label="State" name="state" placeholder="State" type="text" value={state?.state || ''} containerClass="w-1/3" />
             <InputText label="City" name="city" placeholder="City" type="text" value={state?.city || ''} containerClass="w-1/3" />

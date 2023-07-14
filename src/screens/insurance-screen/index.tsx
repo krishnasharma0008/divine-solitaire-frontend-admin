@@ -5,10 +5,13 @@ import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getInsuranceList from '@/api/insurance'
+import { Dropdown } from '@/components/common'
+import { INSURANCE_DOWNLOAD_OPTIONS } from '@/enums'
 import { Insurance } from '@/interface'
 
 export default function Insurancelist() {
   const [policy, setPolicy] = useState<Array<Insurance>>([])
+  const [Dropvalue, setDropvalue] = useState<string>()
 
   const navigate = useRouter()
 
@@ -22,8 +25,18 @@ export default function Insurancelist() {
   }
 
   const onRowClicked = (id: number) => {
-    //console.log(id);
     navigate.push(`/admin/insurance-detail/${id}`)
+  }
+
+  const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
+    //console.log(idx)
+    setDropvalue(Object.values(INSURANCE_DOWNLOAD_OPTIONS)[idx || 0])
+    //console.log(newVal)
+    return Dropvalue
+  }
+
+  const DownloadClick = () => {
+    console.log(Dropvalue)
   }
 
   const columns: TableColumn<Insurance>[] = [
@@ -35,19 +48,19 @@ export default function Insurancelist() {
     },
     {
       name: 'UID',
-      selector: (row) => row.id || '',
+      selector: (row) => row.uid || '',
       sortable: true,
       reorder: true,
     },
     {
       name: 'Status Request',
       cell: (row) => (
-        <Button
-          className={`text-white font-bold py-2 px-4 rounded 
+        <div
+          className={`w-full text-white font-bold py-2 px-4 rounded text-center
         ${row.polstatus === 'Cancelled' || row.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'}`}
         >
           {row.polstatus}
-        </Button>
+        </div>
       ),
       selector: (row) => row.polstatus,
       sortable: true,
@@ -81,7 +94,7 @@ export default function Insurancelist() {
     {
       name: 'Download',
       cell: (row) => (
-        <button className="btn primary" onClick={() => alert(row.id)}>
+        <button className="btn primary" onClick={() => console.log(row.id)}>
           Download
         </button>
       ),
@@ -114,6 +127,23 @@ export default function Insurancelist() {
     <div className="flex-1 w-full pt-5" style={{ height: '500px' }}>
       <div className="bg-white  ">
         <div className="p-5">
+          <div className="w-full flex justify-end">
+            <div className="w-52">
+              <Dropdown
+                options={Object.values(INSURANCE_DOWNLOAD_OPTIONS)}
+                //value={INSURANCE_DOWNLOAD_OPTIONS.ACTIVE}
+                selected={changeProductStatus}
+                disabled={false}
+                onChange={changeProductStatus}
+                className="w-52"
+              />
+            </div>
+            <div>
+              <Button color="white" className="capitalize" onClick={DownloadClick}>
+                Download Excel
+              </Button>
+            </div>
+          </div>
           <DataTable
             title="Insurance"
             columns={columns}
@@ -127,11 +157,13 @@ export default function Insurancelist() {
             highlightOnHover
             pointerOnHover
             paginationComponentOptions={CustomPagination}
-            actions={
-              <Button color="white" className="capitalize">
-                Download Excel
-              </Button>
-            }
+            // actions={
+            //   <>
+            //     <Button color="white" className="capitalize" onClick={DownloadClick}>
+            //       Download Excel
+            //     </Button>
+            //   </>
+            // }
           />
         </div>
       </div>
@@ -141,3 +173,4 @@ export default function Insurancelist() {
 
 // const rootElement = document.getElementById("root");
 // ReactDOM.render(<Insurancelist />, rootElement);
+//style={{ marginTop: policy.length ? -325 : 0, marginLeft: 580 }}

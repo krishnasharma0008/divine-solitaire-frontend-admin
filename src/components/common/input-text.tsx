@@ -11,9 +11,10 @@ export interface InputTextProps extends InputProps {
   placeholder?: string
   type: 'file' | 'number' | 'date' | 'text' | 'password'
   value: string
+  step?: string
 }
 
-const InputText: React.FC<InputTextProps> = ({ className, containerClass, id, label, onChange, type, value, disabled }) => {
+const InputText: React.FC<InputTextProps> = ({ className, containerClass, id, label, onChange, type, value, disabled, step }) => {
   return (
     <div className={`mb-4 ${containerClass} [&>div>label]:peer-focus:text-black font-[Montserrat]`}>
       <Input
@@ -26,7 +27,7 @@ const InputText: React.FC<InputTextProps> = ({ className, containerClass, id, la
         type={type}
         value={value}
         disabled={disabled}
-        step="0.001"
+        step={step}
       />
     </div>
   )

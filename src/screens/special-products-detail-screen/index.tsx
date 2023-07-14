@@ -191,6 +191,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               value={state.isactive ? SPECIAL_PRODUCTS_STATUS.ACTIVE : SPECIAL_PRODUCTS_STATUS.INACTIVE}
               disabled={!editMode}
               selected={changeProductStatus}
+              className="w-96"
             />
           </div>
         </div>
@@ -206,6 +207,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               type="number"
               value={`${state.gross_weight}`}
               disabled={!editMode}
+              step="0.001"
             />
             <InputText
               className="w-96"
@@ -217,6 +219,7 @@ const SpecialProductDetailScreen: React.FC = () => {
               type="number"
               value={`${state.net_weight}`}
               disabled={!editMode}
+              step="0.001"
             />
           </div>
         </div>

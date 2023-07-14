@@ -25,11 +25,11 @@ const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeho
   }, [file, onChange])
 
   return (
-    <FileUploader handleChange={handleChange} types={['pdf', 'jpg']}>
-      <div className="mb-4">
-        <label className="block mb-1" htmlFor={htmlFor}>
-          {label}
-        </label>
+    <div className="mb-4">
+      <label className="block mb-1" htmlFor={htmlFor}>
+        {label}
+      </label>
+      <FileUploader handleChange={handleChange} types={['pdf', 'jpg']}>
         <div>
           <label className="flex justify-center w-full h-32 px-4 transition border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none bg-[#f8f8f8]">
             <span className="flex items-center space-x-2 flex-col justify-evenly	">
@@ -42,8 +42,8 @@ const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeho
             <input type="file" name="file_upload" className="hidden" onChange={onChange} />
           </label>
         </div>
-      </div>
-    </FileUploader>
+      </FileUploader>
+    </div>
   )
 }
 

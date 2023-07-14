@@ -1,11 +1,12 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 import { createResale, getResaleDetail } from '@/api'
-import { MetaDetailsCard } from '@/components/common'
+import { Dropdown, MetaDetailsCard } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import { RESALE_DETAIL_STATUS } from '@/enums'
 import { ResaleDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
 
@@ -18,7 +19,7 @@ interface ResaleDetailAction {
 
 const initialState: ResaleDetail = {
   uid: '',
-  polstatus: '',
+  rstatus: '',
   requestno: '',
   etype: '',
   invdate: '',
@@ -36,6 +37,7 @@ const initialState: ResaleDetail = {
   currentval: '',
   newval: '',
   jewelname: '',
+  createdat: '',
 }
 
 const resaleDetailReducer = (state: ResaleDetail, action: ResaleDetailAction) => {
@@ -47,7 +49,7 @@ const resaleDetailReducer = (state: ResaleDetail, action: ResaleDetailAction) =>
 
 const ResaleDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(resaleDetailReducer, initialState)
-
+  const [Dropvalue, setDropvalue] = useState<string>()
   const { query, push } = useRouter()
   useEffect(() => {
     if (!query.id) {
@@ -95,7 +97,7 @@ const ResaleDetailScreen: React.FC = () => {
       //...state,
       id: state.id,
       uid: state.uid,
-      polstatus: 'Open',
+      rstatus: state.rstatus,
       requestno: state.requestno,
       etype: state.etype,
       invdate: new Date(state.invdate || Date.now()).toISOString(),
@@ -114,7 +116,10 @@ const ResaleDetailScreen: React.FC = () => {
       newval: state.newval,
       jewelname: state.jewelname,
       issamestore: state.issamestore,
+      createdat: state.createdat,
     }
+    console.log('dropdown value', Dropvalue)
+    //return
 
     if (query?.id) {
       payload.id = query.id as unknown as number
@@ -126,6 +131,44 @@ const ResaleDetailScreen: React.FC = () => {
         push('/admin/resale')
       })
       .catch((err) => console.log('Error', err))
+  }
+
+  const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
+    if (idx === -1) {
+      let resalestatus
+      if (state.rstatus === 'Open') {
+        resalestatus = RESALE_DETAIL_STATUS.OPEN
+      } else if (state.rstatus === 'Close') {
+        resalestatus = RESALE_DETAIL_STATUS.CLOSE
+      } else if (state.rstatus === 'InReview') {
+        resalestatus = RESALE_DETAIL_STATUS.IN_REVIEW
+      } else {
+        resalestatus = RESALE_DETAIL_STATUS.APPROVED
+      }
+      return resalestatus
+    }
+    const newVal = Object.values(RESALE_DETAIL_STATUS)[idx || 0]
+    if (newVal === RESALE_DETAIL_STATUS.OPEN) {
+      setDropvalue('Open')
+    } else if (newVal === RESALE_DETAIL_STATUS.CLOSE) {
+      setDropvalue('Close')
+    } else if (newVal === RESALE_DETAIL_STATUS.IN_REVIEW) {
+      setDropvalue('InReview')
+    } else {
+      setDropvalue('Approved')
+    }
+    if (Dropvalue !== state.rstatus) {
+      //console.log(Dropvalue)
+      dispatch({
+        type: 'rstatus',
+        payload: Dropvalue,
+      })
+    }
+
+    //console.log(elem?.toString)
+
+    ///console.log(Dropvalue)
+    return newVal
   }
 
   return (
@@ -141,16 +184,11 @@ const ResaleDetailScreen: React.FC = () => {
             { name: 'UID', value: state.uid },
             {
               name: 'Status',
-              value: (
-                <button className={`text-white font-bold py-2 px-4 rounded ${state.polstatus ? 'bg-light-muted-azure ' : 'bg-red-400 '}`}>
-                  {state.polstatus ? 'Open' : 'Close'}
-                </button>
-              ),
+              value: <Dropdown options={Object.values(RESALE_DETAIL_STATUS)} value={state.rstatus} selected={changeProductStatus} className="w-48" />,
             },
-
             {
               name: 'Date of request',
-              value: dayjs(state.invdate).format('YYYY-MM-DD'),
+              value: dayjs(state.createdat).format('YYYY-MM-DD'),
             },
             {
               name: 'Retail price',
@@ -213,7 +251,7 @@ const ResaleDetailScreen: React.FC = () => {
             value={state.phaddress}
           />
 
-          <div className="flex justify-between pt-5 ">
+          <div className="flex justify-between pt-5 pb-5 ">
             <InputText
               label="City"
               name="city"
@@ -258,7 +296,7 @@ const ResaleDetailScreen: React.FC = () => {
       </SectionContainer>
 
       <SectionContainer className="mt-6">
-        {state.etype !== 'buyback' ? (
+        {state.etype === 'buyback' ? (
           <div>
             <div>
               <h1 className="py-2 font-medium text-base">Buyback Through :</h1>
@@ -317,7 +355,7 @@ const ResaleDetailScreen: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="flex-row py-5 mx-4">
+          <div className="flex-row pb-5 mx-4">
             <InputText
               className="w-full"
               label="Upgrade Amount"
@@ -336,7 +374,7 @@ const ResaleDetailScreen: React.FC = () => {
               name="iamt"
               onChange={onChangeHandlerCreator('invno')}
               placeholder="Invoice Number"
-              type="number"
+              type="text"
               value={state.invno}
               className="w-full"
               containerClass="w-1/4"

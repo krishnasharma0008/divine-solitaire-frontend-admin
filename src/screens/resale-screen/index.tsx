@@ -17,7 +17,6 @@ export default function Resalelist() {
     try {
       const result = await getResaleList()
       setResale(result.data.data)
-      // setfilteredPolicy(result.data.data);
     } catch (error) {
       console.log(error)
     }
@@ -33,36 +32,52 @@ export default function Resalelist() {
       name: 'Sr. No.',
       cell: (row: any, index: number) => index + 1,
       sortable: true,
+      width: '90px',
     },
     {
       name: 'UID',
       selector: (row) => row.uid,
+      sortable: true,
     },
     {
       name: 'Status Request',
       cell: (row) => (
-        // <a href={`/admin/resale-detail/${row.id}`}>
-        <Button color="gray">{row.polstatus ? 'Open' : 'Close'}</Button>
-        // </a>
+        <div
+          className={`w-full text-center text-white font-bold py-2 px-4 rounded ${
+            row.rstatus === 'Open'
+              ? 'bg-light-muted-azure '
+              : row.rstatus === 'Close'
+              ? 'bg-red-400'
+              : row.rstatus === 'InReview'
+              ? 'bg-orange-300	'
+              : 'bg-green	'
+          }`}
+        >
+          {row.rstatus}
+        </div>
       ),
-      selector: (row) => row.polstatus || '',
+      selector: (row) => row.rstatus || '',
       sortable: true,
     },
     {
       name: 'Request No.',
       selector: (row) => row.requestno || '',
+      sortable: true,
     },
     {
       name: 'Request Type',
       selector: (row) => row.etype || '',
+      sortable: true,
     },
     {
       name: 'Date of Request',
       selector: (row) => dayjs(row.invdate).format('DD MMM,YYYY') || '',
+      sortable: true,
     },
     {
       name: 'Name',
       selector: (row) => row.phname || '',
+      sortable: true,
     },
   ]
 
