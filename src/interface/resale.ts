@@ -1,7 +1,7 @@
 export interface Resale {
   id: number
   uid: string
-  polstatus: string
+  rstatus: string
   requestno: number
   etype: string
   invdate: null | Date

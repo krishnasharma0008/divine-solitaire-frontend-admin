@@ -26,6 +26,7 @@ export default function User() {
       name: 'Sr. No.',
       cell: (row, index: number) => index + 1,
       sortable: true,
+      width: '90px',
     },
     {
       name: 'Source',
@@ -33,7 +34,6 @@ export default function User() {
     },
     {
       name: 'Name',
-      //cell: (row: { fname : any; id: number }) => ( <a href={`/resale-detail/${row.id}`}></a> ),
       selector: (row) => (row.fname === null ? ' ' : row.fname) + ' ' + (row.lname === null ? ' ' : row.lname),
       sortable: true,
     },
@@ -60,8 +60,6 @@ export default function User() {
     },
   }
 
-  /* Custom Pagination*/
-
   const CustomPagination = {
     rowsPerPageText: ' ',
     selectAllRowsItem: true,
@@ -79,7 +77,6 @@ export default function User() {
             customStyles={CustomStyles}
             onRowClicked={(e) => onRowClicked(e.id)}
             pagination
-            //paginationComponentOptions={rowsPerPageText: 'Rows per page:'}
             fixedHeader
             fixedHeaderScrollHeight="450px"
             selectableRowsHighlight

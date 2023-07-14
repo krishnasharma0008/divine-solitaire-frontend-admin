@@ -16,6 +16,7 @@ const columns: TableColumn<SpecialProducts>[] = [
   {
     name: 'Design No.',
     selector: (row) => row.design_no,
+    sortable: true,
   },
   {
     name: 'Status',
@@ -34,6 +35,7 @@ const columns: TableColumn<SpecialProducts>[] = [
   {
     name: 'Retail Price',
     selector: (row) => row.price || 0.0,
+    sortable: true,
   },
   {
     name: 'Solitaire Details',

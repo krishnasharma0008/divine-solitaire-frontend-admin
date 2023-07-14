@@ -16,8 +16,9 @@ export interface ResaleDetail {
   phemail: string
   phname: string
   phpincode: string
-  polstatus: string
+  rstatus: string
   requestno: string
   uid: string
   userid: string
+  createdat: string
 }

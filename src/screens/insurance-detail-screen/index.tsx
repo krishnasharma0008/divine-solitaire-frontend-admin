@@ -7,6 +7,7 @@ import { useEffect, useReducer } from 'react'
 import { createInsurance, getInsuranceDetail } from '@/api'
 import { InputFile, MetaDetailsCard } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import { DownloadIcon } from '@/components/icons'
 import { InsuranceDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
 
@@ -69,6 +70,12 @@ const InsuranceDetailScreen: React.FC = () => {
         console.log('errr', err)
       })
   }, [query?.id])
+
+  //const initialEndDate = dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD');
+
+  const iconClick = (downloadType: string) => {
+    console.log(downloadType)
+  }
 
   const onChangeHandlerCreator = (fieldname: string) => {
     if (['invfile', 'polfile'].includes(fieldname)) {
@@ -253,6 +260,21 @@ const InsuranceDetailScreen: React.FC = () => {
           </div>
         </div>
         <InputFile label="Invoice Documents" onChange={onChangeHandlerCreator('invfile')} value={state.invfile} placeholder="Drag & drop files here" />
+        <button
+          type="button"
+          onClick={() => iconClick('Invoice Documents')}
+          className="px-10 py-2 rounded border border-slate-200 block mb-[190px]"
+          style={{ marginTop: -190, marginLeft: 180 }}
+        >
+          <DownloadIcon />
+        </button>
+        {/* <div
+          onClick={() => iconClick('Invoice Documents')}
+          style={{ zIndex: 10, marginTop: InputFile.length ? -170 : 0, marginLeft: 180 }}
+          className="mb-[170px] mr-[180px]"
+        >
+          <DownloadIcon />
+        </div> */}
       </SectionContainer>
 
       <SectionContainer className="mt-6">
@@ -287,7 +309,7 @@ const InsuranceDetailScreen: React.FC = () => {
               value={state.polno}
             />
           </div>
-          <div className="flex justify-between pt-5 ">
+          <div className="flex justify-between pt-5 pb-5">
             <InputText
               label="Start Date"
               name="idate"
@@ -303,7 +325,8 @@ const InsuranceDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('polend')}
               placeholder="End Date"
               type="date"
-              value={dayjs(state.polend).format('YYYY-MM-DD')}
+              //value={dayjs(state.polend).format('YYYY-MM-DD')}
+              value={dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD')}
             />
 
             <InputText
@@ -312,21 +335,33 @@ const InsuranceDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('rendate')}
               placeholder="Renewal Date *"
               type="date"
-              value={dayjs(state.rendate).format('YYYY-MM-DD')}
+              //value={dayjs(state.rendate).format('YYYY-MM-DD')}
+              value={dayjs(state.polend).add(366, 'day').format('YYYY-MM-DD')}
             />
           </div>
-          <InputFile label="Customer Documents" onChange={onChangeHandlerCreator('polfile')} value={state.polfile} placeholder="Drag & drop files here" />
+          <InputFile label="Customer Documents" onChange={onChangeHandlerCreator('polfile')} value={state.polfile || ''} placeholder="Drag & drop files here" />
+          <button
+            type="button"
+            onClick={() => iconClick('Customer Documents')}
+            className="px-10 py-2 rounded border border-slate-200 block mb-[190px]"
+            style={{ marginTop: -190, marginLeft: 180, zIndex: 999 }}
+          >
+            <DownloadIcon />
+          </button>
         </div>
 
         <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5 gap-6">
           <Link href="/admin/insurance">Cancel</Link>
-          <button
-            type="submit"
-            onClick={onSubmitHandler('Reject')}
-            className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
-          >
-            Reject
-          </button>
+          {state.polstatus === 'In Process' && (
+            <button
+              type="submit"
+              onClick={onSubmitHandler('Reject')}
+              className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
+            >
+              Reject
+            </button>
+          )}
+
           <button
             type="submit"
             onClick={onSubmitHandler('Approve')}
