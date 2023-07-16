@@ -64,3 +64,8 @@ export const getStoreLocatorDetailEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
   url: '/api/secadmin/store/',
 }
+
+export const getDashboardUserpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: '/api/secadmin/dashboard/info',
+}
