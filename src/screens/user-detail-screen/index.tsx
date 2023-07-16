@@ -68,7 +68,7 @@ const UserDetailScreen: React.FC = () => {
           type: 'ALL',
           payload: { ...(res.data.data.userinfo as unknown as User) },
         })
-        console.log(res.data.data)
+        //console.log(res.data.data)
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
       })
