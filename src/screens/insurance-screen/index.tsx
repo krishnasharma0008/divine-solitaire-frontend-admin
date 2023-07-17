@@ -1,5 +1,6 @@
 import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
@@ -12,15 +13,19 @@ import { Insurance } from '@/interface'
 export default function Insurancelist() {
   const [policy, setPolicy] = useState<Array<Insurance>>([])
   const [Dropvalue, setDropvalue] = useState<string>()
+  const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useRouter()
 
   const getlistdata = async () => {
     try {
+      setIsLoading(true)
       const result = await getInsuranceList()
       setPolicy(result.data.data)
+      setIsLoading(false)
     } catch (error) {
       console.log(error)
+      setIsLoading(false)
     }
   }
 
@@ -126,46 +131,52 @@ export default function Insurancelist() {
   return (
     <div className="flex-1 w-full pt-5" style={{ height: '500px' }}>
       <div className="bg-white  ">
-        <div className="p-5">
-          <div className="w-full flex justify-end">
-            <div className="w-52">
-              <Dropdown
-                options={Object.values(INSURANCE_DOWNLOAD_OPTIONS)}
-                //value={INSURANCE_DOWNLOAD_OPTIONS.ACTIVE}
-                selected={changeProductStatus}
-                disabled={false}
-                onChange={changeProductStatus}
-                className="w-52"
-              />
-            </div>
-            <div>
-              <Button color="white" className="capitalize" onClick={DownloadClick}>
-                Download Excel
-              </Button>
-            </div>
+        {isLoading ? (
+          <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+            <Image src="/loadert.gif" alt="Loading......" height={'36'} width={'102'} />
           </div>
-          <DataTable
-            title="Insurance"
-            columns={columns}
-            data={policy}
-            customStyles={CustomStyles}
-            onRowClicked={(e) => onRowClicked(e.id || 0)}
-            pagination
-            fixedHeader
-            fixedHeaderScrollHeight="450px"
-            selectableRowsHighlight
-            highlightOnHover
-            pointerOnHover
-            paginationComponentOptions={CustomPagination}
-            // actions={
-            //   <>
-            //     <Button color="white" className="capitalize" onClick={DownloadClick}>
-            //       Download Excel
-            //     </Button>
-            //   </>
-            // }
-          />
-        </div>
+        ) : (
+          <div className="p-5">
+            <div className="w-full flex justify-end">
+              <div className="w-52">
+                <Dropdown
+                  options={Object.values(INSURANCE_DOWNLOAD_OPTIONS)}
+                  //value={INSURANCE_DOWNLOAD_OPTIONS.ACTIVE}
+                  selected={changeProductStatus}
+                  disabled={false}
+                  onChange={changeProductStatus}
+                  className="w-52"
+                />
+              </div>
+              <div>
+                <Button color="white" className="capitalize" onClick={DownloadClick}>
+                  Download Excel
+                </Button>
+              </div>
+            </div>
+            <DataTable
+              title="Insurance"
+              columns={columns}
+              data={policy}
+              customStyles={CustomStyles}
+              onRowClicked={(e) => onRowClicked(e.id || 0)}
+              pagination
+              fixedHeader
+              fixedHeaderScrollHeight="450px"
+              selectableRowsHighlight
+              highlightOnHover
+              pointerOnHover
+              paginationComponentOptions={CustomPagination}
+              // actions={
+              //   <>
+              //     <Button color="white" className="capitalize" onClick={DownloadClick}>
+              //       Download Excel
+              //     </Button>
+              //   </>
+              // }
+            />
+          </div>
+        )}
       </div>
     </div>
   )
