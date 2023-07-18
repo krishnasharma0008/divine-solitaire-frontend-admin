@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 
 import { getDasboardUserDetail } from '@/api/dashboard-detail'
+import LoaderContext from '@/context/loader-context'
 import { User_Activity } from '@/interface'
 
 import DashboardMetaData from './sub-components/dashboard-meta-data'
@@ -15,7 +15,8 @@ const initialState: User_Activity = {
 
 const DashboardScreen = () => {
   const [userActivity, setUserActivity] = useState<User_Activity>(initialState)
-  const [isLoading, setIsLoading] = useState(false)
+  const { showLoader, hideLoader } = useContext(LoaderContext)
+  //const { notifyErr } = useContext(NotificationContext)
 
   const dataObj = [
     {
@@ -117,35 +118,26 @@ const DashboardScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true)
       try {
+        showLoader()
         const response = await getDasboardUserDetail()
         setUserActivity(response.data.data.user_activity)
-        setIsLoading(false)
+        hideLoader()
       } catch (error) {
-        setIsLoading(false)
+        hideLoader()
         console.log(error)
       }
     }
 
     fetchData()
-  }, [])
+  }, [hideLoader, showLoader])
 
   return (
-    <>
-      {isLoading ? (
-        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
-          <Image src="/loadert.gif" alt="Loading......" height={'36'} width={'102'} />
-        </div>
-      ) : (
-        <div className="font-body bg-white w-full min-h-screen p-6 flex flex-col gap-9 rounded">
-          {dataObj.map(({ items, title }) => (
-            <DashboardMetaData items={items} title={title} key={title} />
-          ))}
-        </div>
-      )}
-      ;
-    </>
+    <div className="font-body bg-white w-full min-h-screen p-6 flex flex-col gap-9 rounded">
+      {dataObj.map(({ items, title }) => (
+        <DashboardMetaData items={items} title={title} key={title} />
+      ))}
+    </div>
   )
 }
 

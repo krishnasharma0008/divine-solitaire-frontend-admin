@@ -1,12 +1,13 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useReducer, useState } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
 import { getUserDetail } from '@/api'
 import { MetaDetailsCard } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import LoaderContext from '@/context/loader-context'
 import { Portfolio, User, Wishlist } from '@/interface'
 import { formatByCurrency } from '@/util'
 
@@ -54,6 +55,7 @@ const UserDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(UserDetailReducer, initialState)
   const [portfolio, setPortfolio] = useState<Array<Portfolio>>([])
   const [wishlist, setWishlist] = useState<Array<Wishlist>>([])
+  const { showLoader, hideLoader } = useContext(LoaderContext)
 
   const { query } = useRouter()
 
@@ -62,6 +64,7 @@ const UserDetailScreen: React.FC = () => {
       return
     }
 
+    showLoader()
     getUserDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
@@ -71,12 +74,14 @@ const UserDetailScreen: React.FC = () => {
         //console.log(res.data.data)
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
+        hideLoader()
       })
 
       .catch((err) => {
+        hideLoader()
         console.log('errr', err)
       })
-  }, [query?.id])
+  }, [hideLoader, query.id, showLoader])
 
   const CustomStyles = {
     header: {
