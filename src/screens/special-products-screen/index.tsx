@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@material-tailwind/react'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getSpecialProductsList from '@/api/special-products'
+import LoaderContext from '@/context/loader-context'
 import { SpecialProducts } from '@/interface'
 
 const columns: TableColumn<SpecialProducts>[] = [
@@ -49,15 +50,19 @@ const columns: TableColumn<SpecialProducts>[] = [
 
 const SpecialProductsList: React.FC = () => {
   const [resale, setSpecialProducts] = useState<Array<SpecialProducts>>([])
+  const { showLoader, hideLoader } = useContext(LoaderContext)
 
   const navigate = useRouter()
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getlistdata = async () => {
     try {
+      showLoader()
       const result = await getSpecialProductsList()
       setSpecialProducts(result.data.data)
-      //console.log(result.data.data)
+      hideLoader()
     } catch (error) {
+      hideLoader()
       console.log(error)
     }
   }
@@ -66,7 +71,7 @@ const SpecialProductsList: React.FC = () => {
 
   useEffect(() => {
     getlistdata()
-  }, [])
+  }, [getlistdata])
 
   const addProductClickHandler = () => navigate.push('/admin/special-products/new')
 

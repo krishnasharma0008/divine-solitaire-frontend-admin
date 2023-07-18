@@ -1,11 +1,12 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useReducer } from 'react'
+import { useContext, useEffect, useReducer } from 'react'
 
 import { getStoreLocatorDetail } from '@/api'
 import InputText from '@/components/common/input-text'
 import TextArea from '@/components/common/input-text-area'
+import LoaderContext from '@/context/loader-context'
 import { StoreLocator } from '@/interface'
 
 import SectionContainer from './sub-components/section-container'
@@ -36,6 +37,7 @@ const StoreLocatorDetailReducer = (state: StoreLocator, action: StoreLocatorDeta
 
 const StoreLocatorDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(StoreLocatorDetailReducer, initialState)
+  const { showLoader, hideLoader } = useContext(LoaderContext)
 
   const { query } = useRouter()
 
@@ -44,18 +46,20 @@ const StoreLocatorDetailScreen: React.FC = () => {
       return
     }
 
+    showLoader()
     getStoreLocatorDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
           type: 'ALL',
           payload: { ...(res.data.data as unknown as StoreLocator) },
         })
+        hideLoader()
       })
-
       .catch((err) => {
+        hideLoader()
         console.log('errr', err)
       })
-  }, [query?.id])
+  }, [hideLoader, query.id, showLoader])
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">

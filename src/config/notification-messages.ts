@@ -5,6 +5,8 @@ const NOTIFICATION_MESSAGES = {
   SPECIAL_PRODUCT_CREATE_FAILED: 'Unable To Create Special Product',
   SPECIAL_PRODUCT_UPDATE_SUCCESS: 'Special Product Updated',
   SPECIAL_PRODUCT_UPDATE_FAILED: 'Unable To Update Special Product',
+
+  SOMETHING_WRONG: 'Something Went Wrong! Please Try Again',
 }
 
 export default NOTIFICATION_MESSAGES

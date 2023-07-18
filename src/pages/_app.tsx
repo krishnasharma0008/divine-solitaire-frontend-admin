@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { URLs, breadcrumbList } from '@/constants'
 import { getToken } from '@/local-storage'
 import { LayoutWrapper, NotificationWrapper } from '@/wrapper'
+import LoaderWrapper from '@/wrapper/loader-wrapper'
 import 'react-toastify/dist/ReactToastify.css'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -33,9 +34,11 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
 
 const WrappedApp: React.FC<AppProps> = (props) => (
   <ThemeProvider>
-    <NotificationWrapper>
-      <App {...props} />
-    </NotificationWrapper>
+    <LoaderWrapper>
+      <NotificationWrapper>
+        <App {...props} />
+      </NotificationWrapper>
+    </LoaderWrapper>
   </ThemeProvider>
 )
 

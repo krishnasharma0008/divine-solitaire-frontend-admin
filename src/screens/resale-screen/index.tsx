@@ -2,22 +2,27 @@
 import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getResaleList from '@/api/resale'
+import LoaderContext from '@/context/loader-context'
 import { Resale } from '@/interface'
 
 export default function Resalelist() {
   const [resale, setResale] = useState<Array<Resale>>([])
 
+  const { showLoader, hideLoader } = useContext(LoaderContext)
   const navigate = useRouter()
 
   const getlistdata = async () => {
+    showLoader()
     try {
       const result = await getResaleList()
       setResale(result.data.data)
+      hideLoader()
     } catch (error) {
+      hideLoader()
       console.log(error)
     }
   }
@@ -83,7 +88,7 @@ export default function Resalelist() {
 
   useEffect(() => {
     getlistdata()
-  }, [])
+  }, [getlistdata])
 
   const CustomStyles = {
     headRow: {

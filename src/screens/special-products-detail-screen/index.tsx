@@ -5,6 +5,7 @@ import { createSpecialProducts, getSpecialProductsDetail } from '@/api'
 import { Dropdown } from '@/components/common'
 import InputText from '@/components/common/input-text'
 import { NOTIFICATION_MESSAGES } from '@/config'
+import LoaderContext from '@/context/loader-context'
 import NotificationContext from '@/context/notification-context'
 import { SPECIAL_PRODUCTS_STATUS } from '@/enums'
 import { SpecialProductsDetail } from '@/interface'
@@ -42,6 +43,7 @@ const SpecialProductDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(SpecialProductsDetailReducer, initialState)
   const [editMode, setEditMode] = useState<boolean>(query?.id === 'new')
   const { notify, notifyErr } = useContext(NotificationContext)
+  const { showLoader, hideLoader } = useContext(LoaderContext)
 
   useEffect(() => {
     if (!query.id || query.id === 'new') {
@@ -49,17 +51,20 @@ const SpecialProductDetailScreen: React.FC = () => {
       return
     }
     /**/
+    showLoader()
     getSpecialProductsDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
           type: 'ALL',
           payload: { ...(res.data.data as unknown as SpecialProductsDetail) },
         })
+        hideLoader()
       })
       .catch((err) => {
+        hideLoader()
         console.log('errr', err)
       })
-  }, [query?.id])
+  }, [hideLoader, query.id, showLoader])
 
   const onChangeHandlerCreator = (fieldname: string) => {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -99,15 +104,17 @@ const SpecialProductDetailScreen: React.FC = () => {
     if (query?.id && query?.id !== 'new') {
       payload.id = parseInt(`${query.id}`, 10) as unknown as number
     }
+    showLoader()
     createSpecialProducts(payload)
       .then(() => {
         console.log('It is successfully created')
         notify(query?.id === 'new' ? NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_CREATE_SUCCESS : NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_UPDATE_SUCCESS)
         push('/admin/special-products')
+        hideLoader()
       })
       .catch((err) => {
+        hideLoader()
         notifyErr(query?.id === 'new' ? NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_CREATE_FAILED : NOTIFICATION_MESSAGES.SPECIAL_PRODUCT_UPDATE_FAILED)
-
         console.log('Error', err)
       })
   }

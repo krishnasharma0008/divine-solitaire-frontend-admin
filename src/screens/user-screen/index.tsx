@@ -1,20 +1,25 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn, TableStyles } from 'react-data-table-component'
 
 import getUserList from '@/api/user'
+import LoaderContext from '@/context/loader-context'
 import { User } from '@/interface'
 
 export default function User() {
   const [user, setUser] = useState<Array<User>>([])
+  const { showLoader, hideLoader } = useContext(LoaderContext)
 
   const { push } = useRouter()
 
   const getlistdata = async () => {
+    showLoader()
     try {
       const result = await getUserList()
       setUser(result.data.data)
+      hideLoader()
     } catch (error) {
+      hideLoader()
       console.log(error)
     }
   }
@@ -49,7 +54,7 @@ export default function User() {
 
   useEffect(() => {
     getlistdata()
-  }, [])
+  }, [getlistdata])
 
   const CustomStyles: TableStyles = {
     headRow: {

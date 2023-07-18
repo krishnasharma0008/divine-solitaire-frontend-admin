@@ -1,11 +1,12 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useReducer, useState } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 
 import { createResale, getResaleDetail } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
 import InputText from '@/components/common/input-text'
+import LoaderContext from '@/context/loader-context'
 import { RESALE_DETAIL_STATUS } from '@/enums'
 import { ResaleDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
@@ -51,22 +52,26 @@ const ResaleDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(resaleDetailReducer, initialState)
   const [Dropvalue, setDropvalue] = useState<string>()
   const { query, push } = useRouter()
+  const { showLoader, hideLoader } = useContext(LoaderContext)
+
   useEffect(() => {
     if (!query.id) {
       return
     }
-    /**/
+    showLoader()
     getResaleDetail(query?.id as unknown as number)
       .then((res) => {
         dispatch({
           type: 'ALL',
           payload: { ...(res.data.data as unknown as ResaleDetail) },
         })
+        hideLoader()
       })
       .catch((err) => {
+        hideLoader()
         console.log('errr', err)
       })
-  }, [query?.id])
+  }, [hideLoader, query.id, showLoader])
 
   const onChangeHandlerCreator = (fieldname: string) => {
     if (fieldname == 'samestore') {
@@ -124,13 +129,17 @@ const ResaleDetailScreen: React.FC = () => {
     if (query?.id) {
       payload.id = query.id as unknown as number
     }
-
+    showLoader()
     createResale(payload)
       .then(() => {
         console.log('It is successfully created')
         push('/admin/resale')
+        hideLoader()
       })
-      .catch((err) => console.log('Error', err))
+      .catch((err) => {
+        hideLoader()
+        console.log('Error', err)
+      })
   }
 
   const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
@@ -165,9 +174,6 @@ const ResaleDetailScreen: React.FC = () => {
       })
     }
 
-    //console.log(elem?.toString)
-
-    ///console.log(Dropvalue)
     return newVal
   }
 
