@@ -12,18 +12,6 @@ export default function User() {
 
   const { push } = useRouter()
 
-  const getlistdata = async () => {
-    showLoader()
-    try {
-      const result = await getUserList()
-      setUser(result.data.data)
-      hideLoader()
-    } catch (error) {
-      hideLoader()
-      console.log(error)
-    }
-  }
-
   const onRowClicked = (id: number) => push(`/admin/user-detail/${id}`)
 
   const columns: Array<TableColumn<User>> = [
@@ -53,8 +41,20 @@ export default function User() {
   ]
 
   useEffect(() => {
+    const getlistdata = async () => {
+      showLoader()
+      try {
+        const result = await getUserList()
+        setUser(result.data.data)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    }
+
     getlistdata()
-  }, [getlistdata])
+  }, [hideLoader, showLoader])
 
   const CustomStyles: TableStyles = {
     headRow: {

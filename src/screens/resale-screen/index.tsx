@@ -15,18 +15,6 @@ export default function Resalelist() {
   const { showLoader, hideLoader } = useContext(LoaderContext)
   const navigate = useRouter()
 
-  const getlistdata = async () => {
-    showLoader()
-    try {
-      const result = await getResaleList()
-      setResale(result.data.data)
-      hideLoader()
-    } catch (error) {
-      hideLoader()
-      console.log(error)
-    }
-  }
-
   const onRowClicked = (id: number) => {
     //console.log(id);
     navigate.push(`/admin/resale-detail/${id}`)
@@ -87,8 +75,20 @@ export default function Resalelist() {
   ]
 
   useEffect(() => {
+    const getlistdata = async () => {
+      showLoader()
+      try {
+        const result = await getResaleList()
+        setResale(result.data.data)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    }
+
     getlistdata()
-  }, [getlistdata])
+  }, [hideLoader, showLoader])
 
   const CustomStyles = {
     headRow: {

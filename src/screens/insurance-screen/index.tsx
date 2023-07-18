@@ -18,17 +18,6 @@ export default function Insurancelist() {
   const navigate = useRouter()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getlistdata = async () => {
-    try {
-      showLoader()
-      const result = await getInsuranceList()
-      setPolicy(result.data.data)
-      hideLoader()
-    } catch (error) {
-      hideLoader()
-      console.log(error)
-    }
-  }
 
   const onRowClicked = (id: number) => {
     navigate.push(`/admin/insurance-detail/${id}`)
@@ -109,8 +98,19 @@ export default function Insurancelist() {
   ]
 
   useEffect(() => {
+    const getlistdata = async () => {
+      try {
+        showLoader()
+        const result = await getInsuranceList()
+        setPolicy(result.data.data)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    }
     getlistdata()
-  }, [getlistdata])
+  }, [showLoader, hideLoader])
 
   const CustomStyles = {
     headRow: {

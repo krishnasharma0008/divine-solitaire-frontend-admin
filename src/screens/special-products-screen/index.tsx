@@ -55,23 +55,24 @@ const SpecialProductsList: React.FC = () => {
   const navigate = useRouter()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getlistdata = async () => {
-    try {
-      showLoader()
-      const result = await getSpecialProductsList()
-      setSpecialProducts(result.data.data)
-      hideLoader()
-    } catch (error) {
-      hideLoader()
-      console.log(error)
-    }
-  }
 
   const onRowClicked = (id: number) => navigate.push(`/admin/special-products/${id}`)
 
   useEffect(() => {
+    const getlistdata = async () => {
+      try {
+        showLoader()
+        const result = await getSpecialProductsList()
+        setSpecialProducts(result.data.data)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    }
+
     getlistdata()
-  }, [getlistdata])
+  }, [hideLoader, showLoader])
 
   const addProductClickHandler = () => navigate.push('/admin/special-products/new')
 
