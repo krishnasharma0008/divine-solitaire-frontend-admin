@@ -41,25 +41,25 @@ const StoreLocatorList: React.FC = () => {
   const navigate = useRouter()
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getlistdata = async () => {
-    showLoader()
-    try {
-      const result = await getStoreLocatorList()
-      console.log(result.data.data)
-      setStoreLocator(result.data.data)
-      //console.log(result.data.data)
-      hideLoader()
-    } catch (error) {
-      hideLoader()
-      console.log(error)
-    }
-  }
 
   const onRowClicked = (id: number) => navigate.push(`/admin/storelocator/${id}`)
 
   useEffect(() => {
+    const getlistdata = async () => {
+      showLoader()
+      try {
+        const result = await getStoreLocatorList()
+        console.log(result.data.data)
+        setStoreLocator(result.data.data)
+        //console.log(result.data.data)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    }
     getlistdata()
-  }, [getlistdata])
+  }, [hideLoader, showLoader])
 
   const CustomStyles = {
     headRow: {
