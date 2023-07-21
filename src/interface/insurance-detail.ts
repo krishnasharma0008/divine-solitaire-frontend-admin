@@ -20,9 +20,9 @@ export interface InsuranceDetail {
   requestno: string
   polfile: string
   invfile: string
-  remarks:string
-  createdat:string
-  current_price:string
+  remarks: string
+  createdat: string
+  current_price: string
   uid: string
   id?: number
 }
