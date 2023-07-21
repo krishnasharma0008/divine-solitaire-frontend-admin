@@ -6,6 +6,7 @@ import { useContext, useEffect, useReducer } from 'react'
 
 import { createInsurance, getInsuranceDetail } from '@/api'
 import { InputFile, MetaDetailsCard } from '@/components/common'
+import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
 import { DownloadIcon } from '@/components/icons'
 import LoaderContext from '@/context/loader-context'
@@ -95,6 +96,13 @@ const InsuranceDetailScreen: React.FC = () => {
         type: fieldname,
         payload: (e.target as HTMLInputElement).value,
       })
+  }
+
+  const onDateChangeHandler = (fieldname: string) => (date: Date) => {
+    dispatch({
+      type: fieldname,
+      payload: date.toISOString(),
+    })
   }
 
   const onSubmitHandler = (ActionType: string) => () => {
@@ -258,14 +266,15 @@ const InsuranceDetailScreen: React.FC = () => {
                 value={state.invno}
               />
 
-              <InputText
+              <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" />
+              {/* <InputText
                 label="Invoice Date"
                 name="idate"
-                onChange={onChangeHandlerCreator('invdate')}
+                // onChange={onChangeHandlerCreator('invdate')}
                 placeholder="Invoice Date"
-                type="date"
+                type="text"
                 value={dayjs(state.invdate).format('YYYY-MM-DD')}
-              />
+              /> */}
             </div>
           </div>
           <InputFile label="Invoice Documents" onChange={onChangeHandlerCreator('invfile')} value={state.invfile} placeholder="Drag & drop files here" />
