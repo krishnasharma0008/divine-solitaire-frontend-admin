@@ -8,46 +8,6 @@ import getSpecialProductsList from '@/api/special-products'
 import LoaderContext from '@/context/loader-context'
 import { SpecialProducts } from '@/interface'
 
-const columns: TableColumn<SpecialProducts>[] = [
-  {
-    name: 'Sr. No.',
-    cell: (row: any, index: number) => index + 1,
-    sortable: true,
-  },
-  {
-    name: 'Design No.',
-    selector: (row) => row.design_no,
-    sortable: true,
-  },
-  {
-    name: 'Status',
-    cell: (row) => (
-      <Button className={`w-24 text-white font-bold py-2 px-4 rounded ${row.isactive ? 'bg-green' : 'bg-Inactive '}`}>
-        {row.isactive ? 'Active' : 'Inactive'}
-      </Button>
-    ),
-    selector: (row) => row.isactive || '',
-    sortable: true,
-  },
-  {
-    name: 'Product description',
-    selector: (row) => row.design_type || '',
-  },
-  {
-    name: 'Retail Price',
-    selector: (row) => row.price || 0.0,
-    sortable: true,
-  },
-  {
-    name: 'Solitaire Details',
-    selector: (row) => row.solitaire_details || '',
-  },
-  {
-    name: 'Mount Details',
-    selector: (row) => row.mount_details || '',
-  },
-]
-
 const SpecialProductsList: React.FC = () => {
   const [resale, setSpecialProducts] = useState<Array<SpecialProducts>>([])
   const { showLoader, hideLoader } = useContext(LoaderContext)
@@ -57,6 +17,46 @@ const SpecialProductsList: React.FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const onRowClicked = (id: number) => navigate.push(`/admin/special-products/${id}`)
+
+  const columns: TableColumn<SpecialProducts>[] = [
+    {
+      name: 'Sr. No.',
+      cell: (row: any, index: number) => index + 1,
+      sortable: true,
+    },
+    {
+      name: 'Design No.',
+      selector: (row) => row.design_no,
+      sortable: true,
+    },
+    {
+      name: 'Status',
+      cell: (row) => (
+        <div className={`w-24 text-white font-bold py-2 px-4 rounded ${row.isactive ? 'bg-green' : 'bg-Inactive '}`} onClick={() => onRowClicked(row.id)}>
+          {row.isactive ? 'Active' : 'Inactive'}
+        </div>
+      ),
+      selector: (row) => row.isactive || '',
+      sortable: true,
+    },
+    {
+      name: 'Product description',
+      selector: (row) => row.design_type || '',
+    },
+    {
+      name: 'Retail Price',
+      selector: (row) => row.price || 0.0,
+      sortable: true,
+    },
+    {
+      name: 'Solitaire Details',
+      selector: (row) => row.solitaire_details || '',
+    },
+    {
+      name: 'Mount Details',
+      selector: (row) => row.mount_details || '',
+    },
+  ]
 
   useEffect(() => {
     const getlistdata = async () => {

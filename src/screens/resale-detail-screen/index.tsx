@@ -5,6 +5,7 @@ import { useContext, useEffect, useReducer, useState } from 'react'
 
 import { createResale, getResaleDetail } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
+import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
 import LoaderContext from '@/context/loader-context'
 import { RESALE_DETAIL_STATUS } from '@/enums'
@@ -97,6 +98,13 @@ const ResaleDetailScreen: React.FC = () => {
       })
   }
 
+  const onDateChangeHandler = (fieldname: string) => (date: Date) => {
+    dispatch({
+      type: fieldname,
+      payload: date.toISOString(),
+    })
+  }
+
   const onSubmitHandler = () => {
     const payload: ResaleDetail = {
       //...state,
@@ -147,8 +155,8 @@ const ResaleDetailScreen: React.FC = () => {
       let resalestatus
       if (state.rstatus === 'Open') {
         resalestatus = RESALE_DETAIL_STATUS.OPEN
-      } else if (state.rstatus === 'Close') {
-        resalestatus = RESALE_DETAIL_STATUS.CLOSE
+      } else if (state.rstatus === 'Reject') {
+        resalestatus = RESALE_DETAIL_STATUS.REJECT
       } else if (state.rstatus === 'InReview') {
         resalestatus = RESALE_DETAIL_STATUS.IN_REVIEW
       } else {
@@ -159,8 +167,8 @@ const ResaleDetailScreen: React.FC = () => {
     const newVal = Object.values(RESALE_DETAIL_STATUS)[idx || 0]
     if (newVal === RESALE_DETAIL_STATUS.OPEN) {
       setDropvalue('Open')
-    } else if (newVal === RESALE_DETAIL_STATUS.CLOSE) {
-      setDropvalue('Close')
+    } else if (newVal === RESALE_DETAIL_STATUS.REJECT) {
+      setDropvalue('Reject')
     } else if (newVal === RESALE_DETAIL_STATUS.IN_REVIEW) {
       setDropvalue('InReview')
     } else {
@@ -194,7 +202,7 @@ const ResaleDetailScreen: React.FC = () => {
             },
             {
               name: 'Date of request',
-              value: dayjs(state.createdat).format('YYYY-MM-DD'),
+              value: dayjs(state.createdat).format('DD MMMM YYYY'),
             },
             {
               name: 'Retail price',
@@ -278,7 +286,8 @@ const ResaleDetailScreen: React.FC = () => {
               className="w-full"
               containerClass="w-1/4"
             />
-            <InputText
+            <DatePicker onChange={onDateChangeHandler('phdob')} label="Date of Birth" value={new Date(state.phdob || Date.now())} className="" />
+            {/* <InputText
               label="Date of Birth"
               name="dob"
               onChange={onChangeHandlerCreator('phdob')}
@@ -287,7 +296,7 @@ const ResaleDetailScreen: React.FC = () => {
               value={dayjs(state.phdob).format('YYYY-MM-DD')}
               className="w-full"
               containerClass="w-1/4"
-            />
+            /> */}
           </div>
           <InputText
             className="w-full"
@@ -395,7 +404,8 @@ const ResaleDetailScreen: React.FC = () => {
               className="w-full"
               containerClass="w-1/4"
             />
-            <InputText
+            <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.phdob || Date.now())} className="" />
+            {/* <InputText
               label="Invoice Date"
               name="idate"
               onChange={onChangeHandlerCreator('invdate')}
@@ -404,7 +414,7 @@ const ResaleDetailScreen: React.FC = () => {
               value={dayjs(state.invdate).format('YYYY-MM-DD')}
               className="w-full"
               containerClass="w-1/4"
-            />
+            /> */}
           </div>
         </div>
         <div></div>

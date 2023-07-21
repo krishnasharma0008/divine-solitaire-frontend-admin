@@ -71,7 +71,8 @@ const UserDetailScreen: React.FC = () => {
           type: 'ALL',
           payload: { ...(res.data.data.userinfo as unknown as User) },
         })
-        //console.log(res.data.data)
+        //console.log('dob:', state.dob)
+        //console.log('formatted date:', dayjs(state?.lactivityat).format('DD MMMM YYYY'))
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
         hideLoader()
@@ -116,9 +117,9 @@ const UserDetailScreen: React.FC = () => {
             { name: 'Source', value: state?.vsource },
             {
               name: 'Date of sign Up',
-              value: dayjs(state?.ceatedat).format('YYYY-MM-DD'),
-            } /*value: dayjs(state.etype).format("YYYY-MM-DD")*/,
-            { name: 'Last Activity Date', value: state?.lactivityat ? dayjs(state?.lactivityat).format('YYYY-MM-DD') : '-' },
+              value: dayjs(state?.ceatedat).format('DD MMMM YYYY'),
+            },
+            { name: 'Last Activity Date', value: state?.lactivityat ? dayjs(state?.lactivityat).format('DD MMMM YYYY') : '-' },
             {
               name: 'Purchase Amount',
               value: formatByCurrency(parseFloat(`${calculateTotalPortfolioAmt(portfolio || [])}`)),
@@ -209,16 +210,17 @@ const UserDetailScreen: React.FC = () => {
               label="Date of Birth"
               name="dob"
               placeholder="Date Of Birth"
-              type="date"
-              value={dayjs(state?.dob).format('YYYY-MM-DD')}
+              type="text"
+              //value={dayjs(state?.dob).format('YYYY-MM-DD')}
+              value={dayjs(state?.dob).format('DD MMMM YYYY')}
               // onChange={onChangeHandlerCreator("dob")}
             />
             <InputText
               label="Date of Anniversary"
               name="doanniv"
               placeholder="Date Of Anniversary"
-              type="date"
-              value={dayjs(state?.doanniv).format('YYYY-MM-DD')}
+              type="text"
+              value={dayjs(state?.doanniv).format('DD MMMM YYYY')}
               // onChange={onChangeHandlerCreator("doanniv")}
             />
           </div>

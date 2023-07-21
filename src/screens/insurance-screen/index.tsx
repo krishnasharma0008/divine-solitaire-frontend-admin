@@ -53,6 +53,7 @@ export default function Insurancelist() {
         <div
           className={`w-full text-white font-bold py-2 px-4 rounded text-center
         ${row.polstatus === 'Cancelled' || row.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'}`}
+          onClick={() => onRowClicked(row.id)}
         >
           {row.polstatus}
         </div>
