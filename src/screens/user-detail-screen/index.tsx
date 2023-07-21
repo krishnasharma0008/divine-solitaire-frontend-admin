@@ -8,6 +8,7 @@ import { getUserDetail } from '@/api'
 import { MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
+import CalendarIcon from '@/components/icons/calendar-icon'
 import LoaderContext from '@/context/loader-context'
 import { Portfolio, User, Wishlist } from '@/interface'
 import { formatByCurrency } from '@/util'
@@ -214,25 +215,22 @@ const UserDetailScreen: React.FC = () => {
             />
           </div>
           <div className="flex justify-between pt-5 ">
-            {/* <InputText
+            <DatePicker
+              onChange={onDateChangeHandler('dob')}
               label="Date of Birth"
-              name="dob"
-              placeholder="Date Of Birth"
-              type="text"
-              //value={dayjs(state?.dob).format('YYYY-MM-DD')}
-              value={dayjs(state?.dob || Date.now()).format('DD MMMM YYYY')}
-              // onChange={onChangeHandlerCreator("dob")}
-            /> */}
-            <DatePicker onChange={onDateChangeHandler('dob')} label="Date of Birth" value={new Date(state.dob || Date.now())} className="" />
-            {/* <InputText
+              value={new Date(state.dob || Date.now())}
+              className=""
+              showIcon={true}
+              icon={CalendarIcon}
+            />
+            <DatePicker
+              onChange={onDateChangeHandler('doanniv')}
               label="Date of Anniversary"
-              name="doanniv"
-              placeholder="Date Of Anniversary"
-              type="text"
-              value={dayjs(state?.doanniv || Date.now()).format('DD MMMM YYYY')}
-              // onChange={onChangeHandlerCreator("doanniv")}
-            /> */}
-            <DatePicker onChange={onDateChangeHandler('doanniv')} label="Date of Anniversary" value={new Date(state.doanniv || Date.now())} className="" />
+              value={new Date(state.doanniv || Date.now())}
+              className=""
+              showIcon={true}
+              icon={CalendarIcon}
+            />
           </div>
         </div>
       </SectionContainer>

@@ -3,12 +3,13 @@ import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer } from 'react'
+import React from 'react'
 
 import { createInsurance, getInsuranceDetail } from '@/api'
 import { InputFile, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
-import { DownloadIcon } from '@/components/icons'
+import { CalendarIcon, DownloadIcon } from '@/components/icons'
 import LoaderContext from '@/context/loader-context'
 import { InsuranceDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
@@ -42,6 +43,9 @@ const initialState: InsuranceDetail = {
   requestno: '',
   polfile: '',
   invfile: '',
+  remarks: '',
+  createdat: '',
+  current_price: '',
   uid: '',
 }
 
@@ -51,6 +55,17 @@ const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailA
   }
   return { ...state, [action.type]: action.payload }
 }
+
+// const CustomInput = React.forwardRef((props, ref) => {
+//   return (
+//     <div>
+//       <label onClick={props.onClick} ref={ref}>
+//         {props.value || props.placeholder}
+//       </label>
+//       <CalendarIcon onClick={props.onClick} />
+//     </div>
+//   );
+// });
 
 const InsuranceDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(insuranceDetailReducer, initialState)
@@ -116,7 +131,6 @@ const InsuranceDetailScreen: React.FC = () => {
       payload: date.toISOString(),
     })
   }
-
   const onSubmitHandler = (ActionType: string) => () => {
     const payload: InsuranceDetail = {
       ...state,
@@ -166,8 +180,8 @@ const InsuranceDetailScreen: React.FC = () => {
                 ),
               },
 
-              { name: 'Date of request', value: dayjs(state.invdate).format('DD MMMM YYYY') },
-              { name: 'Retail price', value: '-' }, //add state.invval
+              { name: 'Date of request', value: dayjs(state.createdat).format('DD MMMM YYYY') },
+              { name: 'Retail price', value: formatByCurrency(parseFloat(state.current_price)) },
             ]}
           />
         </SectionContainer>
@@ -188,7 +202,14 @@ const InsuranceDetailScreen: React.FC = () => {
             />
 
             <div className="flex justify-between pt-5 ">
-              <DatePicker onChange={onDateChangeHandler('phdob')} label="Date of Birth" value={new Date(state.phdob || Date.now())} className="" />
+              <DatePicker
+                showIcon={true}
+                onChange={onDateChangeHandler('phdob')}
+                label="Date of Birth"
+                value={new Date(state.phdob || Date.now())}
+                className=""
+                icon={CalendarIcon}
+              />
               {/* <InputText
                 label="Date of Birth"
                 name="dob"
@@ -232,7 +253,7 @@ const InsuranceDetailScreen: React.FC = () => {
             />
 
             <div className="flex justify-between pt-5 ">
-              <InputText label="State" name="state" onChange={onChangeHandlerCreator('phstate')} placeholder="State" type="text" value={state.phstate} />
+              {/* <InputText label="State" name="state" onChange={onChangeHandlerCreator('phstate')} placeholder="State" type="text" value={state.phstate} /> */}
               <InputText label="City" name="city" onChange={onChangeHandlerCreator('phcity')} placeholder="City" type="text" value={state.phcity} />
               <InputText
                 label="Pin Code"
@@ -267,7 +288,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 onChange={onChangeHandlerCreator('invval')}
                 placeholder="Invoice Amount"
                 type="text"
-                value={formatByCurrency(parseFloat(state.invval))}
+                value={formatByCurrency(parseFloat(state.invval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.invval))}
               />
 
               <InputText
@@ -279,15 +300,14 @@ const InsuranceDetailScreen: React.FC = () => {
                 value={state.invno}
               />
 
-              <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" />
-              {/* <InputText
+              <DatePicker
+                onChange={onDateChangeHandler('invdate')}
                 label="Invoice Date"
-                name="idate"
-                // onChange={onChangeHandlerCreator('invdate')}
-                placeholder="Invoice Date"
-                type="text"
-                value={dayjs(state.invdate).format('YYYY-MM-DD')}
-              /> */}
+                value={state.invdate ? new Date(state.invdate) : null}
+                className=""
+                showIcon={true}
+                icon={CalendarIcon}
+              />
             </div>
           </div>
           <InputFile label="Invoice Documents" onChange={onChangeHandlerCreator('invfile')} value={state.invfile} placeholder="Drag & drop files here" />
@@ -341,44 +361,45 @@ const InsuranceDetailScreen: React.FC = () => {
               />
             </div>
             <div className="flex justify-between pt-5 pb-5">
-              {/* <InputText
+              <DatePicker
+                onChange={onDateChangeHandler('polstart')}
                 label="Start Date"
-                name="idate"
-                onChange={onChangeHandlerCreator('polstart')}
-                placeholder="Start Date"
-                type="date"
-                value={dayjs(state.polstart).format('YYYY-MM-DD')}
-              /> */}
+                //value={new Date(state.polstart)}
+                value={state.polstart ? new Date(state.polstart) : null}
+                className=""
+                showIcon={true}
+                icon={CalendarIcon}
+              />
 
-              <DatePicker onChange={onDateChangeHandler('polstart')} label="Start Date" value={new Date(state.polstart || Date.now())} className="" />
-
-              {/* <InputText
+              <DatePicker
+                onChange={onDateChangeHandler('polend')}
                 label="End Date"
-                name="idate"
-                onChange={onChangeHandlerCreator('polend')}
-                placeholder="End Date"
-                type="date"
-                //value={dayjs(state.polend).format('YYYY-MM-DD')}
-                value={dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD')}
-              /> */}
-
-              <DatePicker onChange={onDateChangeHandler('polend')} label="End Date" value={new Date(state.polend || Date.now())} className="" />
-
-              {/* <InputText
-                label="Renewal Date *"
-                name="idate"
-                onChange={onChangeHandlerCreator('rendate')}
-                placeholder="Renewal Date *"
-                type="date"
-                //value={dayjs(state.rendate).format('YYYY-MM-DD')}
-                value={dayjs(state.polend).add(366, 'day').format('YYYY-MM-DD')}
-              /> */}
+                //value={new Date(state.polend || Date.now())}
+                value={state.polstart ? new Date(dayjs(state.polstart).add(365, 'day').toDate()) : null}
+                //value={new Date(dayjs(state.polstart).add(365, 'day').toDate())}
+                className=""
+                showIcon={true}
+                icon={CalendarIcon}
+              />
               <DatePicker
                 onChange={onDateChangeHandler('rendate')}
                 label="Renewal Date"
-                value={new Date(state.rendate || Date.now())}
+                value={state.polstart ? new Date(dayjs(state.polstart).add(366, 'day').toDate()) : null}
                 //value={new Date(dayjs(state.polstart).add(366, 'day').toDate())}
                 className=""
+                showIcon={true}
+                icon={CalendarIcon}
+              />
+            </div>
+            <div className="pb-5 pt-5">
+              <InputText
+                className="w-full"
+                label="Remarks"
+                name="remarks"
+                onChange={onChangeHandlerCreator('remarks')}
+                placeholder="Remarks"
+                type="text"
+                value={state.remarks}
               />
             </div>
             <InputFile
