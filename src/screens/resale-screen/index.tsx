@@ -39,12 +39,13 @@ export default function Resalelist() {
           className={`w-full text-center text-white font-bold py-2 px-4 rounded ${
             row.rstatus === 'Open'
               ? 'bg-light-muted-azure '
-              : row.rstatus === 'Close'
+              : row.rstatus === 'Reject'
               ? 'bg-red-400'
               : row.rstatus === 'InReview'
               ? 'bg-orange-300	'
               : 'bg-green	'
           }`}
+          onClick={() => onRowClicked(row.id)}
         >
           {row.rstatus}
         </div>

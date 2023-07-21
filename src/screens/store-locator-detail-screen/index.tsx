@@ -83,7 +83,7 @@ const StoreLocatorDetailScreen: React.FC = () => {
           </div>
           <div className="flex justify-between pt-5 ">
             <InputText label="Country" name="country" type="text" value={state?.country || ''} containerClass="w-1/3" />
-            <InputText label="Created Date " name="created_at" type="date" value={dayjs(state?.created_at).format('YYYY-MM-DD')} containerClass="w-1/3" />
+            <InputText label="Created Date " name="created_at" type="text" value={dayjs(state?.created_at).format('DD MMMM YYYY')} containerClass="w-1/3" />
           </div>
         </div>
       </SectionContainer>

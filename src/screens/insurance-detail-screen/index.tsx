@@ -99,6 +99,18 @@ const InsuranceDetailScreen: React.FC = () => {
   }
 
   const onDateChangeHandler = (fieldname: string) => (date: Date) => {
+    // if (fieldname === 'polstart') {
+    //   // Calculate the new end date by adding 365 days to the start date
+    //   const endDate = dayjs(date).add(365, 'day').toDate();
+    //   dispatch({ type: 'polend', payload: endDate.toISOString() });
+    // } else if (fieldname === 'polend') {
+    //   // Calculate the new renewal date by adding 1 day to the end date
+    //   const renewalDate = dayjs(date).add(1, 'day').toDate();
+    //   dispatch({ type: 'rendate', payload: renewalDate.toISOString() });
+    // } else {
+    //   dispatch({ type: fieldname, payload: date.toISOString() });
+    // }
+
     dispatch({
       type: fieldname,
       payload: date.toISOString(),
@@ -154,8 +166,8 @@ const InsuranceDetailScreen: React.FC = () => {
                 ),
               },
 
-              { name: 'Date of request', value: dayjs(state.invdate).format('YYYY-MM-DD') },
-              { name: 'Retail price', value: formatByCurrency(1000000) }, //add state.invval
+              { name: 'Date of request', value: dayjs(state.invdate).format('DD MMMM YYYY') },
+              { name: 'Retail price', value: '-' }, //add state.invval
             ]}
           />
         </SectionContainer>
@@ -176,14 +188,15 @@ const InsuranceDetailScreen: React.FC = () => {
             />
 
             <div className="flex justify-between pt-5 ">
-              <InputText
+              <DatePicker onChange={onDateChangeHandler('phdob')} label="Date of Birth" value={new Date(state.phdob || Date.now())} className="" />
+              {/* <InputText
                 label="Date of Birth"
                 name="dob"
                 onChange={onChangeHandlerCreator('phdob')}
                 placeholder="Date Of Birth"
                 type="date"
                 value={dayjs(state.phdob).format('YYYY-MM-DD')}
-              />
+              /> */}
               <InputText
                 className="w-full"
                 containerClass="w-1/4"
@@ -262,7 +275,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 name="iamt"
                 onChange={onChangeHandlerCreator('invno')}
                 placeholder="Invoice Number"
-                type="number"
+                type="text"
                 value={state.invno}
               />
 
@@ -328,16 +341,18 @@ const InsuranceDetailScreen: React.FC = () => {
               />
             </div>
             <div className="flex justify-between pt-5 pb-5">
-              <InputText
+              {/* <InputText
                 label="Start Date"
                 name="idate"
                 onChange={onChangeHandlerCreator('polstart')}
                 placeholder="Start Date"
                 type="date"
                 value={dayjs(state.polstart).format('YYYY-MM-DD')}
-              />
+              /> */}
 
-              <InputText
+              <DatePicker onChange={onDateChangeHandler('polstart')} label="Start Date" value={new Date(state.polstart || Date.now())} className="" />
+
+              {/* <InputText
                 label="End Date"
                 name="idate"
                 onChange={onChangeHandlerCreator('polend')}
@@ -345,9 +360,11 @@ const InsuranceDetailScreen: React.FC = () => {
                 type="date"
                 //value={dayjs(state.polend).format('YYYY-MM-DD')}
                 value={dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD')}
-              />
+              /> */}
 
-              <InputText
+              <DatePicker onChange={onDateChangeHandler('polend')} label="End Date" value={new Date(state.polend || Date.now())} className="" />
+
+              {/* <InputText
                 label="Renewal Date *"
                 name="idate"
                 onChange={onChangeHandlerCreator('rendate')}
@@ -355,6 +372,13 @@ const InsuranceDetailScreen: React.FC = () => {
                 type="date"
                 //value={dayjs(state.rendate).format('YYYY-MM-DD')}
                 value={dayjs(state.polend).add(366, 'day').format('YYYY-MM-DD')}
+              /> */}
+              <DatePicker
+                onChange={onDateChangeHandler('rendate')}
+                label="Renewal Date"
+                value={new Date(state.rendate || Date.now())}
+                //value={new Date(dayjs(state.polstart).add(366, 'day').toDate())}
+                className=""
               />
             </div>
             <InputFile
