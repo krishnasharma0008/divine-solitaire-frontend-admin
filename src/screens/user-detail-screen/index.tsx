@@ -6,6 +6,7 @@ import DataTable from 'react-data-table-component'
 
 import { getUserDetail } from '@/api'
 import { MetaDetailsCard } from '@/components/common'
+import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
 import LoaderContext from '@/context/loader-context'
 import { Portfolio, User, Wishlist } from '@/interface'
@@ -83,6 +84,13 @@ const UserDetailScreen: React.FC = () => {
         console.log('errr', err)
       })
   }, [hideLoader, query.id, showLoader])
+
+  const onDateChangeHandler = (fieldname: string) => (date: Date) => {
+    dispatch({
+      type: fieldname,
+      payload: date.toISOString(),
+    })
+  }
 
   const CustomStyles = {
     header: {
@@ -206,23 +214,25 @@ const UserDetailScreen: React.FC = () => {
             />
           </div>
           <div className="flex justify-between pt-5 ">
-            <InputText
+            {/* <InputText
               label="Date of Birth"
               name="dob"
               placeholder="Date Of Birth"
               type="text"
               //value={dayjs(state?.dob).format('YYYY-MM-DD')}
-              value={dayjs(state?.dob).format('DD MMMM YYYY')}
+              value={dayjs(state?.dob || Date.now()).format('DD MMMM YYYY')}
               // onChange={onChangeHandlerCreator("dob")}
-            />
-            <InputText
+            /> */}
+            <DatePicker onChange={onDateChangeHandler('dob')} label="Date of Birth" value={new Date(state.dob || Date.now())} className="" />
+            {/* <InputText
               label="Date of Anniversary"
               name="doanniv"
               placeholder="Date Of Anniversary"
               type="text"
-              value={dayjs(state?.doanniv).format('DD MMMM YYYY')}
+              value={dayjs(state?.doanniv || Date.now()).format('DD MMMM YYYY')}
               // onChange={onChangeHandlerCreator("doanniv")}
-            />
+            /> */}
+            <DatePicker onChange={onDateChangeHandler('doanniv')} label="Date of Anniversary" value={new Date(state.doanniv || Date.now())} className="" />
           </div>
         </div>
       </SectionContainer>
