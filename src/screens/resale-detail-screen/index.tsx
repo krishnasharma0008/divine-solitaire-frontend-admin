@@ -404,7 +404,7 @@ const ResaleDetailScreen: React.FC = () => {
               className="w-full"
               containerClass="w-1/4"
             />
-            <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.phdob || Date.now())} className="" />
+            <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" />
             {/* <InputText
               label="Invoice Date"
               name="idate"
