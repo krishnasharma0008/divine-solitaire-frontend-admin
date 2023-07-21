@@ -3,10 +3,7 @@ import colors from 'tailwindcss/colors'
 
 /** @type {import('tailwindcss').Config} */
 export default withMT({
-  content: [
-    './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/tailwind-datepicker-react/dist/**/*.js', // <--- Add this line for date picker
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       backgroundImage: {

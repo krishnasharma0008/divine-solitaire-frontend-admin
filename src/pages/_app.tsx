@@ -9,6 +9,7 @@ import { getToken } from '@/local-storage'
 import { LayoutWrapper, NotificationWrapper } from '@/wrapper'
 import LoaderWrapper from '@/wrapper/loader-wrapper'
 import 'react-toastify/dist/ReactToastify.css'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { push, asPath } = useRouter()
