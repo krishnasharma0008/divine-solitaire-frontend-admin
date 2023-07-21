@@ -7,6 +7,7 @@ import { createResale, getResaleDetail } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
+import CalendarIcon from '@/components/icons/calendar-icon'
 import LoaderContext from '@/context/loader-context'
 import { RESALE_DETAIL_STATUS } from '@/enums'
 import { ResaleDetail } from '@/interface'
@@ -206,7 +207,8 @@ const ResaleDetailScreen: React.FC = () => {
             },
             {
               name: 'Retail price',
-              value: formatByCurrency(parseFloat(state.currentval)),
+              //value: formatByCurrency(parseFloat(state.currentval)),
+              value: formatByCurrency(parseFloat(state.currentval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.currentval)),
             },
           ]}
         />
@@ -286,17 +288,14 @@ const ResaleDetailScreen: React.FC = () => {
               className="w-full"
               containerClass="w-1/4"
             />
-            <DatePicker onChange={onDateChangeHandler('phdob')} label="Date of Birth" value={new Date(state.phdob || Date.now())} className="" />
-            {/* <InputText
+            <DatePicker
+              showIcon={true}
+              onChange={onDateChangeHandler('phdob')}
               label="Date of Birth"
-              name="dob"
-              onChange={onChangeHandlerCreator('phdob')}
-              placeholder="Date Of Birth"
-              type="date"
-              value={dayjs(state.phdob).format('YYYY-MM-DD')}
-              className="w-full"
-              containerClass="w-1/4"
-            /> */}
+              value={state.phdob ? new Date(state.phdob) : null}
+              className=""
+              icon={CalendarIcon}
+            />
           </div>
           <InputText
             className="w-full"
@@ -378,7 +377,8 @@ const ResaleDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('newval')}
               placeholder="Upgrade Amount"
               type="text"
-              value={state.newval}
+              //value={state.newval}
+              value={formatByCurrency(parseFloat(state.newval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.newval))}
             />
           </div>
         )}
@@ -400,21 +400,19 @@ const ResaleDetailScreen: React.FC = () => {
               onChange={onChangeHandlerCreator('invval')}
               placeholder="Invoice Amount"
               type="text"
-              value={formatByCurrency(parseFloat(state.invval))}
+              value={formatByCurrency(parseFloat(state.invval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.invval))}
               className="w-full"
               containerClass="w-1/4"
             />
-            <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" />
-            {/* <InputText
+            {/* <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" /> */}
+            <DatePicker
+              showIcon={true}
+              onChange={onDateChangeHandler('invdate')}
               label="Invoice Date"
-              name="idate"
-              onChange={onChangeHandlerCreator('invdate')}
-              placeholder="Invoice Date"
-              type="date"
-              value={dayjs(state.invdate).format('YYYY-MM-DD')}
-              className="w-full"
-              containerClass="w-1/4"
-            /> */}
+              value={state.invdate ? new Date(state.invdate) : null}
+              className=""
+              icon={CalendarIcon}
+            />
           </div>
         </div>
         <div></div>

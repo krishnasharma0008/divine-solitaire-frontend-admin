@@ -1,5 +1,6 @@
 export { default as ActiveNotificationsIcon } from './active-notifications-icon'
 export { default as CloudIcon } from './cloud-icon'
+export { default as CalendarIcon } from './calendar-icon'
 export { default as DownloadIcon } from './download-icon'
 export { default as EcomOrdersIcon } from './ecom-orders-icon'
 export { default as HomeIcon } from './home-icon'
