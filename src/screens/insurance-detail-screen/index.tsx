@@ -56,17 +56,6 @@ const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailA
   return { ...state, [action.type]: action.payload }
 }
 
-// const CustomInput = React.forwardRef((props, ref) => {
-//   return (
-//     <div>
-//       <label onClick={props.onClick} ref={ref}>
-//         {props.value || props.placeholder}
-//       </label>
-//       <CalendarIcon onClick={props.onClick} />
-//     </div>
-//   );
-// });
-
 const InsuranceDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(insuranceDetailReducer, initialState)
   const { showLoader, hideLoader } = useContext(LoaderContext)
@@ -114,17 +103,15 @@ const InsuranceDetailScreen: React.FC = () => {
   }
 
   const onDateChangeHandler = (fieldname: string) => (date: Date) => {
-    // if (fieldname === 'polstart') {
-    //   // Calculate the new end date by adding 365 days to the start date
-    //   const endDate = dayjs(date).add(365, 'day').toDate();
-    //   dispatch({ type: 'polend', payload: endDate.toISOString() });
-    // } else if (fieldname === 'polend') {
-    //   // Calculate the new renewal date by adding 1 day to the end date
-    //   const renewalDate = dayjs(date).add(1, 'day').toDate();
-    //   dispatch({ type: 'rendate', payload: renewalDate.toISOString() });
-    // } else {
-    //   dispatch({ type: fieldname, payload: date.toISOString() });
-    // }
+    if (fieldname === 'polstart') {
+      // Calculate the new end date by adding 365 days to the start date
+      const endDate = dayjs(date).add(365, 'day').toDate()
+      dispatch({ type: 'polend', payload: endDate.toISOString() })
+
+      // Calculate the new renewal date by adding 1 day to the end date
+      const renewalDate = dayjs(endDate).add(1, 'day').toDate()
+      dispatch({ type: 'rendate', payload: renewalDate.toISOString() })
+    }
 
     dispatch({
       type: fieldname,
@@ -374,8 +361,8 @@ const InsuranceDetailScreen: React.FC = () => {
               <DatePicker
                 onChange={onDateChangeHandler('polend')}
                 label="End Date"
-                //value={new Date(state.polend || Date.now())}
-                value={state.polstart ? new Date(dayjs(state.polstart).add(365, 'day').toDate()) : null}
+                value={state.polend ? new Date(state.polend) : null}
+                //value={state.polstart ? new Date(dayjs(state.polstart).add(365, 'day').toDate()) : null}
                 //value={new Date(dayjs(state.polstart).add(365, 'day').toDate())}
                 className=""
                 showIcon={true}
@@ -384,8 +371,8 @@ const InsuranceDetailScreen: React.FC = () => {
               <DatePicker
                 onChange={onDateChangeHandler('rendate')}
                 label="Renewal Date"
-                value={state.polstart ? new Date(dayjs(state.polstart).add(366, 'day').toDate()) : null}
-                //value={new Date(dayjs(state.polstart).add(366, 'day').toDate())}
+                value={state.rendate ? new Date(state.rendate) : null}
+                //value={state.polstart ? new Date(dayjs(state.polstart).add(366, 'day').toDate()) : null}
                 className=""
                 showIcon={true}
                 icon={CalendarIcon}
