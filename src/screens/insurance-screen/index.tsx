@@ -71,7 +71,7 @@ export default function Insurancelist() {
     },
     {
       name: 'Date of Request',
-      selector: (row) => (row.polstart !== null ? dayjs(row.polstart).format('DD MMM,YYYY') : ''),
+      selector: (row) => (row.createdat !== null ? dayjs(row.createdat).format('DD MMM,YYYY') : ''),
       sortable: true,
       reorder: true,
     },
