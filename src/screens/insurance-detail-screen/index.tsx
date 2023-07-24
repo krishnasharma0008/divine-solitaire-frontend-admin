@@ -1,5 +1,6 @@
 import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
+import utcPlugin from 'dayjs/plugin/utc'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer } from 'react'
@@ -15,6 +16,8 @@ import { InsuranceDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
 
 import SectionContainer from './sub-components/section-container'
+
+dayjs.extend(utcPlugin)
 
 interface InsuranceDetailAction {
   type: string
@@ -59,6 +62,8 @@ const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailA
 const InsuranceDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(insuranceDetailReducer, initialState)
   const { showLoader, hideLoader } = useContext(LoaderContext)
+
+  const DateFormat = 'YYYY-MM-DD HH:mm:ss'
 
   const { query, push } = useRouter()
   useEffect(() => {
@@ -167,7 +172,8 @@ const InsuranceDetailScreen: React.FC = () => {
                 ),
               },
 
-              { name: 'Date of request', value: dayjs(state.createdat).format('DD MMMM YYYY') },
+              { name: 'Date of request', value: dayjs.utc(state.createdat).format('DD MMMM YYYY') },
+              //dayjs.utc(state.dob).format(DateFormat)
               { name: 'Retail price', value: formatByCurrency(parseFloat(state.current_price)) },
             ]}
           />
@@ -193,7 +199,9 @@ const InsuranceDetailScreen: React.FC = () => {
                 showIcon={true}
                 onChange={onDateChangeHandler('phdob')}
                 label="Date of Birth"
-                value={new Date(state.phdob || Date.now())}
+                //value={new Date(state.phdob || Date.now())}
+                //value={state.phdob ? new Date(dayjs.utc(state.phdob).format(DateFormat)) : null}
+                value={state.phdob ? new Date(dayjs.utc(state.phdob).format(DateFormat)) : null}
                 className=""
                 icon={CalendarIcon}
               />
@@ -290,7 +298,8 @@ const InsuranceDetailScreen: React.FC = () => {
               <DatePicker
                 onChange={onDateChangeHandler('invdate')}
                 label="Invoice Date"
-                value={state.invdate ? new Date(state.invdate) : null}
+                //value={state.invdate ? new Date(state.invdate) : null}
+                value={state.invdate ? new Date(dayjs.utc(state.invdate).format(DateFormat)) : null}
                 className=""
                 showIcon={true}
                 icon={CalendarIcon}
@@ -301,18 +310,11 @@ const InsuranceDetailScreen: React.FC = () => {
           <button
             type="button"
             onClick={() => iconClick('Invoice Documents')}
-            className="px-10 py-2 rounded border border-slate-200 block mb-[190px]"
-            style={{ marginTop: -190, marginLeft: 180 }}
+            className="px-5 py-2 block mb-[190px]"
+            style={{ marginTop: -180, marginLeft: 120 }}
           >
             <DownloadIcon />
           </button>
-          {/* <div
-          onClick={() => iconClick('Invoice Documents')}
-          style={{ zIndex: 10, marginTop: InputFile.length ? -170 : 0, marginLeft: 180 }}
-          className="mb-[170px] mr-[180px]"
-        >
-          <DownloadIcon />
-        </div> */}
         </SectionContainer>
 
         <SectionContainer className="mt-6">
@@ -352,7 +354,8 @@ const InsuranceDetailScreen: React.FC = () => {
                 onChange={onDateChangeHandler('polstart')}
                 label="Start Date"
                 //value={new Date(state.polstart)}
-                value={state.polstart ? new Date(state.polstart) : null}
+                //value={state.polstart ? new Date(state.polstart) : null}
+                value={state.polstart ? new Date(dayjs.utc(state.polstart).format(DateFormat)) : null}
                 className=""
                 showIcon={true}
                 icon={CalendarIcon}
@@ -361,8 +364,8 @@ const InsuranceDetailScreen: React.FC = () => {
               <DatePicker
                 onChange={onDateChangeHandler('polend')}
                 label="End Date"
-                value={state.polend ? new Date(state.polend) : null}
-                //value={state.polstart ? new Date(dayjs(state.polstart).add(365, 'day').toDate()) : null}
+                //value={state.polend ? new Date(state.polend) : null}
+                value={state.polend ? new Date(dayjs.utc(state.polend).format(DateFormat)) : null}
                 //value={new Date(dayjs(state.polstart).add(365, 'day').toDate())}
                 className=""
                 showIcon={true}
@@ -371,8 +374,8 @@ const InsuranceDetailScreen: React.FC = () => {
               <DatePicker
                 onChange={onDateChangeHandler('rendate')}
                 label="Renewal Date"
-                value={state.rendate ? new Date(state.rendate) : null}
-                //value={state.polstart ? new Date(dayjs(state.polstart).add(366, 'day').toDate()) : null}
+                //value={state.rendate ? new Date(state.rendate) : null}
+                value={state.rendate ? new Date(dayjs.utc(state.rendate).format(DateFormat)) : null}
                 className=""
                 showIcon={true}
                 icon={CalendarIcon}
@@ -398,8 +401,8 @@ const InsuranceDetailScreen: React.FC = () => {
             <button
               type="button"
               onClick={() => iconClick('Customer Documents')}
-              className="px-10 py-2 rounded border border-slate-200 block mb-[190px]"
-              style={{ marginTop: -190, marginLeft: 180, zIndex: 999 }}
+              className="px-5 py-2  block mb-[190px]"
+              style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
             >
               <DownloadIcon />
             </button>

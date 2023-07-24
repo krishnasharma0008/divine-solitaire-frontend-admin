@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import utcPlugin from 'dayjs/plugin/utc'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
@@ -15,6 +16,8 @@ import { formatByCurrency } from '@/util'
 
 import SectionContainer from './sub-components/section-container'
 import { portfolioColumns, wishlistColumns } from './user-detail-screen-table-columns'
+
+dayjs.extend(utcPlugin)
 
 interface UserDetailAction {
   type: string
@@ -59,6 +62,8 @@ const UserDetailScreen: React.FC = () => {
   const [wishlist, setWishlist] = useState<Array<Wishlist>>([])
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
+  const DateFormat = 'YYYY-MM-DD HH:mm:ss'
+
   const { query } = useRouter()
 
   useEffect(() => {
@@ -73,7 +78,11 @@ const UserDetailScreen: React.FC = () => {
           type: 'ALL',
           payload: { ...(res.data.data.userinfo as unknown as User) },
         })
-        //console.log('dob:', state.dob)
+        //console.log('dob:', dayjs(state.dob, 'DD MMMM YYYY').utc().format())
+        //const dt = state.dob //'2023-07-10T00:00:00Z'
+        //console.log('dob 1', dayjs.utc(state.dob).format('YYYY-MM-DD HH:mm:ss'))
+        //console.log(new Date(dayjs.utc(state.dob).format()))
+        //console.log('dob 2', state.dob)
         //console.log('formatted date:', dayjs(state?.lactivityat).format('DD MMMM YYYY'))
         setPortfolio(res.data.data.portfolio)
         setWishlist(res.data.data.Wishlist)
@@ -218,7 +227,8 @@ const UserDetailScreen: React.FC = () => {
             <DatePicker
               onChange={onDateChangeHandler('dob')}
               label="Date of Birth"
-              value={new Date(state.dob || Date.now())}
+              //value={new Date(state.dob || Date.now())}
+              value={state.dob ? new Date(dayjs.utc(state.dob).format(DateFormat)) : null}
               className=""
               showIcon={true}
               icon={CalendarIcon}
@@ -226,7 +236,8 @@ const UserDetailScreen: React.FC = () => {
             <DatePicker
               onChange={onDateChangeHandler('doanniv')}
               label="Date of Anniversary"
-              value={new Date(state.doanniv || Date.now())}
+              //value={new Date(state.doanniv || Date.now())}
+              value={state.doanniv ? new Date(dayjs.utc(state.doanniv).format(DateFormat)) : null}
               className=""
               showIcon={true}
               icon={CalendarIcon}
