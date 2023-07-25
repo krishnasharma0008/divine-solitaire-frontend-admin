@@ -6,6 +6,7 @@ import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getInsuranceList from '@/api/insurance'
 import { Dropdown } from '@/components/common'
+import DownloadIcon from '@/components/icons/download-icon'
 import LoaderContext from '@/context/loader-context'
 import { INSURANCE_DOWNLOAD_OPTIONS } from '@/enums'
 import { Insurance } from '@/interface'
@@ -28,6 +29,10 @@ export default function Insurancelist() {
     setDropvalue(Object.values(INSURANCE_DOWNLOAD_OPTIONS)[idx || 0])
     //console.log(newVal)
     return Dropvalue
+  }
+
+  const rowDownload = (id: number) => {
+    console.log(id)
   }
 
   const DownloadClick = () => {
@@ -90,9 +95,12 @@ export default function Insurancelist() {
     {
       name: 'Download',
       cell: (row) => (
-        <button className="btn primary" onClick={() => console.log(row.id)}>
-          Download
-        </button>
+        // <button className="btn primary" onClick={() => console.log(row.id)}>
+        //   Download
+        // </button>
+        <div onClick={() => rowDownload(row.id)} className="w-full p-2 justify-center items-center">
+          <DownloadIcon />
+        </div>
       ),
       width: '100px',
     },

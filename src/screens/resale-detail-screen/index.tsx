@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import utcPlugin from 'dayjs/plugin/utc'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
@@ -14,6 +15,8 @@ import { ResaleDetail } from '@/interface'
 import { formatByCurrency } from '@/util'
 
 import SectionContainer from './sub-components/section-container'
+
+dayjs.extend(utcPlugin)
 
 interface ResaleDetailAction {
   type: string
@@ -55,6 +58,8 @@ const ResaleDetailScreen: React.FC = () => {
   const [Dropvalue, setDropvalue] = useState<string>()
   const { query, push } = useRouter()
   const { showLoader, hideLoader } = useContext(LoaderContext)
+
+  const DateFormat = 'YYYY-MM-DD HH:mm:ss'
 
   useEffect(() => {
     if (!query.id) {
@@ -203,7 +208,8 @@ const ResaleDetailScreen: React.FC = () => {
             },
             {
               name: 'Date of request',
-              value: dayjs(state.createdat).format('DD MMMM YYYY'),
+              //value: dayjs(state.createdat).format('DD MMMM YYYY'),
+              value: dayjs.utc(state.createdat).format('DD MMMM YYYY'),
             },
             {
               name: 'Retail price',
@@ -292,7 +298,7 @@ const ResaleDetailScreen: React.FC = () => {
               showIcon={true}
               onChange={onDateChangeHandler('phdob')}
               label="Date of Birth"
-              value={state.phdob ? new Date(state.phdob) : null}
+              value={state.phdob ? new Date(dayjs.utc(state.phdob).format(DateFormat)) : null}
               className=""
               icon={CalendarIcon}
             />
@@ -409,7 +415,7 @@ const ResaleDetailScreen: React.FC = () => {
               showIcon={true}
               onChange={onDateChangeHandler('invdate')}
               label="Invoice Date"
-              value={state.invdate ? new Date(state.invdate) : null}
+              value={state.invdate ? new Date(dayjs.utc(state.invdate).format(DateFormat)) : null}
               className=""
               icon={CalendarIcon}
             />
