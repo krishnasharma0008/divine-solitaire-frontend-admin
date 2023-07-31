@@ -1,8 +1,8 @@
 enum INSURANCE_DOWNLOAD_OPTIONS {
-  OPEN = 'OPEN',
-  ACTIVE = 'ACTIVE',
-  EXPIRE = 'EXPIRE',
-  RENEWAL = 'RENEWAL',
+  IN_PROCESS = 'In Process',
+  ACTIVE = 'Active',
+  EXPIRED = 'Expired',
+  CANCELLED = 'Cancelled',
 }
 
 export default INSURANCE_DOWNLOAD_OPTIONS

@@ -40,4 +40,16 @@ const createInsurance = (payload: InsuranceDetail): Promise<AxiosResponse<void>>
   })
 }
 
-export { getInsuranceDetail, createInsurance }
+const DownloadExcel = async (status: string, id: number): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = `excel?policy_status=${status}&id=${id}`
+  console.log(apiUrl)
+  return callWebService(getInsuranceListEndpoint.url + apiUrl, {
+    method: getInsuranceListEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getInsuranceDetail, createInsurance, DownloadExcel }
