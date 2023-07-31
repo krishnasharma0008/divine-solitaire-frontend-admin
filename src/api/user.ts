@@ -19,3 +19,23 @@ const getUserList = (): Promise<AxiosResponse<GetUserListResponse>> =>
   })
 
 export default getUserList
+
+// const getUserListWithFilter = (fieldName?: string, fieldValue?: string, pageNo?: number): Promise<AxiosResponse<GetUserListResponse>> => {
+//   let apiUrl = `list?fldname=${fieldName}`
+
+//   if (fieldValue !== null && fieldValue !== undefined) {
+//     apiUrl += `&fldvalue=${fieldValue}`
+//   }
+//   if (pageNo !== null && pageNo !== undefined) {
+//     apiUrl += `&pageno=${pageNo}`
+//   }
+//   console.log(apiUrl)
+//   return callWebService(getUserListEndpoint.url + apiUrl, {
+//     method: getUserListEndpoint.method,
+//     headers: {
+//       Authorization: 'Bearer ' + getToken(),
+//     },
+//   })
+// }
+
+// export default {getUserListWithFilter}

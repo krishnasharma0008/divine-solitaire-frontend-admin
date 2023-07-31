@@ -5,8 +5,8 @@ export interface InputTextProps extends InputProps {
   className?: string
   containerClass?: string
   id?: string
-  label: string
-  name: string
+  label?: string
+  name?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
   type: 'file' | 'number' | 'date' | 'text' | 'password'

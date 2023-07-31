@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import get from 'lodash/get'
 
-import { User, UserDetail } from '@/interface'
+import { User } from '@/interface'
 import { Portfolio } from '@/interface/portfolio'
 import { Wishlist } from '@/interface/wishlist'
 import { getToken } from '@/local-storage'
@@ -25,7 +25,7 @@ const getUserDetail = (id: number): Promise<AxiosResponse<GetUserDetailResponse>
     },
   })
 
-const createUser = (payload: UserDetail): Promise<AxiosResponse<void>> => {
+const createUser = (payload: User): Promise<AxiosResponse<void>> => {
   const formData = new FormData()
   Object.keys(payload).forEach((key: string) => formData.append(key, get(payload, key)))
 

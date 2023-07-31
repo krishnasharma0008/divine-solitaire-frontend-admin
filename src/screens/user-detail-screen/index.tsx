@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
 import DataTable from 'react-data-table-component'
 
-import { getUserDetail } from '@/api'
+import { createUser, getUserDetail } from '@/api'
 import { MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
@@ -21,7 +21,7 @@ dayjs.extend(utcPlugin)
 
 interface UserDetailAction {
   type: string
-  payload: User | string
+  payload?: User | string
 }
 
 const initialState: User = {
@@ -62,9 +62,11 @@ const UserDetailScreen: React.FC = () => {
   const [wishlist, setWishlist] = useState<Array<Wishlist>>([])
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
+  const [editMode, setEditMode] = useState<boolean>(false)
+
   const DateFormat = 'YYYY-MM-DD HH:mm:ss'
 
-  const { query } = useRouter()
+  const { query, push } = useRouter()
 
   useEffect(() => {
     if (!query.id) {
@@ -95,6 +97,44 @@ const UserDetailScreen: React.FC = () => {
       })
   }, [hideLoader, query.id, showLoader])
 
+  const onSubmitHandler = () => {
+    const payload: Partial<User> = {
+      //...state,
+      fname: state.fname,
+      email: state.email,
+      contactno: state.contactno,
+      address: state.address,
+      state: state.state,
+      city: state.city,
+      pincode: state.pincode,
+      dob: new Date(state.dob || Date.now()).toISOString(),
+      doanniv: new Date(state.doanniv || Date.now()).toISOString(),
+    }
+    //console.log(payload)
+    if (query?.id) {
+      payload.id = query.id as unknown as number
+    }
+    showLoader()
+    createUser(payload)
+      .then(() => {
+        console.log('It is successfully created')
+        push('/admin/user')
+        hideLoader()
+      })
+      .catch((err) => {
+        hideLoader()
+        console.log('Error', err)
+      })
+  }
+
+  const onChangeHandlerCreator = (fieldname: string) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) =>
+      dispatch({
+        type: fieldname,
+        payload: (e.target as HTMLInputElement).value,
+      })
+  }
+
   const onDateChangeHandler = (fieldname: string) => (date: Date) => {
     dispatch({
       type: fieldname,
@@ -124,7 +164,7 @@ const UserDetailScreen: React.FC = () => {
     },
   }
 
-  //const actions = styled.div`justify-content: flex-end;`;
+  const onEditClickHandler = () => setEditMode(true)
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -159,7 +199,8 @@ const UserDetailScreen: React.FC = () => {
             placeholder="Name"
             type="text"
             value={state?.fname || ''}
-            // onChange={onChangeHandlerCreator("fname")}
+            onChange={onChangeHandlerCreator('fname')}
+            disabled={!editMode}
           />
 
           <div className="flex justify-between pt-5 ">
@@ -170,8 +211,9 @@ const UserDetailScreen: React.FC = () => {
               name="email"
               placeholder="Email"
               type="text"
-              // onChange={onChangeHandlerCreator("email")}
+              onChange={onChangeHandlerCreator('email')}
               value={state?.email || ''}
+              disabled={!editMode}
             />
             <InputText
               className="w-full"
@@ -180,8 +222,9 @@ const UserDetailScreen: React.FC = () => {
               name="mno"
               placeholder="Mobile No."
               type="text"
-              // onChange={onChangeHandlerCreator("contactno")}
+              onChange={onChangeHandlerCreator('contactno')}
               value={state?.contactno || ''}
+              disabled={!editMode}
             />
           </div>
         </div>
@@ -193,8 +236,9 @@ const UserDetailScreen: React.FC = () => {
             name="address"
             placeholder="Address"
             type="text"
-            // onChange={onChangeHandlerCreator("address")}
+            onChange={onChangeHandlerCreator('address')}
             value={state?.address || ''}
+            disabled={!editMode}
           />
 
           <div className="flex justify-between pt-5 ">
@@ -203,8 +247,9 @@ const UserDetailScreen: React.FC = () => {
               name="state"
               placeholder="State"
               type="text"
-              // onChange={onChangeHandlerCreator("state")}
+              onChange={onChangeHandlerCreator('state')}
               value={state?.state || ''}
+              disabled={!editMode}
             />
             <InputText
               label="City"
@@ -212,15 +257,17 @@ const UserDetailScreen: React.FC = () => {
               placeholder="City"
               type="text"
               value={state?.city || ''}
-              // onChange={onChangeHandlerCreator("city")}
+              onChange={onChangeHandlerCreator('city')}
+              disabled={!editMode}
             />
             <InputText
               label="Pin Code"
               name="pincode"
               placeholder="Pin Code"
               type="text"
-              // onChange={onChangeHandlerCreator("pincode")}
+              onChange={onChangeHandlerCreator('pincode')}
               value={state?.pincode || ''}
+              disabled={!editMode}
             />
           </div>
           <div className="flex justify-between pt-5 ">
@@ -230,7 +277,7 @@ const UserDetailScreen: React.FC = () => {
               //value={new Date(state.dob || Date.now())}
               value={state.dob ? new Date(dayjs.utc(state.dob).format(DateFormat)) : null}
               className=""
-              showIcon={true}
+              showIcon={editMode}
               icon={CalendarIcon}
             />
             <DatePicker
@@ -239,7 +286,7 @@ const UserDetailScreen: React.FC = () => {
               //value={new Date(state.doanniv || Date.now())}
               value={state.doanniv ? new Date(dayjs.utc(state.doanniv).format(DateFormat)) : null}
               className=""
-              showIcon={true}
+              showIcon={editMode}
               icon={CalendarIcon}
             />
           </div>
@@ -285,12 +332,28 @@ const UserDetailScreen: React.FC = () => {
           <Link href="/admin/user">
             <button
               type="submit"
-              //onClick={onSubmitHandler}
               className="inline-flex items-center justify-center px-4 py-2 bg-Chinese-Black-sidebar border border-transparent rounded-md font-semibold capitalize text-white hover:bg-Chinese-Black-sidebar active:bg-Chinese-Black-sidebar focus:outline-none focus:bg-Chinese-Black-sidebar focus:ring focus:ring-red-200 disabled:opacity-25 transition"
             >
               Close
             </button>
           </Link>
+          {editMode ? (
+            <button
+              type="submit"
+              onClick={onSubmitHandler}
+              className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={onEditClickHandler}
+              className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+            >
+              Edit
+            </button>
+          )}
         </div>
       </SectionContainer>
     </div>

@@ -21,4 +21,5 @@ export interface ResaleDetail {
   uid: string
   userid: string
   createdat: string
+  remarks: string
 }

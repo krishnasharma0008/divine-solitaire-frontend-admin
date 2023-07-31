@@ -44,6 +44,7 @@ const initialState: ResaleDetail = {
   newval: '',
   jewelname: '',
   createdat: '',
+  remarks: '',
 }
 
 const resaleDetailReducer = (state: ResaleDetail, action: ResaleDetailAction) => {
@@ -136,6 +137,7 @@ const ResaleDetailScreen: React.FC = () => {
       jewelname: state.jewelname,
       issamestore: state.issamestore,
       createdat: state.createdat,
+      remarks: state.remarks,
     }
     console.log('dropdown value', Dropvalue)
     //return
@@ -420,8 +422,18 @@ const ResaleDetailScreen: React.FC = () => {
               icon={CalendarIcon}
             />
           </div>
+          <div className="pt-5">
+            <InputText
+              className="w-full"
+              label="Remarks"
+              name="remarks"
+              onChange={onChangeHandlerCreator('remarks')}
+              placeholder="Remarks"
+              type="text"
+              value={state.remarks}
+            />
+          </div>
         </div>
-        <div></div>
       </SectionContainer>
 
       <SectionContainer className="mt-6">

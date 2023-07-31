@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
+import { DownloadExcel } from '@/api'
 import getInsuranceList from '@/api/insurance'
 import { Dropdown } from '@/components/common'
 import DownloadIcon from '@/components/icons/download-icon'
@@ -13,7 +14,7 @@ import { Insurance } from '@/interface'
 
 export default function Insurancelist() {
   const [policy, setPolicy] = useState<Array<Insurance>>([])
-  const [Dropvalue, setDropvalue] = useState<string>()
+  const [Dropvalue, setDropvalue] = useState<string>(INSURANCE_DOWNLOAD_OPTIONS.IN_PROCESS)
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
   const navigate = useRouter()
@@ -26,17 +27,49 @@ export default function Insurancelist() {
 
   const changeProductStatus = (elem?: React.ReactNode, idx?: number) => {
     //console.log(idx)
+    if (idx === -1) {
+      setDropvalue(INSURANCE_DOWNLOAD_OPTIONS.IN_PROCESS)
+      return Dropvalue
+    }
     setDropvalue(Object.values(INSURANCE_DOWNLOAD_OPTIONS)[idx || 0])
     //console.log(newVal)
     return Dropvalue
   }
 
-  const rowDownload = (id: number) => {
-    console.log(id)
+  const ExcelDownload = async (status: string, id: number) => {
+    try {
+      showLoader()
+      const result = await DownloadExcel(status, id)
+      const href = window.URL.createObjectURL(new Blob([result.data]))
+
+      //const filename = result.headers['content-disposition']
+      //console.log(filename)
+      // .split(';')
+      // .find((n: string) => n.includes('filename='))
+      // .replace('filename=', '')
+      // .trim()
+
+      const anchorElement = document.createElement('a')
+
+      anchorElement.href = href
+      anchorElement.download = `Insurance_${new Date()}.xlsx`
+
+      document.body.appendChild(anchorElement)
+      anchorElement.click()
+
+      document.body.removeChild(anchorElement)
+      window.URL.revokeObjectURL(href)
+
+      hideLoader()
+    } catch (error) {
+      hideLoader()
+      console.log(error)
+    }
   }
 
   const DownloadClick = () => {
     console.log(Dropvalue)
+    ExcelDownload(Dropvalue, 0)
   }
 
   const columns: TableColumn<Insurance>[] = [
@@ -98,7 +131,7 @@ export default function Insurancelist() {
         // <button className="btn primary" onClick={() => console.log(row.id)}>
         //   Download
         // </button>
-        <div onClick={() => rowDownload(row.id)} className="w-full p-2 justify-center items-center">
+        <div onClick={() => ExcelDownload('', row.id)} className="w-full p-2 justify-center items-center">
           <DownloadIcon />
         </div>
       ),
@@ -146,10 +179,9 @@ export default function Insurancelist() {
             <div className="w-52">
               <Dropdown
                 options={Object.values(INSURANCE_DOWNLOAD_OPTIONS)}
-                //value={INSURANCE_DOWNLOAD_OPTIONS.ACTIVE}
                 selected={changeProductStatus}
                 disabled={false}
-                onChange={changeProductStatus}
+                //onChange={changeProductStatus}
                 className="w-52"
               />
             </div>
