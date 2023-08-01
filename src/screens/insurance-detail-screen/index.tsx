@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer } from 'react'
 import React from 'react'
 
-import { createInsurance, getInsuranceDetail } from '@/api'
+import { createInsurance, getInsuranceDetail, DownloadFile } from '@/api'
 import { InputFile, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
@@ -50,6 +50,8 @@ const initialState: InsuranceDetail = {
   createdat: '',
   current_price: '',
   uid: '',
+  invdoc: '',
+  poldoc: '',
 }
 
 const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailAction) => {
@@ -83,12 +85,53 @@ const InsuranceDetailScreen: React.FC = () => {
         hideLoader()
         console.log('errr', err)
       })
-  }, [hideLoader, query.id, showLoader])
+  }, [query.id, showLoader, hideLoader])
 
-  //const initialEndDate = dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD');
+  const iconClick = async (filename: string) => {
+    if (filename !== '') {
+      try {
+        showLoader()
+        const result = await DownloadFile(filename)
 
-  const iconClick = (downloadType: string) => {
-    console.log(downloadType)
+        // Determine the file type based on the file extension (assuming the filename has a valid extension)
+        const fileExtension = filename.split('.').pop()
+        let fileType = ''
+        switch (fileExtension?.toLowerCase()) {
+          case 'pdf':
+            fileType = 'application/pdf'
+            break
+          case 'jpg':
+          case 'jpeg':
+            fileType = 'image/jpeg'
+            break
+          case 'png':
+            fileType = 'image/png'
+          default:
+            // If the file type is not recognized, fallback to 'application/octet-stream' (binary data)
+            fileType = 'application/octet-stream'
+        }
+
+        const href = window.URL.createObjectURL(new Blob([result.data], { type: fileType }))
+        const anchorElement = document.createElement('a')
+
+        anchorElement.href = href
+        anchorElement.download = filename
+
+        document.body.appendChild(anchorElement)
+        anchorElement.click()
+
+        document.body.removeChild(anchorElement)
+        window.URL.revokeObjectURL(href)
+
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    } else {
+      alert('Document not available to Download')
+    }
+    //console.log(filename)
   }
 
   const onChangeHandlerCreator = (fieldname: string) => {
@@ -307,12 +350,7 @@ const InsuranceDetailScreen: React.FC = () => {
             </div>
           </div>
           <InputFile label="Invoice Documents" onChange={onChangeHandlerCreator('invfile')} value={state.invfile} placeholder="Drag & drop files here" />
-          <button
-            type="button"
-            onClick={() => iconClick('Invoice Documents')}
-            className="px-5 py-2 block mb-[190px]"
-            style={{ marginTop: -180, marginLeft: 120 }}
-          >
+          <button type="button" onClick={() => iconClick(state.invdoc)} className="px-5 py-2 block mb-[190px]" style={{ marginTop: -180, marginLeft: 120 }}>
             <DownloadIcon />
           </button>
         </SectionContainer>
@@ -392,15 +430,12 @@ const InsuranceDetailScreen: React.FC = () => {
                 value={state.remarks}
               />
             </div>
-            <InputFile
-              label="Customer Documents"
-              onChange={onChangeHandlerCreator('polfile')}
-              value={state.polfile || ''}
-              placeholder="Drag & drop files here"
-            />
+            <InputFile label="Policy Documents" onChange={onChangeHandlerCreator('polfile')} value={state.polfile || ''} placeholder="Drag & drop files here" />
             <button
               type="button"
-              onClick={() => iconClick('Customer Documents')}
+              onClick={() => {
+                if (state.poldoc) iconClick(state.poldoc)
+              }}
               className="px-5 py-2  block mb-[190px]"
               style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
             >

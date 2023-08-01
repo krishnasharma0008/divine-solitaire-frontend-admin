@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
 
 import { CloudIcon } from '../icons'
@@ -12,24 +12,18 @@ export interface InputTextProps {
 }
 
 const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeholder }) => {
-  const [file, setFile] = useState<File | null>(null)
   const handleChange = (file: File) => {
-    setFile(file)
+    onChange({
+      target: { files: [file] as unknown as FileList },
+    } as ChangeEvent<HTMLInputElement>)
   }
-
-  useEffect(() => {
-    if (file)
-      onChange({
-        target: { files: [file] as unknown as FileList },
-      } as ChangeEvent<HTMLInputElement>)
-  }, [file, onChange])
 
   return (
     <div className="mb-4">
       <label className="block mb-1" htmlFor={htmlFor}>
         {label}
       </label>
-      <FileUploader handleChange={handleChange} types={['pdf', 'jpg']}>
+      <FileUploader handleChange={handleChange} types={['pdf', 'jpg', 'jpeg', 'png']}>
         <div>
           <label className="flex justify-center w-full h-32 px-4 transition border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none bg-[#f8f8f8]">
             <span className="flex items-center space-x-2 flex-col justify-evenly	">

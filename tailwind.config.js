@@ -20,6 +20,7 @@ export default withMT({
         snow: '#F9F9F9',
         green: '#00AC00',
         Inactive: '#B3B3B3',
+        gray_light: '#A9A9A9',
       },
       backgroundColor: {
         'light-muted-azure': '#5599FF',

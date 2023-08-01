@@ -10,15 +10,17 @@ export interface InsuranceDetail {
   invno: string
   invdate: string
   invval: string
+  invdoc: string
   purstore: string
   polcomp: string
   polno: string
   polstart: string
   polend: string
   polstatus: string
+  poldoc?: string
   rendate: string
   requestno: string
-  polfile: string
+  polfile?: string
   invfile: string
   remarks: string
   createdat: string
