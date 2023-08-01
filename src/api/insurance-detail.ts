@@ -23,6 +23,7 @@ const createInsurance = (payload: InsuranceDetail): Promise<AxiosResponse<void>>
   const formData = new FormData()
   Object.keys(payload).forEach((key: string) => {
     if (!get(payload, key)) return
+
     if (['invfile', 'polfile'].includes(key)) {
       formData.append(key, get(payload, key), get(payload, key))
       return
@@ -42,7 +43,7 @@ const createInsurance = (payload: InsuranceDetail): Promise<AxiosResponse<void>>
 
 const DownloadExcel = async (status: string, id: number): Promise<AxiosResponse<Blob>> => {
   const apiUrl = `excel?policy_status=${status}&id=${id}`
-  console.log(apiUrl)
+  //console.log(apiUrl)
   return callWebService(getInsuranceListEndpoint.url + apiUrl, {
     method: getInsuranceListEndpoint.method,
     headers: {
@@ -52,4 +53,16 @@ const DownloadExcel = async (status: string, id: number): Promise<AxiosResponse<
   })
 }
 
-export { getInsuranceDetail, createInsurance, DownloadExcel }
+const DownloadFile = async (filename: string): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = `doc/${filename}`
+  //console.log(apiUrl)
+  return callWebService(getInsuranceListEndpoint.url + apiUrl, {
+    method: getInsuranceListEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getInsuranceDetail, createInsurance, DownloadExcel, DownloadFile }

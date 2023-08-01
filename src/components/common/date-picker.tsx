@@ -27,13 +27,13 @@ const DatePicker: React.FC<DatePickerProps> = ({ showIcon, onChange, className, 
   return (
     <div className={`flex flex-col ${className}`}>
       <label className="absolute -mt-6">{label}</label>
-      <div className="flex border border-black p-2.5 rounded justify-between items-center">
+      <div className={`flex p-2.5 rounded justify-between items-center ${showIcon === true ? 'border border-black' : 'bg-[#eceff1]'}`}>
         <DatePickerTw
           //showIcon={showIcon}
           selected={value}
           onChange={handleDateChange}
           dateFormat="dd MMMM yyyy"
-          className="focus:outline-none focus:border-none"
+          className={`focus:outline-none focus:border-none ${showIcon === true ? '' : 'bg-[#eceff1]'}`}
           readOnly={true} // Make the DatePicker read-only
           open={isDatePickerOpen} // Control visibility of the DatePicker based on state
           onClickOutside={() => setIsDatePickerOpen(false)} // Close the DatePicker when clicking outside

@@ -8,7 +8,7 @@ import { createResale, getResaleDetail } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
-import CalendarIcon from '@/components/icons/calendar-icon'
+import { CalendarIcon, DownloadIcon } from '@/components/icons'
 import LoaderContext from '@/context/loader-context'
 import { RESALE_DETAIL_STATUS } from '@/enums'
 import { ResaleDetail } from '@/interface'
@@ -60,6 +60,8 @@ const ResaleDetailScreen: React.FC = () => {
   const { query, push } = useRouter()
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
+  const [editMode, setEditMode] = useState<boolean>(false)
+
   const DateFormat = 'YYYY-MM-DD HH:mm:ss'
 
   useEffect(() => {
@@ -110,6 +112,48 @@ const ResaleDetailScreen: React.FC = () => {
       type: fieldname,
       payload: date.toISOString(),
     })
+  }
+
+  //download click
+  const iconClick = async (filename: string) => {
+    if (filename !== '') {
+      // try {
+      //   showLoader()
+      //   const result = await DownloadFile(filename)
+      //   // Determine the file type based on the file extension (assuming the filename has a valid extension)
+      //   const fileExtension = filename.split('.').pop()
+      //   let fileType = ''
+      //   switch (fileExtension?.toLowerCase()) {
+      //     case 'pdf':
+      //       fileType = 'application/pdf'
+      //       break
+      //     case 'jpg':
+      //     case 'jpeg':
+      //       fileType = 'image/jpeg'
+      //       break
+      //     case 'png':
+      //       fileType = 'image/png'
+      //     default:
+      //       fileType = 'application/octet-stream'
+      //   }
+      //   const href = window.URL.createObjectURL(new Blob([result.data], { type: fileType }))
+      //   const anchorElement = document.createElement('a')
+      //   anchorElement.href = href
+      //   anchorElement.download = filename
+      //   document.body.appendChild(anchorElement)
+      //   anchorElement.click()
+      //   document.body.removeChild(anchorElement)
+      //   window.URL.revokeObjectURL(href)
+      //   hideLoader()
+      // } catch (error) {
+      //   hideLoader()
+      //   console.log(error)
+      // }
+    } else {
+      //alert('Document not available to Download')
+      alert('Work in Progress.....')
+    }
+    //console.log(filename)
   }
 
   const onSubmitHandler = () => {
@@ -193,267 +237,320 @@ const ResaleDetailScreen: React.FC = () => {
     return newVal
   }
 
-  return (
-    <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
-      <SectionContainer>
-        <MetaDetailsCard
-          label="Details :"
-          containerClass="bg-[#28A0B0] w-full"
-          className=" ml-4 my-2.5 text-white"
-          fields={[
-            { name: 'Request No.', value: state.requestno },
-            { name: 'Request Type.', value: state.etype },
-            { name: 'UID', value: state.uid },
-            {
-              name: 'Status',
-              value: <Dropdown options={Object.values(RESALE_DETAIL_STATUS)} value={state.rstatus} selected={changeProductStatus} className="w-48" />,
-            },
-            {
-              name: 'Date of request',
-              //value: dayjs(state.createdat).format('DD MMMM YYYY'),
-              value: dayjs.utc(state.createdat).format('DD MMMM YYYY'),
-            },
-            {
-              name: 'Retail price',
-              //value: formatByCurrency(parseFloat(state.currentval)),
-              value: formatByCurrency(parseFloat(state.currentval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.currentval)),
-            },
-          ]}
-        />
-      </SectionContainer>
+  const onEditClickHandler = () => setEditMode(true)
 
-      <SectionContainer className="mt-6">
-        {/* <div>
+  return (
+    <>
+      <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
+        {/* <button type="button" onClick={() => iconClick('')} className="absolute top-[124px] right-7">
+          <DownloadIcon />
+        </button> */}
+        <SectionContainer>
+          <MetaDetailsCard
+            label="Details :"
+            containerClass="bg-[#28A0B0] w-full"
+            className=" ml-4 my-2.5 text-white"
+            fields={[
+              { name: 'Request No.', value: state.requestno },
+              { name: 'Request Type.', value: state.etype },
+              { name: 'UID', value: state.uid },
+              {
+                name: 'Status',
+                value: (
+                  <Dropdown
+                    options={Object.values(RESALE_DETAIL_STATUS)}
+                    value={state.rstatus}
+                    selected={changeProductStatus}
+                    className="w-48"
+                    disabled={!editMode}
+                  />
+                ),
+              },
+              {
+                name: 'Date of request',
+                //value: dayjs(state.createdat).format('DD MMMM YYYY'),
+                value: dayjs.utc(state.createdat).format('DD MMMM YYYY'),
+              },
+              {
+                name: 'Retail price',
+                //value: formatByCurrency(parseFloat(state.currentval)),
+                value: formatByCurrency(parseFloat(state.currentval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.currentval)),
+              },
+            ]}
+          />
+        </SectionContainer>
+
+        <SectionContainer className="mt-6">
+          {/* <div>
           <h1 className="py-2 font-medium text-base">Personal Details :</h1>
         </div> */}
-        <div className="bg-[#28A0B0] w-full">
-          <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Personal Details:</h1>
-        </div>
-        <div className="flex-row pt-5">
-          <InputText
-            className="w-full"
-            label="Name"
-            name="name"
-            onChange={onChangeHandlerCreator('phname')}
-            placeholder="Name"
-            type="text"
-            value={state.phname}
-          />
-
-          <div className="flex justify-between pt-5 ">
-            <InputText
-              className="w-full"
-              containerClass="w-1/4"
-              label="Email"
-              name="email"
-              onChange={onChangeHandlerCreator('phemail')}
-              placeholder="Email"
-              type="text"
-              value={state.phemail}
-            />
-            <InputText
-              className="w-full"
-              containerClass="w-1/4"
-              label="Mobile No."
-              name="mno"
-              onChange={onChangeHandlerCreator('phcontactno')}
-              placeholder="Mobile No."
-              type="text"
-              value={state.phcontactno}
-            />
+          <div className="bg-[#28A0B0] w-full">
+            <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Personal Details:</h1>
           </div>
-        </div>
-
-        <div className="flex-row pt-5">
-          <InputText
-            className="w-full"
-            label="Address"
-            name="address"
-            onChange={onChangeHandlerCreator('phaddress')}
-            placeholder="Address"
-            type="text"
-            value={state.phaddress}
-          />
-
-          <div className="flex justify-between pt-5 pb-5 ">
+          <div className="flex-row pt-10">
             <InputText
-              label="City"
-              name="city"
-              onChange={onChangeHandlerCreator('phcity')}
-              placeholder="City"
-              type="text"
-              value={state.phcity}
               className="w-full"
-              containerClass="w-1/4"
-            />
-            <InputText
-              label="Pin Code"
-              name="pincode"
-              onChange={onChangeHandlerCreator('phpincode')}
-              placeholder="Pin Code"
+              label="Name"
+              name="name"
+              onChange={onChangeHandlerCreator('phname')}
+              placeholder="Name"
               type="text"
-              value={state.phpincode}
-              className="w-full"
-              containerClass="w-1/4"
+              value={state.phname}
+              disabled={!editMode}
             />
-            <DatePicker
-              showIcon={true}
-              onChange={onDateChangeHandler('phdob')}
-              label="Date of Birth"
-              value={state.phdob ? new Date(dayjs.utc(state.phdob).format(DateFormat)) : null}
-              className=""
-              icon={CalendarIcon}
-            />
-          </div>
-          <InputText
-            className="w-full"
-            label="Jeweller Name"
-            name="jewelname"
-            onChange={onChangeHandlerCreator('jewelname')}
-            placeholder="Jeweller Name"
-            type="text"
-            value={state.jewelname}
-          />
-        </div>
-      </SectionContainer>
 
-      <SectionContainer className="mt-6">
-        {state.etype === 'buyback' ? (
-          <div>
-            <div>
-              <h1 className="py-2 font-medium text-base">Buyback Through :</h1>
-            </div>
-            <div>
-              <fieldset>
-                <div className="flex justify-between mt-6 space-y-6">
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="samestore"
-                      name="buyback-through"
-                      type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      value={state.issamestore === true ? 'true' : 'false'}
-                      checked={state.issamestore === true}
-                      onChange={onChangeHandlerCreator('samestore')}
-                    />
-                    <label htmlFor="samestore" className="block text-sm font-medium leading-6 text-gray-900">
-                      Same Store
-                    </label>
-                    <input
-                      type="text"
-                      name="samestore"
-                      id="samestore"
-                      autoComplete="Same Store"
-                      className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
-                      placeholder="1,00,000"
-                      value={state.issamestore === true ? state.newval : ''}
-                    />
-                  </div>
-                  <div className="flex items-center gap-x-3">
-                    <input
-                      id="diffstore"
-                      name="buyback-through"
-                      type="radio"
-                      className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      value={state.issamestore === false ? 'true' : 'false'}
-                      checked={state.issamestore === false}
-                      onChange={onChangeHandlerCreator('diffstore')}
-                    />
-                    <label htmlFor="diffstore" className="block text-sm font-medium leading-6 text-gray-900">
-                      Different Store
-                    </label>
-                    <input
-                      type="text"
-                      name="diffstore"
-                      id="diffstore"
-                      autoComplete="Different Store"
-                      className="pl-5 py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
-                      placeholder="1,00,000"
-                      value={state.issamestore === false ? state.newval : ''}
-                    />
-                  </div>
-                </div>
-              </fieldset>
+            <div className="flex justify-between pt-5 ">
+              <InputText
+                className="w-full"
+                containerClass="w-1/4"
+                label="Email"
+                name="email"
+                onChange={onChangeHandlerCreator('phemail')}
+                placeholder="Email"
+                type="text"
+                value={state.phemail}
+                disabled={!editMode}
+              />
+              <InputText
+                className="w-full"
+                containerClass="w-1/4"
+                label="Mobile No."
+                name="mno"
+                onChange={onChangeHandlerCreator('phcontactno')}
+                placeholder="Mobile No."
+                type="text"
+                value={state.phcontactno}
+                disabled={!editMode}
+              />
             </div>
           </div>
-        ) : (
-          <div className="flex-row pb-5 mx-4">
-            <InputText
-              className="w-full"
-              label="Upgrade Amount"
-              name="pugradeamt"
-              onChange={onChangeHandlerCreator('newval')}
-              placeholder="Upgrade Amount"
-              type="text"
-              //value={state.newval}
-              value={formatByCurrency(parseFloat(state.newval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.newval))}
-            />
-          </div>
-        )}
-        <div className="flex-row py-5 mx-4">
-          <div className="flex justify-between pt-5 ">
-            <InputText
-              label="Invoice Number"
-              name="iamt"
-              onChange={onChangeHandlerCreator('invno')}
-              placeholder="Invoice Number"
-              type="text"
-              value={state.invno}
-              className="w-full"
-              containerClass="w-1/4"
-            />
-            <InputText
-              label="Invoice Amount"
-              name="iamt"
-              onChange={onChangeHandlerCreator('invval')}
-              placeholder="Invoice Amount"
-              type="text"
-              value={formatByCurrency(parseFloat(state.invval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.invval))}
-              className="w-full"
-              containerClass="w-1/4"
-            />
-            {/* <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" /> */}
-            <DatePicker
-              showIcon={true}
-              onChange={onDateChangeHandler('invdate')}
-              label="Invoice Date"
-              value={state.invdate ? new Date(dayjs.utc(state.invdate).format(DateFormat)) : null}
-              className=""
-              icon={CalendarIcon}
-            />
-          </div>
-          <div className="pt-5">
-            <InputText
-              className="w-full"
-              label="Remarks"
-              name="remarks"
-              onChange={onChangeHandlerCreator('remarks')}
-              placeholder="Remarks"
-              type="text"
-              value={state.remarks}
-            />
-          </div>
-        </div>
-      </SectionContainer>
 
-      <SectionContainer className="mt-6">
-        <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
-          <Link href={'/admin/resale'}>
-            <button type="button" className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md">
-              {' '}
-              Cancel{' '}
+          <div className="flex-row pt-5">
+            <InputText
+              className="w-full"
+              label="Address"
+              name="address"
+              onChange={onChangeHandlerCreator('phaddress')}
+              placeholder="Address"
+              type="text"
+              value={state.phaddress}
+              disabled={!editMode}
+            />
+
+            <div className="flex justify-between pt-5 pb-5 ">
+              <InputText
+                label="City"
+                name="city"
+                onChange={onChangeHandlerCreator('phcity')}
+                placeholder="City"
+                type="text"
+                value={state.phcity}
+                className="w-full"
+                containerClass="w-1/4"
+                disabled={!editMode}
+              />
+              <InputText
+                label="Pin Code"
+                name="pincode"
+                onChange={onChangeHandlerCreator('phpincode')}
+                placeholder="Pin Code"
+                type="text"
+                value={state.phpincode}
+                className="w-full"
+                containerClass="w-1/4"
+                disabled={!editMode}
+              />
+              <DatePicker
+                showIcon={editMode}
+                onChange={onDateChangeHandler('phdob')}
+                label="Date of Birth"
+                value={state.phdob ? new Date(dayjs.utc(state.phdob).format(DateFormat)) : null}
+                className=""
+                icon={CalendarIcon}
+              />
+            </div>
+            <InputText
+              className="w-full"
+              label="Jeweller Name"
+              name="jewelname"
+              onChange={onChangeHandlerCreator('jewelname')}
+              placeholder="Jeweller Name"
+              type="text"
+              value={state.jewelname}
+              disabled={!editMode}
+            />
+          </div>
+        </SectionContainer>
+
+        <SectionContainer className="mt-6">
+          {state.etype === 'buyback' ? (
+            <div>
+              {/* <div>
+                <h1 className="py-2 font-medium text-base">Buyback Through :</h1>
+              </div> */}
+              <div className="bg-[#28A0B0] w-full">
+                <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Buyback Through :</h1>
+              </div>
+              <div>
+                <fieldset>
+                  <div className="flex justify-between mt-6 space-y-6">
+                    <div className="flex items-center gap-x-3">
+                      <input
+                        id="samestore"
+                        name="buyback-through"
+                        type="radio"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        value={state.issamestore === true ? 'true' : 'false'}
+                        checked={state.issamestore === true}
+                        onChange={onChangeHandlerCreator('samestore')}
+                      />
+                      <label htmlFor="samestore" className="block text-sm font-medium leading-6 text-gray-900">
+                        Same Store
+                      </label>
+                      <input
+                        type="text"
+                        name="samestore"
+                        id="samestore"
+                        autoComplete="Same Store"
+                        className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
+                        value={state.issamestore === true ? state.newval : ''}
+                        disabled={!editMode}
+                      />
+                    </div>
+                    <div className="flex items-center gap-x-3">
+                      <input
+                        id="diffstore"
+                        name="buyback-through"
+                        type="radio"
+                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        value={state.issamestore === false ? 'true' : 'false'}
+                        checked={state.issamestore === false}
+                        onChange={onChangeHandlerCreator('diffstore')}
+                      />
+                      <label htmlFor="diffstore" className="block text-sm font-medium leading-6 text-gray-900">
+                        Different Store
+                      </label>
+                      <input
+                        type="text"
+                        name="diffstore"
+                        id="diffstore"
+                        autoComplete="Different Store"
+                        className="pl-5 py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block"
+                        value={state.issamestore === false ? state.newval : ''}
+                        disabled={!editMode}
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          ) : (
+            <div className="flex-row pb-5 mx-4">
+              <InputText
+                className="w-full"
+                label="Upgrade Amount"
+                name="pugradeamt"
+                onChange={onChangeHandlerCreator('newval')}
+                placeholder="Upgrade Amount"
+                type="text"
+                //value={state.newval}
+                value={formatByCurrency(parseFloat(state.newval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.newval))}
+                disabled={!editMode}
+              />
+            </div>
+          )}
+          <div className="flex-row py-5 mx-4">
+            <div className="flex justify-between pt-5 ">
+              <InputText
+                label="Invoice Number"
+                name="iamt"
+                onChange={onChangeHandlerCreator('invno')}
+                placeholder="Invoice Number"
+                type="text"
+                value={state.invno}
+                className="w-full"
+                containerClass="w-1/4"
+                disabled={!editMode}
+              />
+              <InputText
+                label="Invoice Amount"
+                name="iamt"
+                onChange={onChangeHandlerCreator('invval')}
+                placeholder="Invoice Amount"
+                type="text"
+                value={formatByCurrency(parseFloat(state.invval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.invval))}
+                className="w-full"
+                containerClass="w-1/4"
+                disabled={!editMode}
+              />
+              {/* <DatePicker onChange={onDateChangeHandler('invdate')} label="Invoice Date" value={new Date(state.invdate || Date.now())} className="" /> */}
+              <DatePicker
+                showIcon={editMode}
+                onChange={onDateChangeHandler('invdate')}
+                label="Invoice Date"
+                value={state.invdate ? new Date(dayjs.utc(state.invdate).format(DateFormat)) : null}
+                className=""
+                icon={CalendarIcon}
+              />
+            </div>
+            <div className="pt-5">
+              <InputText
+                className="w-full"
+                label="Remarks"
+                name="remarks"
+                onChange={onChangeHandlerCreator('remarks')}
+                placeholder="Remarks"
+                type="text"
+                value={state.remarks}
+                disabled={!editMode}
+              />
+            </div>
+          </div>
+        </SectionContainer>
+
+        <SectionContainer className="mt-6">
+          <div className="bg-[#28A0B0] w-full">
+            <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Invoice Proof:</h1>
+          </div>
+          <div className="flex pt-5">
+            <label htmlFor="diffstore" className="block text-sm font-medium leading-6 text-gray-900">
+              Download document
+            </label>
+            <button type="button" onClick={() => iconClick('')} className="absolute left-56">
+              <DownloadIcon />
             </button>
-          </Link>
-          <button
-            type="submit"
-            onClick={onSubmitHandler}
-            className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
-          >
-            Submit
-          </button>
-        </div>
-      </SectionContainer>
-    </div>
+          </div>
+        </SectionContainer>
+
+        <SectionContainer className="mt-6">
+          <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
+            <Link href={'/admin/resale'}>
+              <button type="button" className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md">
+                {' '}
+                Cancel{' '}
+              </button>
+            </Link>
+            {editMode ? (
+              <button
+                type="submit"
+                onClick={onSubmitHandler}
+                className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={onEditClickHandler}
+                className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+              >
+                Edit
+              </button>
+            )}
+          </div>
+        </SectionContainer>
+      </div>
+    </>
   )
 }
 

@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react' //
 import DataTable, { TableColumn, TableStyles } from 'react-data-table-component'
 
-import getUserList from '@/api/user'
+import getUserListWithFilter from '@/api/user'
 //import { getUserList, getUserListWithFilter } from '@/api/user'
+import InputText from '@/components/common/input-text'
 import SearchBox from '@/components/common/searchbox'
 import LoaderContext from '@/context/loader-context'
 import { USER_SEARCH_LIST } from '@/enums'
@@ -16,6 +17,29 @@ export default function User() {
 
   const [Dropvalue, setDropvalue] = useState<string>(USER_SEARCH_LIST.NAME)
   const [search, setSearch] = useState<string>('')
+
+  /** */
+  const [totalPages, setTotalPage] = useState<number>(1)
+  const [totalRows, setTotalRows] = useState<number>(1)
+  const [selectedPage, setSelectedPage] = useState<number>(1)
+
+  const onSelectedPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputPage = parseInt(event.target.value, 10)
+    //console.log(inputPage)
+    const selectedPageIndex = inputPage - 1
+    if (selectedPageIndex >= 0 && selectedPageIndex < totalPages) {
+      setSelectedPage(isNaN(inputPage) ? 1 : inputPage)
+    }
+  }
+
+  const goToSelectedPage = () => {
+    //console.log(selectedPage)
+    const selectedPageIndex = selectedPage - 1
+    if (selectedPageIndex >= 0 && selectedPageIndex < totalPages) {
+      onPageClick(selectedPageIndex)
+    }
+  }
+  /** */
 
   const { push } = useRouter()
 
@@ -29,15 +53,16 @@ export default function User() {
       return Dropvalue
     }
     setDropvalue(Object.values(USER_SEARCH_LIST)[idx || 0])
-    return Dropvalue // Make sure to return a value here
+    return Dropvalue
   }
 
-  const getlistdata = async () => {
-    //fieldName?: string, fieldValue?: string, pageNo?: number
+  const getlistdata = async (fieldName?: string, fieldValue?: string, pageNo?: number) => {
     try {
       showLoader()
-      const result = await getUserList() //getUserListWithFilter(fieldName, fieldValue, pageNo)
+      const result = await getUserListWithFilter(fieldName, fieldValue, pageNo)
       setUser(result.data.data ?? [])
+      setTotalPage(result.data.total_page)
+      setTotalRows(result.data.total_row)
       hideLoader()
     } catch (error) {
       hideLoader()
@@ -47,12 +72,14 @@ export default function User() {
 
   const SearchClick = () => {
     console.log('click check')
-    //getlistdata(Dropvalue.toLocaleLowerCase(), search, 0)
+    setSelectedPage(1)
+    getlistdata(Dropvalue.toLocaleLowerCase() === 'mobile' ? 'mobno' : Dropvalue.toLocaleLowerCase(), search, selectedPage)
   }
 
-  const onPageClick = (pageIndex: number) => {
-    console.log('onPageClick called with pageIndex:', pageIndex)
-    //getlistdata(Dropvalue.toLocaleLowerCase(), search, pageIndex)
+  const onPageClick = (newPageNumber: number) => {
+    //console.log('onPageClick called with pageIndex:', newPageNumber)
+    setSelectedPage(isNaN(newPageNumber) ? 1 : newPageNumber)
+    getlistdata(Dropvalue.toLocaleLowerCase() === 'mobile' ? 'mobno' : Dropvalue.toLocaleLowerCase(), search, newPageNumber)
   }
   const onRowClicked = (id: number) => push(`/admin/user-detail/${id}`)
 
@@ -86,7 +113,7 @@ export default function User() {
   ]
 
   useEffect(() => {
-    getlistdata()
+    getlistdata('', '', 1)
   }, [])
 
   const CustomStyles: TableStyles = {
@@ -102,6 +129,7 @@ export default function User() {
     rowsPerPageText: ' ',
     selectAllRowsItem: true,
     selectAllRowsItemText: 'All',
+    noRowsPerPage: true,
   }
 
   return (
@@ -124,8 +152,10 @@ export default function User() {
             columns={columns}
             data={user}
             customStyles={CustomStyles}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             onRowClicked={(e) => onRowClicked(e.id!)}
             pagination
+            paginationServer
             fixedHeader
             fixedHeaderScrollHeight="450px"
             selectableRowsHighlight
@@ -133,6 +163,34 @@ export default function User() {
             pointerOnHover
             paginationComponentOptions={CustomPagination}
             onChangePage={onPageClick}
+            //paginationServer
+            paginationTotalRows={totalRows}
+            paginationDefaultPage={selectedPage}
+            //paginationPerPage={10}
+            // paginationComponentOptions={{
+            //   noRowsPerPage: true,
+            //   selectAllRowsItem: true,
+            // }}
+            //onChangePage={(page) => setPage(page)}
+          />
+          <button
+            type="button"
+            className="bg-[#00A0B6] text-white px-5 py-1.5 rounded block"
+            style={{ marginTop: user.length ? -40 : 0, marginLeft: 90 }}
+            onClick={goToSelectedPage}
+          >
+            Go to Page
+          </button>
+        </div>
+        <div className="flex" style={{ marginTop: user.length ? -65 : 0, marginLeft: 45 }}>
+          <InputText
+            className="w-14 py-0"
+            onChange={onSelectedPageChange}
+            placeholder="Go to Page"
+            type="number"
+            value={selectedPage.toString()}
+            min={1}
+            max={totalPages}
           />
         </div>
       </div>

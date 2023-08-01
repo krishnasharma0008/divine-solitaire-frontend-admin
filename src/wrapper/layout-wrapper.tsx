@@ -40,7 +40,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       icon: ResaleIcon,
       name: URLs.RESALE,
     },
-    { title: 'Ecom Orders', icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
+    // { title: 'Ecom Orders', icon: EcomOrdersIcon, name: URLs.USER_DETAIL },
     { title: 'Store Locator', url: '/admin/storelocator', icon: StoreLocatorIcon, name: URLs.STORE_LOCATOR },
     {
       title: 'Special Products',

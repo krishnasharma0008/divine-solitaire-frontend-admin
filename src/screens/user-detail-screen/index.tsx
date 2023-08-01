@@ -98,7 +98,7 @@ const UserDetailScreen: React.FC = () => {
   }, [hideLoader, query.id, showLoader])
 
   const onSubmitHandler = () => {
-    const payload: Partial<User> = {
+    const payload: User = {
       //...state,
       fname: state.fname,
       email: state.email,
@@ -110,7 +110,7 @@ const UserDetailScreen: React.FC = () => {
       dob: new Date(state.dob || Date.now()).toISOString(),
       doanniv: new Date(state.doanniv || Date.now()).toISOString(),
     }
-    //console.log(payload)
+    console.log(payload)
     if (query?.id) {
       payload.id = query.id as unknown as number
     }
