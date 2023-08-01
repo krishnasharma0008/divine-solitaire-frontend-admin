@@ -114,7 +114,7 @@ export default function User() {
 
   useEffect(() => {
     getlistdata('', '', 1)
-  }, [getlistdata])
+  }, [])
 
   const CustomStyles: TableStyles = {
     headRow: {
