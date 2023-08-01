@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
 
 import { CloudIcon } from '../icons'
@@ -12,27 +12,11 @@ export interface InputTextProps {
 }
 
 const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeholder }) => {
-  const [file, setFile] = useState<File | null>(null)
   const handleChange = (file: File) => {
-    setFile(file)
+    onChange({
+      target: { files: [file] as unknown as FileList },
+    } as ChangeEvent<HTMLInputElement>)
   }
-
-  // const stableOnChange = useCallback(onChange, [])
-
-  // useEffect(() => {
-  //   if (file) {
-  //     stableOnChange({
-  //       target: { files: [file] as unknown as FileList },
-  //     } as ChangeEvent<HTMLInputElement>)
-  //   }
-  // }, [file, stableOnChange])
-
-  useEffect(() => {
-    if (file)
-      onChange({
-        target: { files: [file] as unknown as FileList },
-      } as ChangeEvent<HTMLInputElement>)
-  }, [file, onChange])
 
   return (
     <div className="mb-4">

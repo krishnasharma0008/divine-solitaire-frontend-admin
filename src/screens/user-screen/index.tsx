@@ -114,7 +114,7 @@ export default function User() {
 
   useEffect(() => {
     getlistdata('', '', 1)
-  }, [])
+  }, [getlistdata])
 
   const CustomStyles: TableStyles = {
     headRow: {
@@ -182,12 +182,12 @@ export default function User() {
             Go to Page
           </button>
         </div>
-        <div className="flex" style={{ marginTop: user.length ? -65 : 0, marginLeft: 45 }}>
+        <div className="flex" style={{ marginTop: user.length ? -55 : 0, marginLeft: 45 }}>
           <InputText
-            className="w-14 py-0"
+            className="!w-[3rem] !border-gray_light !h-[2.5rem] !pt-0 !pb-0"
             onChange={onSelectedPageChange}
             placeholder="Go to Page"
-            type="number"
+            type="text"
             value={selectedPage.toString()}
             min={1}
             max={totalPages}

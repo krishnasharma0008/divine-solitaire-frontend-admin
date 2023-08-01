@@ -79,16 +79,13 @@ const InsuranceDetailScreen: React.FC = () => {
           type: 'ALL',
           payload: { ...(res.data.data as unknown as InsuranceDetail) },
         })
-        //console.log(res.data.data)
         hideLoader()
       })
       .catch((err) => {
         hideLoader()
         console.log('errr', err)
       })
-  }, [hideLoader, query.id, showLoader])
-
-  //const initialEndDate = dayjs(state.polend).add(365, 'day').format('YYYY-MM-DD');
+  }, [query.id, showLoader, hideLoader])
 
   const iconClick = async (filename: string) => {
     if (filename !== '') {
@@ -184,7 +181,6 @@ const InsuranceDetailScreen: React.FC = () => {
       payload.id = query.id as unknown as number
     }
     showLoader()
-    //console.log(payload)
     createInsurance(payload)
       .then(() => {
         console.log('It is successfully created')
@@ -437,7 +433,9 @@ const InsuranceDetailScreen: React.FC = () => {
             <InputFile label="Policy Documents" onChange={onChangeHandlerCreator('polfile')} value={state.polfile || ''} placeholder="Drag & drop files here" />
             <button
               type="button"
-              onClick={() => iconClick(state.poldoc)}
+              onClick={() => {
+                if (state.poldoc) iconClick(state.poldoc)
+              }}
               className="px-5 py-2  block mb-[190px]"
               style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
             >

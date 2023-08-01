@@ -8,4 +8,5 @@ export interface Insurance {
   polend: null | number
   polstatus: string
   createdat: string
+  poldoc: string
 }

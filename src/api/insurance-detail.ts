@@ -19,9 +19,10 @@ const getInsuranceDetail = (id: number): Promise<AxiosResponse<GetInsuranceDetai
     },
   })
 
-const createInsurance = (payload: InsuranceDetail): Promise<AxiosResponse<void>> => {
+const createInsurance = ({ poldoc, invdoc, ...payload }: InsuranceDetail): Promise<AxiosResponse<void>> => {
   const formData = new FormData()
-  Object.keys(payload).forEach((key: string) => {
+  console.log(poldoc, invdoc)
+  Object.keys({ ...payload }).forEach((key: string) => {
     if (!get(payload, key)) return
 
     if (['invfile', 'polfile'].includes(key)) {

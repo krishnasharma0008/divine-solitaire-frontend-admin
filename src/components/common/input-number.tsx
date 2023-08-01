@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from 'react'
 
 const InputNumber = () => {
   const decrement = (e: SyntheticEvent) => {
-    const btn = (e.target as HTMLElement).parentNode!.parentElement!.querySelector('button[data-action="decrement"]') as HTMLElement
+    const btn = (e.target as HTMLElement).parentNode?.parentElement?.querySelector('button[data-action="decrement"]') as HTMLElement
     const target = btn.nextElementSibling as HTMLInputElement
     let value = Number(target.value)
     value--
@@ -10,7 +10,7 @@ const InputNumber = () => {
   }
 
   const increment = (e: SyntheticEvent) => {
-    const btn = (e.target as HTMLElement).parentNode!.parentElement!.querySelector('button[data-action="decrement"]') as HTMLElement
+    const btn = (e.target as HTMLElement).parentNode?.parentElement?.querySelector('button[data-action="decrement"]') as HTMLElement
     const target = btn.nextElementSibling as HTMLInputElement
     let value = Number(target.value)
     value++
