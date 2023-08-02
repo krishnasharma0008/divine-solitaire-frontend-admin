@@ -120,23 +120,7 @@ const ResaleDetailScreen: React.FC = () => {
       // try {
       //   showLoader()
       //   const result = await DownloadFile(filename)
-      //   // Determine the file type based on the file extension (assuming the filename has a valid extension)
-      //   const fileExtension = filename.split('.').pop()
-      //   let fileType = ''
-      //   switch (fileExtension?.toLowerCase()) {
-      //     case 'pdf':
-      //       fileType = 'application/pdf'
-      //       break
-      //     case 'jpg':
-      //     case 'jpeg':
-      //       fileType = 'image/jpeg'
-      //       break
-      //     case 'png':
-      //       fileType = 'image/png'
-      //     default:
-      //       fileType = 'application/octet-stream'
-      //   }
-      //   const href = window.URL.createObjectURL(new Blob([result.data], { type: fileType }))
+      //   const href = window.URL.createObjectURL(new Blob([result.data]))
       //   const anchorElement = document.createElement('a')
       //   anchorElement.href = href
       //   anchorElement.download = filename

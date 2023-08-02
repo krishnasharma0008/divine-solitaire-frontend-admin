@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '@/components/common/navbar'
 import Sidebar, { SidebarProps } from '@/components/common/sidebar'
 import {
-  ActiveNotificationsIcon,
+  //ActiveNotificationsIcon,
   InsuranceIcon,
   HomeIcon,
   QuestionIcon,
@@ -41,11 +41,11 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       icon: SpecialProductsIcon,
       name: URLs.SPECIAL_PRODUCTS,
     },
-    {
-      title: 'Active Notifications',
-      icon: ActiveNotificationsIcon,
-      name: URLs.USER_DETAIL,
-    },
+    // {
+    //   title: 'Active Notifications',
+    //   icon: ActiveNotificationsIcon,
+    //   name: URLs.USER_DETAIL,
+    // },
     {
       title: 'Log Out',
       url: '/login',

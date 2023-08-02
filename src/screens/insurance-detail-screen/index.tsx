@@ -93,25 +93,7 @@ const InsuranceDetailScreen: React.FC = () => {
         showLoader()
         const result = await DownloadFile(filename)
 
-        // Determine the file type based on the file extension (assuming the filename has a valid extension)
-        const fileExtension = filename.split('.').pop()
-        let fileType = ''
-        switch (fileExtension?.toLowerCase()) {
-          case 'pdf':
-            fileType = 'application/pdf'
-            break
-          case 'jpg':
-          case 'jpeg':
-            fileType = 'image/jpeg'
-            break
-          case 'png':
-            fileType = 'image/png'
-          default:
-            // If the file type is not recognized, fallback to 'application/octet-stream' (binary data)
-            fileType = 'application/octet-stream'
-        }
-
-        const href = window.URL.createObjectURL(new Blob([result.data], { type: fileType }))
+        const href = window.URL.createObjectURL(new Blob([result.data]))
         const anchorElement = document.createElement('a')
 
         anchorElement.href = href
@@ -176,7 +158,7 @@ const InsuranceDetailScreen: React.FC = () => {
       rendate: new Date(state.rendate || Date.now()).toISOString(),
       polstatus: ActionType,
     }
-
+    //console.log(payload.invfile)
     if (query?.id) {
       payload.id = query.id as unknown as number
     }
@@ -192,6 +174,8 @@ const InsuranceDetailScreen: React.FC = () => {
         console.log('Error', err)
       })
   }
+
+  /** */
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
