@@ -33,4 +33,16 @@ const createResale = (payload: ResaleDetail): Promise<AxiosResponse<void>> => {
   })
 }
 
-export { getResaleDetail, createResale }
+const DownloadFile = async (filename: string): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = `doc/${filename}`
+  //console.log(apiUrl)
+  return callWebService(getResaleListEndpoint.url + apiUrl, {
+    method: getResaleListEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getResaleDetail, createResale, DownloadFile }

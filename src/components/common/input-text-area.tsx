@@ -10,10 +10,12 @@ export interface TextAreaProps extends TextareaProps {
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void
   placeholder?: string
   value: string
+  disabled?:boolean
   row?: number
+
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ className, containerClass, id, label, name, onChange, value, placeholder, row }) => {
+const TextArea: React.FC<TextAreaProps> = ({ className, containerClass, id, label, name, onChange, value, placeholder,disabled, row }) => {
   return (
     <div className={`mb-4 ${containerClass}`}>
       <label htmlFor={id} className="block text-gray-700 text-sm mb-2">
@@ -26,6 +28,7 @@ const TextArea: React.FC<TextAreaProps> = ({ className, containerClass, id, labe
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        disabled={disabled}
         rows={row}
       />
     </div>

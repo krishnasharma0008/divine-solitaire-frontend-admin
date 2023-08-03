@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useReducer } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 import React from 'react'
 
 import { createInsurance, getInsuranceDetail, DownloadFile } from '@/api'
@@ -64,6 +64,8 @@ const insuranceDetailReducer = (state: InsuranceDetail, action: InsuranceDetailA
 const InsuranceDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(insuranceDetailReducer, initialState)
   const { showLoader, hideLoader } = useContext(LoaderContext)
+
+  const [editMode, setEditMode] = useState<boolean>(false)
 
   const DateFormat = 'YYYY-MM-DD HH:mm:ss'
 
@@ -175,7 +177,7 @@ const InsuranceDetailScreen: React.FC = () => {
       })
   }
 
-  /** */
+  const onEditClickHandler = () => setEditMode(true)
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
@@ -219,11 +221,12 @@ const InsuranceDetailScreen: React.FC = () => {
               placeholder="Name"
               type="text"
               value={state.phname}
+              disabled={!editMode}
             />
 
             <div className="flex justify-between pt-5 ">
               <DatePicker
-                showIcon={true}
+                showIcon={editMode}
                 onChange={onDateChangeHandler('phdob')}
                 label="Date of Birth"
                 //value={new Date(state.phdob || Date.now())}
@@ -249,6 +252,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Email"
                 type="text"
                 value={state.phemail}
+                disabled={!editMode}
               />
               <InputText
                 className="w-full"
@@ -259,6 +263,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Mobile No."
                 type="text"
                 value={state.phcontactno}
+                disabled={!editMode}
               />
             </div>
           </div>
@@ -272,11 +277,20 @@ const InsuranceDetailScreen: React.FC = () => {
               placeholder="Address"
               type="text"
               value={state.phaddress}
+              disabled={!editMode}
             />
 
             <div className="flex justify-between pt-5 ">
               {/* <InputText label="State" name="state" onChange={onChangeHandlerCreator('phstate')} placeholder="State" type="text" value={state.phstate} /> */}
-              <InputText label="City" name="city" onChange={onChangeHandlerCreator('phcity')} placeholder="City" type="text" value={state.phcity} />
+              <InputText
+                label="City"
+                name="city"
+                onChange={onChangeHandlerCreator('phcity')}
+                placeholder="City"
+                type="text"
+                value={state.phcity}
+                disabled={!editMode}
+              />
               <InputText
                 label="Pin Code"
                 name="pincode"
@@ -284,6 +298,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Pin Code"
                 type="text"
                 value={state.phpincode}
+                disabled={!editMode}
               />
             </div>
           </div>
@@ -301,6 +316,7 @@ const InsuranceDetailScreen: React.FC = () => {
             placeholder="Jeweller Name"
             type="text"
             value={state.purstore}
+            disabled={!editMode}
           />
           <div className="flex-row py-5">
             <div className="flex justify-between pt-5 ">
@@ -311,6 +327,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Invoice Amount"
                 type="text"
                 value={formatByCurrency(parseFloat(state.invval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.invval))}
+                disabled={!editMode}
               />
 
               <InputText
@@ -320,6 +337,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Invoice Number"
                 type="text"
                 value={state.invno}
+                disabled={!editMode}
               />
 
               <DatePicker
@@ -328,15 +346,28 @@ const InsuranceDetailScreen: React.FC = () => {
                 //value={state.invdate ? new Date(state.invdate) : null}
                 value={state.invdate ? new Date(dayjs.utc(state.invdate).format(DateFormat)) : null}
                 className=""
-                showIcon={true}
+                showIcon={editMode}
                 icon={CalendarIcon}
               />
             </div>
           </div>
-          <InputFile label="Invoice Documents" onChange={onChangeHandlerCreator('invfile')} value={state.invfile} placeholder="Drag & drop files here" />
-          <button type="button" onClick={() => iconClick(state.invdoc)} className="px-5 py-2 block mb-[190px]" style={{ marginTop: -180, marginLeft: 120 }}>
-            <DownloadIcon />
-          </button>
+          <InputFile
+            label="Invoice Documents"
+            onChange={onChangeHandlerCreator('invfile')}
+            value={state.invfile}
+            placeholder="Drag & drop files here"
+            disabled={!editMode}
+          />
+          {editMode ? (
+            <button
+              type="button"
+              onClick={() => iconClick(state.invdoc)}
+              className={`px-5 py-2 block mb-[190px] `}
+              style={{ marginTop: -180, marginLeft: 120 }}
+            >
+              <DownloadIcon />
+            </button>
+          ) : null}
         </SectionContainer>
 
         <SectionContainer className="mt-6">
@@ -360,6 +391,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Insurance Provider Name *"
                 type="text"
                 value={state.polcomp}
+                disabled={!editMode}
               />
 
               <InputText
@@ -369,6 +401,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Policy Number "
                 type="text"
                 value={state.polno}
+                disabled={!editMode}
               />
             </div>
             <div className="flex justify-between pt-5 pb-5">
@@ -379,7 +412,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 //value={state.polstart ? new Date(state.polstart) : null}
                 value={state.polstart ? new Date(dayjs.utc(state.polstart).format(DateFormat)) : null}
                 className=""
-                showIcon={true}
+                showIcon={editMode}
                 icon={CalendarIcon}
               />
 
@@ -390,7 +423,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 value={state.polend ? new Date(dayjs.utc(state.polend).format(DateFormat)) : null}
                 //value={new Date(dayjs(state.polstart).add(365, 'day').toDate())}
                 className=""
-                showIcon={true}
+                showIcon={editMode}
                 icon={CalendarIcon}
               />
               <DatePicker
@@ -399,7 +432,7 @@ const InsuranceDetailScreen: React.FC = () => {
                 //value={state.rendate ? new Date(state.rendate) : null}
                 value={state.rendate ? new Date(dayjs.utc(state.rendate).format(DateFormat)) : null}
                 className=""
-                showIcon={true}
+                showIcon={editMode}
                 icon={CalendarIcon}
               />
             </div>
@@ -412,9 +445,18 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Remarks"
                 type="text"
                 value={state.remarks}
+                disabled={!editMode}
               />
             </div>
-            <InputFile label="Policy Documents" onChange={onChangeHandlerCreator('polfile')} value={state.polfile || ''} placeholder="Drag & drop files here" />
+            {editMode ? (
+              <InputFile
+                label="Policy Documents"
+                onChange={onChangeHandlerCreator('polfile')}
+                value={state.polfile || ''}
+                placeholder="Drag & drop files here"
+                disabled={!editMode}
+              />
+            ) : null}
             <button
               type="button"
               onClick={() => {
@@ -429,7 +471,36 @@ const InsuranceDetailScreen: React.FC = () => {
 
           <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5 gap-6">
             <Link href="/admin/insurance">Cancel</Link>
-            {state.polstatus === 'In Process' && (
+            {!editMode ? (
+              <button
+                type="button"
+                onClick={onEditClickHandler}
+                className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+              >
+                Edit
+              </button>
+            ) : (
+              <>
+                {state.polstatus === 'In Process' && (
+                  <button
+                    type="submit"
+                    onClick={onSubmitHandler('Reject')}
+                    className="text-sm font-semibold text-gray-900 px-12 border-black border py-2 box-border rounded-md"
+                  >
+                    Reject
+                  </button>
+                )}
+
+                <button
+                  type="submit"
+                  onClick={onSubmitHandler('Approve')}
+                  className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+                >
+                  Approve
+                </button>
+              </>
+            )}
+            {/* {state.polstatus === 'In Process' && (
               <button
                 type="submit"
                 onClick={onSubmitHandler('Reject')}
@@ -445,7 +516,7 @@ const InsuranceDetailScreen: React.FC = () => {
               className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
             >
               Approve
-            </button>
+            </button> */}
           </div>
         </SectionContainer>
       </div>
