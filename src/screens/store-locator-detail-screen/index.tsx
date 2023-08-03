@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useContext, useEffect, useReducer } from 'react'
+import { useContext, useEffect, useReducer, useState } from 'react'
 
 import { getStoreLocatorDetail } from '@/api'
 import InputText from '@/components/common/input-text'
@@ -39,6 +39,8 @@ const StoreLocatorDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(StoreLocatorDetailReducer, initialState)
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
+  const [editMode] = useState<boolean>(false)//setEditMode
+
   const { query } = useRouter()
 
   useEffect(() => {
@@ -61,6 +63,8 @@ const StoreLocatorDetailScreen: React.FC = () => {
       })
   }, [hideLoader, query.id, showLoader])
 
+  //const onEditClickHandler = () => setEditMode(true)
+
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
       <SectionContainer className="mt-6">
@@ -68,22 +72,37 @@ const StoreLocatorDetailScreen: React.FC = () => {
           <h1 className="py-2 font-medium text-base">Store Details :</h1>
         </div>
         <div className="flex-row pt-5">
-          <InputText className="w-full" label="Name" name="name" placeholder="Name" type="text" value={state?.name || ''} />
+          <InputText className="w-full" label="Name" name="name" placeholder="Name" type="text" value={state?.name || ''} disabled={!editMode} />
           <div className="flex justify-between pt-5 pb-5">
-            <InputText className="w-full" containerClass="w-1/3" label="Mobile No." name="mno" type="text" value={state?.contact_no || ''} />
+            <InputText
+              className="w-full"
+              containerClass="w-1/3"
+              label="Mobile No."
+              name="mno"
+              type="text"
+              value={state?.contact_no || ''}
+              disabled={!editMode}
+            />
           </div>
-          <InputText className="w-full" label="Email" name="email" placeholder="Email" type="text" value={state?.email || ''} />
+          <InputText className="w-full" label="Email" name="email" placeholder="Email" type="text" value={state?.email || ''} disabled={!editMode} />
         </div>
 
         <div className="flex-row pt-5">
-          <TextArea className="w-full" label="Address" name="address" placeholder="Address" rows={3} value={state?.address || ''} />
+          <TextArea className="w-full" label="Address" name="address" placeholder="Address" rows={3} value={state?.address || ''} disabled={!editMode} />
           <div className="flex justify-between pt-5 ">
-            <InputText label="State" name="state" placeholder="State" type="text" value={state?.state || ''} containerClass="w-1/3" />
-            <InputText label="City" name="city" placeholder="City" type="text" value={state?.city || ''} containerClass="w-1/3" />
+            <InputText label="State" name="state" placeholder="State" type="text" value={state?.state || ''} containerClass="w-1/3" disabled={!editMode} />
+            <InputText label="City" name="city" placeholder="City" type="text" value={state?.city || ''} containerClass="w-1/3" disabled={!editMode} />
           </div>
           <div className="flex justify-between pt-5 ">
-            <InputText label="Country" name="country" type="text" value={state?.country || ''} containerClass="w-1/3" />
-            <InputText label="Created Date " name="created_at" type="text" value={dayjs(state?.created_at).format('DD MMMM YYYY')} containerClass="w-1/3" />
+            <InputText label="Country" name="country" type="text" value={state?.country || ''} containerClass="w-1/3" disabled={!editMode} />
+            <InputText
+              label="Created Date "
+              name="created_at"
+              type="text"
+              value={dayjs(state?.created_at).format('DD MMMM YYYY')}
+              containerClass="w-1/3"
+              disabled={!editMode}
+            />
           </div>
         </div>
       </SectionContainer>

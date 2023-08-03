@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
 
-import { createResale, getResaleDetail } from '@/api'
+import { createResale, getResaleDetail, DownloadFile } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
@@ -117,25 +117,25 @@ const ResaleDetailScreen: React.FC = () => {
   //download click
   const iconClick = async (filename: string) => {
     if (filename !== '') {
-      // try {
-      //   showLoader()
-      //   const result = await DownloadFile(filename)
-      //   const href = window.URL.createObjectURL(new Blob([result.data]))
-      //   const anchorElement = document.createElement('a')
-      //   anchorElement.href = href
-      //   anchorElement.download = filename
-      //   document.body.appendChild(anchorElement)
-      //   anchorElement.click()
-      //   document.body.removeChild(anchorElement)
-      //   window.URL.revokeObjectURL(href)
-      //   hideLoader()
-      // } catch (error) {
-      //   hideLoader()
-      //   console.log(error)
-      // }
+      try {
+        showLoader()
+        const result = await DownloadFile(filename)
+        const href = window.URL.createObjectURL(new Blob([result.data]))
+        const anchorElement = document.createElement('a')
+        anchorElement.href = href
+        anchorElement.download = filename
+        document.body.appendChild(anchorElement)
+        anchorElement.click()
+        document.body.removeChild(anchorElement)
+        window.URL.revokeObjectURL(href)
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
     } else {
-      //alert('Document not available to Download')
-      alert('Work in Progress.....')
+      alert('Document not available to Download')
+      //alert('Work in Progress.....')
     }
     //console.log(filename)
   }
@@ -496,14 +496,18 @@ const ResaleDetailScreen: React.FC = () => {
           <div className="bg-[#28A0B0] w-full">
             <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Invoice Proof:</h1>
           </div>
+          {/* {editMode ? ( */}
           <div className="flex pt-5">
             <label htmlFor="diffstore" className="block text-sm font-medium leading-6 text-gray-900">
               Download document
             </label>
-            <button type="button" onClick={() => iconClick('')} className="absolute left-56">
-              <DownloadIcon />
-            </button>
+            {editMode ? (
+              <button type="button" onClick={() => iconClick(state.docname)} className="absolute left-56">
+                <DownloadIcon />
+              </button>
+            ) : null}
           </div>
+          {/* ) : null} */}
         </SectionContainer>
 
         <SectionContainer className="mt-6">

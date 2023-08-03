@@ -10,7 +10,6 @@ enum URLs {
   RESALE = '/admin/resale',
   SPECIAL_PRODUCTS_DETAIL = '/admin/specialproducts-detail',
   STORE_LOCATOR = '/admin/storelocator',
-  STORE_LOCATOR_DETAIL = '/admin/storelocator-details',
   DASHBOARD_CLICKED = '/#',
 }
 
@@ -50,7 +49,6 @@ const breadcrumbList: {
   [URLs.SPECIAL_PRODUCTS]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
   [URLs.SPECIAL_PRODUCTS_DETAIL]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
   [URLs.STORE_LOCATOR]: [PAGES.DASHBOARD, PAGES.STORELOCATOR],
-  [URLs.STORE_LOCATOR_DETAIL]: [PAGES.DASHBOARD, PAGES.STORELOCATOR],
 }
 
 export default breadcrumbList

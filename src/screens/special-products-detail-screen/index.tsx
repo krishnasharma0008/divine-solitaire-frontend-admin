@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
 
@@ -232,6 +233,14 @@ const SpecialProductDetailScreen: React.FC = () => {
         </div>
         <div className="mt-6">
           <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5">
+            <Link href="/admin/special-products">
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center px-4 py-2 bg-Chinese-Black-sidebar border border-transparent rounded-md font-semibold capitalize text-white hover:bg-Chinese-Black-sidebar active:bg-Chinese-Black-sidebar focus:outline-none focus:bg-Chinese-Black-sidebar focus:ring focus:ring-red-200 disabled:opacity-25 transition"
+              >
+                Close
+              </button>
+            </Link>
             {editMode ? (
               <button
                 type="submit"
