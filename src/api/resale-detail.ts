@@ -33,7 +33,7 @@ const createResale = (payload: ResaleDetail): Promise<AxiosResponse<void>> => {
   })
 }
 
-const DownloadFile = async (filename: string): Promise<AxiosResponse<Blob>> => {
+const DownloadDocFile = async (filename: string): Promise<AxiosResponse<Blob>> => {
   const apiUrl = `doc/${filename}`
   //console.log(apiUrl)
   return callWebService(getResaleListEndpoint.url + apiUrl, {
@@ -45,4 +45,4 @@ const DownloadFile = async (filename: string): Promise<AxiosResponse<Blob>> => {
   })
 }
 
-export { getResaleDetail, createResale, DownloadFile }
+export { getResaleDetail, createResale, DownloadDocFile }

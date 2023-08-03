@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useContext, useEffect, useReducer, useState } from 'react'
 
-import { createResale, getResaleDetail, DownloadFile } from '@/api'
+import { createResale, getResaleDetail, DownloadDocFile } from '@/api'
 import { Dropdown, MetaDetailsCard } from '@/components/common'
 import DatePicker from '@/components/common/date-picker'
 import InputText from '@/components/common/input-text'
@@ -119,7 +119,7 @@ const ResaleDetailScreen: React.FC = () => {
     if (filename !== '') {
       try {
         showLoader()
-        const result = await DownloadFile(filename)
+        const result = await DownloadDocFile(filename)
         const href = window.URL.createObjectURL(new Blob([result.data]))
         const anchorElement = document.createElement('a')
         anchorElement.href = href

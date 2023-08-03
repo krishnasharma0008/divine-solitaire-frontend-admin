@@ -39,7 +39,7 @@ const StoreLocatorDetailScreen: React.FC = () => {
   const [state, dispatch] = useReducer(StoreLocatorDetailReducer, initialState)
   const { showLoader, hideLoader } = useContext(LoaderContext)
 
-  const [editMode] = useState<boolean>(false)//setEditMode
+  const [editMode] = useState<boolean>(false) //setEditMode
 
   const { query } = useRouter()
 
