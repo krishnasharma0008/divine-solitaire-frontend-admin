@@ -429,7 +429,7 @@ const ResaleDetailScreen: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex-row pb-5 mx-4">
+            <div className="flex-row pb-5">
               <InputText
                 className="w-full"
                 label="Upgrade Amount"
@@ -443,7 +443,7 @@ const ResaleDetailScreen: React.FC = () => {
               />
             </div>
           )}
-          <div className="flex-row py-5 mx-4">
+          <div className="flex-row py-5">
             <div className="flex justify-between pt-5 ">
               <InputText
                 label="Invoice Number"
