@@ -1,24 +1,25 @@
 import React from 'next'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+//import Image from 'next/image'
+// import { useRouter } from 'next/router'
+// import { useState } from 'react'
 
 import { Breadcrumbs } from '@/interface/breadcrumbs'
-import { deleteToken } from '@/local-storage'
+import { getUserName } from '@/local-storage'
+// import { deleteToken } from '@/local-storage'
 
-import { TriangleDownIcon } from '../icons'
+// import { TriangleDownIcon } from '../icons'
 
 type NavbarProps = Omit<Breadcrumbs, 'pageName'>
 
 const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
-  const [open, setOpen] = useState<boolean>(false)
-  const { push } = useRouter()
-  const openUserDropdown = () => setOpen((oldVal) => !oldVal)
+  //const [open, setOpen] = useState<boolean>(false)
+  //const { push } = useRouter()
+  //const openUserDropdown = () => setOpen((oldVal) => !oldVal)
 
-  const logout = () => {
-    deleteToken()
-    push('/login')
-  }
+  // const logout = () => {
+  //   deleteToken()
+  //   push('/login')
+  // }
 
   return (
     <div className="flex items-center text-sm text-neutral-600 bg-white mb-10 rounded py-3.5">
@@ -32,8 +33,8 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
           ))}
         </div>
         <div className="flex items-center w-1/6 justify-end">
-          <div className="mr-5 relative">Users</div>
-          <div className="mr-5 relative">
+          <div className="mr-5 relative">{getUserName()}</div>
+          {/*<div className="mr-5 relative">
             <Image
               src="https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2250&q=80"
               alt=""
@@ -41,8 +42,8 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
               width={36}
               height={36}
             />
-          </div>
-          <span onClick={openUserDropdown}>
+          </div> */}
+          {/* <span onClick={openUserDropdown}>
             <TriangleDownIcon className="w-4" />
           </span>
           {open && (
@@ -51,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
                 Logout
               </button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

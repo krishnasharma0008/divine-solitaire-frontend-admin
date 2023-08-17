@@ -16,7 +16,7 @@ import {
 } from '@/components/icons'
 import { URLs } from '@/constants'
 import { Breadcrumbs } from '@/interface/breadcrumbs'
-import { getToken, deleteToken } from '@/local-storage'
+import { getToken, deleteToken, deleteUserName } from '@/local-storage'
 
 const sidebarProps: Omit<SidebarProps, 'pageName'> = {
   items: [
@@ -50,7 +50,10 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       title: 'Log Out',
       url: '/login',
       icon: SignOutIcon,
-      onClick: () => deleteToken(),
+      onClick: () => {
+        deleteToken()
+        deleteUserName()
+      },
       name: URLs.USER_DETAIL,
     },
     { title: 'Help', icon: QuestionIcon, name: URLs.USER_DETAIL },

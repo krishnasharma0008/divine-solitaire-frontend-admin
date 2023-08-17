@@ -465,7 +465,7 @@ const InsuranceDetailScreen: React.FC = () => {
               className="px-5 py-2  block mb-[190px]"
               style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
             >
-              <DownloadIcon />
+              {editMode ? <DownloadIcon /> : ''}
             </button>
           </div>
 

@@ -20,4 +20,16 @@ const getStoreLocatorDetail = (id: number): Promise<AxiosResponse<GetStoreLocato
     },
   })
 
-export { getStoreLocatorDetail }
+const DownloadStoreExcel = async (): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = 'excel'
+  //console.log(apiUrl)
+  return callWebService(getStoreLocatorDetailEndpoint.url + apiUrl, {
+    method: getStoreLocatorDetailEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getStoreLocatorDetail, DownloadStoreExcel }

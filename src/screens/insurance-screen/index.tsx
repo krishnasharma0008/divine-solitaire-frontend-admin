@@ -5,19 +5,116 @@ import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import { DownloadExcel } from '@/api'
-import getInsuranceList from '@/api/insurance'
+import getInsuranceListWithFilter from '@/api/insurance'
 import { Dropdown } from '@/components/common'
+import InputText from '@/components/common/input-text'
+import SearchBox from '@/components/common/searchbox'
 import DownloadIcon from '@/components/icons/download-icon'
 import LoaderContext from '@/context/loader-context'
-import { INSURANCE_DOWNLOAD_OPTIONS } from '@/enums'
+import { INSURANCE_DOWNLOAD_OPTIONS, INSURANCE_SEARCH_LIST } from '@/enums'
 import { Insurance } from '@/interface'
 
 export default function Insurancelist() {
   const [policy, setPolicy] = useState<Array<Insurance>>([])
   const [Dropvalue, setDropvalue] = useState<string>(INSURANCE_DOWNLOAD_OPTIONS.IN_PROCESS)
   const { showLoader, hideLoader } = useContext(LoaderContext)
-
   const navigate = useRouter()
+
+  /** Searching */
+
+  const [SearchDropvalue, setSearchDropvalue] = useState<string>(INSURANCE_SEARCH_LIST.UID)
+
+  const [search, setSearch] = useState<string>('')
+  const [totalPages, setTotalPage] = useState<number>(1)
+  const [totalRows, setTotalRows] = useState<number>(1)
+  const [selectedPage, setSelectedPage] = useState<number>(1)
+
+  const onSelectedPageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputPage = parseInt(event.target.value, 10)
+    //console.log(inputPage)
+    const selectedPageIndex = inputPage - 1
+    if (selectedPageIndex >= 0 && selectedPageIndex < totalPages) {
+      setSelectedPage(isNaN(inputPage) ? 1 : inputPage)
+    }
+  }
+
+  const goToSelectedPage = () => {
+    //console.log(selectedPage)
+    const selectedPageIndex = selectedPage - 1
+    if (selectedPageIndex >= 0 && selectedPageIndex < totalPages) {
+      onPageClick(selectedPageIndex)
+    }
+  }
+
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value)
+  }
+
+  const changeStatus = (elem?: React.ReactNode, idx?: number) => {
+    if (idx === -1) {
+      setSearchDropvalue(INSURANCE_SEARCH_LIST.UID)
+      return SearchDropvalue
+    }
+    setSearchDropvalue(Object.values(INSURANCE_SEARCH_LIST)[idx || 0])
+    //console.log(SearchDropvalue)
+    return SearchDropvalue
+  }
+
+  const SearchClick = () => {
+    //console.log('click check')
+
+    setSelectedPage(1)
+    getlistdata(chkSearchDropvalue(SearchDropvalue), search, selectedPage)
+  }
+
+  const onPageClick = (newPageNumber: number) => {
+    console.log('onPageClick called with pageIndex:', newPageNumber)
+    setSelectedPage(isNaN(newPageNumber) ? 1 : newPageNumber)
+    getlistdata(chkSearchDropvalue(SearchDropvalue), search, newPageNumber)
+  }
+
+  const chkSearchDropvalue = (dvalue: string) => {
+    if (dvalue === 'UID') {
+      dvalue = 'uid'
+    } else if (dvalue === 'Request No') {
+      dvalue = 'requestno'
+    }
+    // else if (dvalue === 'Date Of Request') {
+    //   dvalue = 'createdat'
+    // }
+    else if (dvalue === 'Name') {
+      dvalue = 'name'
+    }
+    return dvalue
+  }
+
+  /** */
+
+  const getlistdata = async (fieldName?: string, fieldValue?: string, pageNo?: number) => {
+    try {
+      showLoader()
+      const result = await getInsuranceListWithFilter(fieldName, fieldValue, pageNo)
+      setPolicy(result.data.data ?? [])
+      setTotalPage(result.data.total_page)
+      setTotalRows(result.data.total_row)
+      hideLoader()
+    } catch (error) {
+      hideLoader()
+      console.log(error)
+    }
+  }
+
+  // const getlistdata = async () => {
+  //   try {
+  //     showLoader()
+  //     const result = await getInsuranceList()
+  //     setPolicy(result.data.data)
+  //     hideLoader()
+  //   } catch (error) {
+  //     hideLoader()
+  //     console.log(error)
+  //   }
+  // }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
@@ -140,19 +237,8 @@ export default function Insurancelist() {
   ]
 
   useEffect(() => {
-    const getlistdata = async () => {
-      try {
-        showLoader()
-        const result = await getInsuranceList()
-        setPolicy(result.data.data)
-        hideLoader()
-      } catch (error) {
-        hideLoader()
-        console.log(error)
-      }
-    }
     getlistdata()
-  }, [showLoader, hideLoader])
+  }, [])
 
   const CustomStyles = {
     headRow: {
@@ -173,10 +259,22 @@ export default function Insurancelist() {
 
   return (
     <div className="flex-1 w-full pt-5" style={{ height: '500px' }}>
-      <div className="bg-white  ">
+      <div className="bg-white ">
+        <div className=" px-5 pt-5">
+          <span className="font-Montserrat  font-normal text-black text-2xl">Insurance</span>
+        </div>
         <div className="p-5">
           <div className="w-full flex justify-end">
-            <div className="w-52">
+            <div className="w-full pr-5">
+              <SearchBox
+                options={Object.values(INSURANCE_SEARCH_LIST)}
+                selected={changeStatus}
+                value={search}
+                onChange={changeHandler}
+                onSearchClick={SearchClick}
+              />
+            </div>
+            <div className="w-auto">
               <Dropdown
                 options={Object.values(INSURANCE_DOWNLOAD_OPTIONS)}
                 selected={changeProductStatus}
@@ -185,32 +283,49 @@ export default function Insurancelist() {
                 className="w-52"
               />
             </div>
-            <div>
+            <div className="w-1/3">
               <Button color="white" className="capitalize" onClick={DownloadClick}>
                 Download Excel
               </Button>
             </div>
           </div>
+
           <DataTable
-            title="Insurance"
+            //title="Insurance"
             columns={columns}
             data={policy}
             customStyles={CustomStyles}
             onRowClicked={(e) => onRowClicked(e.id || 0)}
             pagination
+            paginationServer
             fixedHeader
             fixedHeaderScrollHeight="450px"
             selectableRowsHighlight
             highlightOnHover
             pointerOnHover
             paginationComponentOptions={CustomPagination}
-            // actions={
-            //   <>
-            //     <Button color="white" className="capitalize" onClick={DownloadClick}>
-            //       Download Excel
-            //     </Button>
-            //   </>
-            // }
+            onChangePage={onPageClick}
+            paginationTotalRows={totalRows}
+            paginationDefaultPage={selectedPage}
+          />
+          <button
+            type="button"
+            className="bg-[#00A0B6] text-white px-5 py-1.5 rounded block"
+            style={{ marginTop: policy.length ? -40 : 0, marginLeft: 90 }}
+            onClick={goToSelectedPage}
+          >
+            Go to Page
+          </button>
+        </div>
+        <div className="flex" style={{ marginTop: policy.length ? -55 : 0, marginLeft: 45 }}>
+          <InputText
+            className="!w-[3rem] !border-gray_light !h-[2.5rem] !pt-0 !pb-0"
+            onChange={onSelectedPageChange}
+            placeholder="Go to Page"
+            type="text"
+            value={selectedPage.toString()}
+            min={1}
+            max={totalPages}
           />
         </div>
       </div>
