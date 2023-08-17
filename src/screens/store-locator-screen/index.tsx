@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
 import getStoreLocatorList from '@/api/store-locator'
+import { DownloadStoreExcel } from '@/api/store-locator-detail'
 import LoaderContext from '@/context/loader-context'
 import { StoreLocator } from '@/interface'
 
@@ -77,6 +78,37 @@ const StoreLocatorList: React.FC = () => {
     selectAllRowsItemText: 'All',
   }
 
+  const ExcelDownload = async () => {
+    try {
+      showLoader()
+      const result = await DownloadStoreExcel()
+      const href = window.URL.createObjectURL(new Blob([result.data]))
+
+      //const filename = result.headers['content-disposition']
+      //console.log(filename)
+      // .split(';')
+      // .find((n: string) => n.includes('filename='))
+      // .replace('filename=', '')
+      // .trim()
+
+      const anchorElement = document.createElement('a')
+
+      anchorElement.href = href
+      anchorElement.download = `Store_Locator_${new Date()}.xlsx`
+
+      document.body.appendChild(anchorElement)
+      anchorElement.click()
+
+      document.body.removeChild(anchorElement)
+      window.URL.revokeObjectURL(href)
+
+      hideLoader()
+    } catch (error) {
+      hideLoader()
+      console.log(error)
+    }
+  }
+
   return (
     <div className="flex-1 w-full pt-5" style={{ height: '500px' }}>
       <div className="bg-white">
@@ -95,7 +127,7 @@ const StoreLocatorList: React.FC = () => {
             pointerOnHover
             paginationComponentOptions={CustomPagination}
             actions={
-              <Button color="white" className="capitalize">
+              <Button color="white" className="capitalize" onClick={ExcelDownload}>
                 Download Excel
               </Button>
             }

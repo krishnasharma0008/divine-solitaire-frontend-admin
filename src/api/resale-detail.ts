@@ -45,4 +45,16 @@ const DownloadDocFile = async (filename: string): Promise<AxiosResponse<Blob>> =
   })
 }
 
-export { getResaleDetail, createResale, DownloadDocFile }
+const DownloadSaleExcel = async (): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = 'excel'
+  //console.log(apiUrl)
+  return callWebService(getResaleListEndpoint.url + apiUrl, {
+    method: getResaleListEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getResaleDetail, createResale, DownloadDocFile, DownloadSaleExcel }

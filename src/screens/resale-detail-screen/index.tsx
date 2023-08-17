@@ -252,12 +252,10 @@ const ResaleDetailScreen: React.FC = () => {
               },
               {
                 name: 'Date of request',
-                //value: dayjs(state.createdat).format('DD MMMM YYYY'),
                 value: dayjs.utc(state.createdat).format('DD MMMM YYYY'),
               },
               {
                 name: 'Retail price',
-                //value: formatByCurrency(parseFloat(state.currentval)),
                 value: formatByCurrency(parseFloat(state.currentval)) === 'NaN' ? '0.00' : formatByCurrency(parseFloat(state.currentval)),
               },
             ]}
@@ -265,9 +263,6 @@ const ResaleDetailScreen: React.FC = () => {
         </SectionContainer>
 
         <SectionContainer className="mt-6">
-          {/* <div>
-          <h1 className="py-2 font-medium text-base">Personal Details :</h1>
-        </div> */}
           <div className="bg-[#28A0B0] w-full">
             <h1 className="py-2 font-medium text-base ml-4 my-2.5 text-white">Personal Details:</h1>
           </div>

@@ -7,6 +7,7 @@ export interface LoginResponse {
   id: number
   message: 'SUCCESS' | 'FAILURE'
   token: string
+  fname: string
 }
 
 const loginApi = (email: string, password: string): Promise<AxiosResponse<LoginResponse>> =>

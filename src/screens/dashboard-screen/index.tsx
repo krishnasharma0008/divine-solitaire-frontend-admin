@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react'
 
 import { getDasboardUserDetail } from '@/api/dashboard-detail'
 import LoaderContext from '@/context/loader-context'
-import { User_Activity } from '@/interface'
+import { User_Activity, Insurance_Activity, Resale_Activity, Store_Activity } from '@/interface'
 
 import DashboardMetaData from './sub-components/dashboard-meta-data'
 
@@ -13,8 +13,27 @@ const initialState: User_Activity = {
   last1year: '',
 }
 
+const initialStateInsurance: Insurance_Activity = {
+  cancelled: '',
+  inprocess: '',
+  active: '',
+  expired: '',
+}
+
+const initialStateResale: Resale_Activity = {
+  buyback: '',
+  upgrade: '',
+}
+
+const initialStateStore: Store_Activity = {
+  total: '',
+}
+
 const DashboardScreen = () => {
   const [userActivity, setUserActivity] = useState<User_Activity>(initialState)
+  const [insuranceActivity, setInsuranceActivity] = useState<Insurance_Activity>(initialStateInsurance)
+  const [resaleActivity, setResaleActivity] = useState<Resale_Activity>(initialStateResale)
+  const [storeActivity, setStoreActivity] = useState<Store_Activity>(initialStateStore)
   const { showLoader, hideLoader } = useContext(LoaderContext)
   //const { notifyErr } = useContext(NotificationContext)
 
@@ -53,20 +72,20 @@ const DashboardScreen = () => {
       title: 'Insurance',
       items: [
         {
-          title: 'Active Insurance',
-          content: '-',
+          title: 'Active',
+          content: insuranceActivity.active,
         },
         {
-          title: 'Fresh Insurance Request Open',
-          content: '-',
+          title: 'Cancelled',
+          content: insuranceActivity.cancelled,
         },
         {
-          title: 'Renewal Insurance Request Open',
-          content: '-',
+          title: 'In Process',
+          content: insuranceActivity.inprocess,
         },
         {
-          title: 'Renewal Request',
-          content: '-',
+          title: 'Expired',
+          content: insuranceActivity.expired,
         },
       ],
     },
@@ -74,12 +93,12 @@ const DashboardScreen = () => {
       title: 'Resale',
       items: [
         {
-          title: 'Fresh buyback requests',
-          content: '-',
+          title: 'Upgrade',
+          content: resaleActivity.upgrade,
         },
         {
-          title: 'Fresh upgrade requests',
-          content: '-',
+          title: 'Buyback',
+          content: resaleActivity.buyback,
         },
       ],
     },
@@ -100,8 +119,8 @@ const DashboardScreen = () => {
       title: 'Store Locator',
       items: [
         {
-          title: 'Active Stores',
-          content: '-',
+          title: 'Total Stores',
+          content: storeActivity.total,
         },
       ],
     },
@@ -122,6 +141,9 @@ const DashboardScreen = () => {
         showLoader()
         const response = await getDasboardUserDetail()
         setUserActivity(response.data.data.user_activity)
+        setInsuranceActivity(response.data.data.policy)
+        setResaleActivity(response.data.data.resale)
+        setStoreActivity(response.data.data.store)
         hideLoader()
       } catch (error) {
         hideLoader()
