@@ -498,7 +498,7 @@ const ResaleDetailScreen: React.FC = () => {
             </label>
             {editMode ? (
               <button type="button" onClick={() => iconClick(state.docname)} className="absolute left-56">
-                <DownloadIcon />
+                <DownloadIcon strokeColor="#161616" />
               </button>
             ) : null}
           </div>
