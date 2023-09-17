@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
 
 import { CloudIcon } from '../icons'
@@ -13,7 +13,10 @@ export interface InputTextProps {
 }
 
 const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeholder, disabled }) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+
   const handleChange = (file: File) => {
+    setSelectedFile(file) // Store the selected file in state
     onChange({
       target: { files: [file] as unknown as FileList },
     } as ChangeEvent<HTMLInputElement>)
@@ -45,6 +48,14 @@ const InputFile: React.FC<InputTextProps> = ({ htmlFor, label, onChange, placeho
               <span className="flex items-center space-x-2 flex-col justify-evenly ">
                 <CloudIcon className="w-7" />
                 <span className="font-medium text-gray-600">
+                  {/* selected file name display start */}
+                  {selectedFile && (
+                    <span>
+                      Selected file: <strong>{selectedFile.name}</strong>
+                      <br />
+                    </span>
+                  )}
+                  {/* selected file name display end */}
                   {placeholder}
                   <span className="text-blue-600 underline ml-1">Browse here</span>
                 </span>

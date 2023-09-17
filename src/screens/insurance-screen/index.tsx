@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import DataTable, { TableColumn } from 'react-data-table-component'
 
-import { DownloadExcel } from '@/api'
+import { DownloadExcel, DownloadFile } from '@/api'
 import getInsuranceListWithFilter from '@/api/insurance'
 import { Dropdown } from '@/components/common'
 import InputText from '@/components/common/input-text'
@@ -169,6 +169,35 @@ export default function Insurancelist() {
     ExcelDownload(Dropvalue, 0)
   }
 
+  const iconClick = async (filename: string) => {
+    if (filename !== '') {
+      try {
+        showLoader()
+        const result = await DownloadFile(filename)
+
+        const href = window.URL.createObjectURL(new Blob([result.data]))
+        const anchorElement = document.createElement('a')
+
+        anchorElement.href = href
+        anchorElement.download = filename
+
+        document.body.appendChild(anchorElement)
+        anchorElement.click()
+
+        document.body.removeChild(anchorElement)
+        window.URL.revokeObjectURL(href)
+
+        hideLoader()
+      } catch (error) {
+        hideLoader()
+        console.log(error)
+      }
+    } else {
+      alert('Document not available to Download')
+    }
+    //console.log(filename)
+  }
+
   const columns: TableColumn<Insurance>[] = [
     {
       name: 'Sr. No.',
@@ -223,13 +252,23 @@ export default function Insurancelist() {
       reorder: true,
     },
     {
-      name: 'Download',
+      name: 'Policy Download',
       cell: (row) => (
         // <button className="btn primary" onClick={() => console.log(row.id)}>
         //   Download
         // </button>
-        <div onClick={() => ExcelDownload('', row.id)} className="w-full p-2 justify-center items-center">
-          <DownloadIcon />
+        // <div onClick={() => ExcelDownload('', row.id)} className="w-full p-2 justify-center items-center">
+        //   <DownloadIcon  />
+        // </div>
+
+        <div
+          onClick={() => {
+            if (row.poldoc) iconClick(row.poldoc)
+          }}
+          className="w-full p-2 justify-center items-center"
+        >
+          {/* <DownloadIcon strokeColor={row.poldoc ? '#00FF00' : '#161616'} /> */}
+          <DownloadIcon strokeColor="#161616" />
         </div>
       ),
       width: '100px',

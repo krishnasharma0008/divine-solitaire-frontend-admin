@@ -365,7 +365,7 @@ const InsuranceDetailScreen: React.FC = () => {
               className={`px-5 py-2 block mb-[190px] `}
               style={{ marginTop: -180, marginLeft: 120 }}
             >
-              <DownloadIcon />
+              {state.invdoc !== '' ? <DownloadIcon strokeColor="#161616" /> : ''}
             </button>
           ) : null}
         </SectionContainer>
@@ -456,17 +456,22 @@ const InsuranceDetailScreen: React.FC = () => {
                 placeholder="Drag & drop files here"
                 disabled={!editMode}
               />
-            ) : null}
-            <button
-              type="button"
-              onClick={() => {
-                if (state.poldoc) iconClick(state.poldoc)
-              }}
-              className="px-5 py-2  block mb-[190px]"
-              style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
-            >
-              {editMode ? <DownloadIcon /> : ''}
-            </button>
+            ) : // {policyfile}
+            null}
+            {state.poldoc !== '' ? (
+              <button
+                type="button"
+                onClick={() => {
+                  if (state.poldoc) iconClick(state.poldoc)
+                }}
+                className="px-5 py-2  block mb-[190px]"
+                style={{ marginTop: -180, marginLeft: 140, zIndex: 999 }}
+              >
+                {editMode ? <DownloadIcon strokeColor="#161616" /> : ''}
+              </button>
+            ) : (
+              ''
+            )}
           </div>
 
           <div className="mt-6 flex items-center justify-center gap-x-6 my-5 py-5 gap-6">
