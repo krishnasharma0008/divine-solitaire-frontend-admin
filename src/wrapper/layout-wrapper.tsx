@@ -41,6 +41,12 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       icon: SpecialProductsIcon,
       name: URLs.SPECIAL_PRODUCTS,
     },
+    {
+      title: 'Premium Charts',
+      url: '/admin/premium-charts',
+      icon: SpecialProductsIcon,
+      name: URLs.SPECIAL_PRODUCTS,
+    },
     // {
     //   title: 'Active Notifications',
     //   icon: ActiveNotificationsIcon,
