@@ -39,7 +39,7 @@ const PremiumChartsScreen: React.FC = () => {
 
   return (
     <div className="flex-1 w-full mt-1 bg-gray-50 pt-10 px-4 rounded-lg">
-      <InputFileExcel label="Premium Chart" onChange={onChangeHandlerCreator('premiumChart')} value={state.premiumChart} placeholder="Drag & drop files here" />
+      <InputFileExcel label="Premium Chart" onChange={handleFileChange} placeholder="Drag & drop files here" />
       <button
         type="submit"
         onClick={onSubmitHandler}
