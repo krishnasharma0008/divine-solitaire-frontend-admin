@@ -13,7 +13,9 @@ import {
   SpecialProductsIcon,
   StoreLocatorIcon,
   UserIcon,
+  UploadIcon,
 } from '@/components/icons'
+//import Download from '@/components/icons/download-icon'
 import { URLs } from '@/constants'
 import { Breadcrumbs } from '@/interface/breadcrumbs'
 import { getToken, deleteToken, deleteUserName } from '@/local-storage'
@@ -44,7 +46,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
     {
       title: 'Premium Charts',
       url: '/admin/premium-charts',
-      icon: SpecialProductsIcon,
+      icon: UploadIcon,
       name: URLs.SPECIAL_PRODUCTS,
     },
     // {

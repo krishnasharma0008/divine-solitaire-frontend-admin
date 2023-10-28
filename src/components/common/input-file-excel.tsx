@@ -8,7 +8,6 @@ export interface InputTextProps {
   label: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder: string
-  value: string
   disabled?: boolean
 }
 
@@ -35,12 +34,12 @@ const InputFileExcel: React.FC<InputTextProps> = ({ htmlFor, label, onChange, pl
                 <CloudIcon className="w-7" />
                 <span className="font-medium text-gray-600">
                   {/* selected file name display start */}
-                  {selectedFile && (
+                  {selectedFile ? (
                     <span>
                       Selected file: <strong>{selectedFile.name}</strong>
                       <br />
                     </span>
-                  )}
+                  ) : null}
                   {/* selected file name display end */}
                   {placeholder}
                   <span className="text-blue-600 underline ml-1">Browse here</span>
