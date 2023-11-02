@@ -22,7 +22,6 @@ const PremiumChartsScreen: React.FC = () => {
       showLoader()
       createPremiumChart(selectedFile)
         .then(() => {
-          //console.log('File uploaded successfully')
           notify(NOTIFICATION_MESSAGES.PREMIUM_CHART_SUCESS)
           setSelectedFile(null)
           hideLoader()
