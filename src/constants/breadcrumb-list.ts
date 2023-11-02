@@ -10,6 +10,7 @@ enum URLs {
   RESALE = '/admin/resale',
   SPECIAL_PRODUCTS_DETAIL = '/admin/specialproducts-detail',
   STORE_LOCATOR = '/admin/storelocator',
+  PREMIUM_CHARTS = '/admin/premium-charts',
   DASHBOARD_CLICKED = '/#',
 }
 
@@ -25,6 +26,7 @@ interface Page {
   RESALE: BreadCrumb
   SPECIALPRODUCTS: BreadCrumb
   STORELOCATOR: BreadCrumb
+  PREMIUM_CHARTS: BreadCrumb
 }
 
 const PAGES: Page = {
@@ -34,6 +36,7 @@ const PAGES: Page = {
   RESALE: { text: 'Resale', url: URLs.RESALE },
   SPECIALPRODUCTS: { text: 'Special Products', url: URLs.SPECIAL_PRODUCTS },
   STORELOCATOR: { text: 'Store Locator', url: URLs.STORE_LOCATOR },
+  PREMIUM_CHARTS: { text: 'Premium Charts', url: URLs.PREMIUM_CHARTS },
 }
 
 const breadcrumbList: {
@@ -49,6 +52,7 @@ const breadcrumbList: {
   [URLs.SPECIAL_PRODUCTS]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
   [URLs.SPECIAL_PRODUCTS_DETAIL]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
   [URLs.STORE_LOCATOR]: [PAGES.DASHBOARD, PAGES.STORELOCATOR],
+  [URLs.PREMIUM_CHARTS]: [PAGES.DASHBOARD, PAGES.PREMIUM_CHARTS],
 }
 
 export default breadcrumbList

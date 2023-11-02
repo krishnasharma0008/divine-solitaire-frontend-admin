@@ -33,7 +33,7 @@ const createInsurance = ({ ...payload }: InsuranceDetail): Promise<AxiosResponse
     formData.append(key, get(payload, key))
   })
 
-  console.log(formData)
+  //console.log(formData)
 
   return callWebService(createInsuranceEndpoint.url, {
     method: createInsuranceEndpoint.method,

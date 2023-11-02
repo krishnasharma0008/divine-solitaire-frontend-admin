@@ -7,6 +7,9 @@ const NOTIFICATION_MESSAGES = {
   SPECIAL_PRODUCT_UPDATE_FAILED: 'Unable To Update Special Product',
 
   SOMETHING_WRONG: 'Something Went Wrong! Please Try Again',
+
+  PREMIUM_CHART_SUCESS: 'Premium Chart Uploaded Sucessfully',
+  PREMIUM_CHART_FAIL: 'Premium Chart Uploaded Failed',
 }
 
 export default NOTIFICATION_MESSAGES

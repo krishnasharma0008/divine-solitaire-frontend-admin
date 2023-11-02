@@ -69,3 +69,8 @@ export const getDashboardUserpoint: Endpoint = {
   method: HTTP_METHOD.GET,
   url: '/api/secadmin/dashboard/info',
 }
+
+export const createPremiumChartEndpoint: Endpoint = {
+  method: HTTP_METHOD.POST,
+  url: '/api/secadmin/premiumdia/syncslab',
+}
