@@ -15,22 +15,30 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { push, asPath } = useRouter()
   const [pageName, setPageName] = useState<URLs>(URLs.DASHBOARD)
 
+  const [token, setToken] = useState<string | null | undefined>(undefined)
+
   useEffect(() => {
     if (!getToken() && asPath !== '/login') {
       push('/login')
+    } else {
+      setToken(getToken())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [asPath])
 
-  return (
-    <>
-      <div className="text-sm">
-        <LayoutWrapper breadcrumbs={breadcrumbList[pageName]} pageName={pageName}>
-          <Component {...pageProps} setPageName={setPageName} />
-        </LayoutWrapper>
-      </div>
-    </>
-  )
+  if (token !== undefined || asPath === '/login') {
+    return (
+      <>
+        <div className="text-sm">
+          <LayoutWrapper breadcrumbs={breadcrumbList[pageName]} pageName={pageName}>
+            <Component {...pageProps} setPageName={setPageName} />
+          </LayoutWrapper>
+        </div>
+      </>
+    )
+  }
+
+  return <></>
 }
 
 const WrappedApp: React.FC<AppProps> = (props) => (
