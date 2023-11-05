@@ -12,65 +12,65 @@ export interface Endpoint {
 
 export const loginEndpoint: Endpoint = {
   method: HTTP_METHOD.POST,
-  url: '/api/login',
+  url: '/login',
 }
 
 export const getInsuranceListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/policy/',
+  url: '/secadmin/policy/',
 }
 
 export const createInsuranceEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
-  url: '/api/secadmin/policy/',
+  url: '/secadmin/policy/',
 }
 
 export const getResaleListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/resale/',
+  url: '/secadmin/resale/',
 }
 
 export const createResaleEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
-  url: '/api/secadmin/resale/',
+  url: '/secadmin/resale/',
 }
 
 export const getUserListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/user/',
+  url: '/secadmin/user/',
 }
 
 export const createUserEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
-  url: '/api/secadmin/user/',
+  url: '/secadmin/user/',
 }
 
 export const getSpecialProductsListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/designprice/',
+  url: '/secadmin/designprice/',
 }
 
 export const createSpecialProductsEndpoint: Endpoint = {
   method: HTTP_METHOD.PUT,
-  url: '/api/secadmin/designprice/',
+  url: '/secadmin/designprice/',
 }
 
 export const getStoreLocatorListEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/store/list',
+  url: '/secadmin/store/list',
 }
 
 export const getStoreLocatorDetailEndpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/store/',
+  url: '/secadmin/store/',
 }
 
 export const getDashboardUserpoint: Endpoint = {
   method: HTTP_METHOD.GET,
-  url: '/api/secadmin/dashboard/info',
+  url: '/secadmin/dashboard/info',
 }
 
 export const createPremiumChartEndpoint: Endpoint = {
   method: HTTP_METHOD.POST,
-  url: '/api/secadmin/premiumdia/syncslab',
+  url: '/secadmin/premiumdia/syncslab',
 }
