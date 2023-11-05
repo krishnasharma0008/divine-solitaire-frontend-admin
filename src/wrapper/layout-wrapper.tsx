@@ -73,19 +73,22 @@ export interface LayoutWrapperProps extends Breadcrumbs {
 }
 
 const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ breadcrumbs, children, pageName }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState<undefined | boolean>(undefined)
 
   const { asPath } = useRouter()
 
   useEffect(() => {
-    if (getToken()) {
-      setIsLoggedIn(true)
-    }
+    setIsLoggedIn(!!getToken())
   }, [asPath])
+
+  if (isLoggedIn === undefined) {
+    return <></>
+  }
 
   if (!isLoggedIn || asPath === '/login') {
     return <>{children}</>
   }
+
   return (
     <>
       <div className="flex">
