@@ -47,7 +47,7 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       title: 'Premium Charts',
       url: '/admin/premium-charts',
       icon: UploadIcon,
-      name: URLs.SPECIAL_PRODUCTS,
+      name: URLs.PREMIUM_CHARTS,
     },
     // {
     //   title: 'Active Notifications',

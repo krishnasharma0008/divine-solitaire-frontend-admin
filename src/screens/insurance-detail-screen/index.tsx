@@ -193,7 +193,11 @@ const InsuranceDetailScreen: React.FC = () => {
                 value: (
                   <Button
                     className={`text-white font-bold py-2 px-4 rounded ${
-                      state.polstatus === 'Cancelled' || state.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'
+                      state.polstatus === 'Cancelled' || state.polstatus === 'Expired'
+                        ? 'bg-red-400'
+                        : state.polstatus === 'Active'
+                        ? 'bg-green'
+                        : 'bg-light-muted-azure'
                     }`}
                   >
                     {state.polstatus}

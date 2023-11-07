@@ -216,7 +216,8 @@ export default function Insurancelist() {
       cell: (row) => (
         <div
           className={`w-full text-white font-bold py-2 px-4 rounded text-center
-        ${row.polstatus === 'Cancelled' || row.polstatus === 'Expired' ? 'bg-red-400 ' : 'bg-light-muted-azure'}`}
+          
+        ${row.polstatus === 'Cancelled' || row.polstatus === 'Expired' ? 'bg-red-400' : row.polstatus === 'Active' ? 'bg-green' : 'bg-light-muted-azure	'}`}
           onClick={() => onRowClicked(row.id)}
         >
           {row.polstatus}
