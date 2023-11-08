@@ -269,7 +269,8 @@ export default function Insurancelist() {
           className="w-full p-2 justify-center items-center"
         >
           {/* <DownloadIcon strokeColor={row.poldoc ? '#00FF00' : '#161616'} /> */}
-          <DownloadIcon strokeColor="#161616" />
+          {/* <DownloadIcon strokeColor="#161616" /> */}
+          {row.poldoc !== '' ? <DownloadIcon strokeColor="#161616" /> : ''}
         </div>
       ),
       width: '100px',
