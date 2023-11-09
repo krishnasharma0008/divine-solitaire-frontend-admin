@@ -1,8 +1,10 @@
+import { Button } from '@material-tailwind/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react' //
 import DataTable, { TableColumn, TableStyles } from 'react-data-table-component'
 
+import { DownloadUserExcel } from '@/api'
 import getUserListWithFilter from '@/api/user'
 //import { getUserList, getUserListWithFilter } from '@/api/user'
 import InputText from '@/components/common/input-text'
@@ -83,6 +85,41 @@ export default function User() {
   }
   const onRowClicked = (id: number) => push(`/admin/user-detail/${id}`)
 
+  const ExcelDownload = async () => {
+    try {
+      showLoader()
+      const result = await DownloadUserExcel()
+      const href = window.URL.createObjectURL(new Blob([result.data]))
+
+      //const filename = result.headers['content-disposition']
+      //console.log(filename)
+      // .split(';')
+      // .find((n: string) => n.includes('filename='))
+      // .replace('filename=', '')
+      // .trim()
+
+      const anchorElement = document.createElement('a')
+
+      anchorElement.href = href
+      anchorElement.download = `User_${new Date()}.xlsx`
+
+      document.body.appendChild(anchorElement)
+      anchorElement.click()
+
+      document.body.removeChild(anchorElement)
+      window.URL.revokeObjectURL(href)
+
+      hideLoader()
+    } catch (error) {
+      hideLoader()
+      console.log(error)
+    }
+  }
+
+  const DownloadClick = () => {
+    ExcelDownload()
+  }
+
   const columns: Array<TableColumn<User>> = [
     {
       name: 'Sr. No.',
@@ -135,17 +172,24 @@ export default function User() {
   return (
     <div className="flex-1 w-full pt-5" style={{ height: '500px' }}>
       <div className="bg-white">
-        <div className=" px-5 pt-5">
+        <div className=" px-5 pt-5 mb-5">
           <span className="font-Montserrat  font-normal text-black text-2xl">Users</span>
         </div>
-        <div className="w-full pt-5 px-5">
-          <SearchBox
-            options={Object.values(USER_SEARCH_LIST)}
-            selected={changeProductStatus}
-            value={search}
-            onChange={changeHandler}
-            onSearchClick={SearchClick}
-          />
+        <div className="w-full flex justify-end">
+          <div className="w-full px-5">
+            <SearchBox
+              options={Object.values(USER_SEARCH_LIST)}
+              selected={changeProductStatus}
+              value={search}
+              onChange={changeHandler}
+              onSearchClick={SearchClick}
+            />
+          </div>
+          <div className="w-1/3">
+            <Button color="white" className="capitalize" onClick={DownloadClick}>
+              Download Excel
+            </Button>
+          </div>
         </div>
         <div className="p-5">
           <DataTable

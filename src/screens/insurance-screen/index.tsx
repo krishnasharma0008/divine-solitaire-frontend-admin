@@ -91,6 +91,8 @@ export default function Insurancelist() {
   /** */
 
   const getlistdata = async (fieldName?: string, fieldValue?: string, pageNo?: number) => {
+    // pageNo = typeof pageNo === 'undefined' ? 1 : pageNo
+    // console.log(pageNo)
     try {
       showLoader()
       const result = await getInsuranceListWithFilter(fieldName, fieldValue, pageNo)
@@ -165,7 +167,7 @@ export default function Insurancelist() {
   }
 
   const DownloadClick = () => {
-    console.log(Dropvalue)
+    //console.log(Dropvalue)
     ExcelDownload(Dropvalue, 0)
   }
 
@@ -278,7 +280,7 @@ export default function Insurancelist() {
   ]
 
   useEffect(() => {
-    getlistdata()
+    getlistdata(chkSearchDropvalue(SearchDropvalue), search, selectedPage)
   }, [])
 
   const CustomStyles = {

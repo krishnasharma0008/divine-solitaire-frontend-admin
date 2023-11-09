@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ breadcrumbs }) => {
           ))}
         </div>
         <div className="flex items-center w-1/6 justify-end">
-          <div className="mr-5 relative">{getUserName()}</div>
+          <div className="mr-5 relative">{getUserName() === null ? '' : getUserName()}</div>
           {/*<div className="mr-5 relative">
             <Image
               src="https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=2250&q=80"

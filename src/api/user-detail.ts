@@ -39,4 +39,16 @@ const createUser = (payload: User): Promise<AxiosResponse<void>> => {
   })
 }
 
-export { getUserDetail, createUser }
+const DownloadUserExcel = async (): Promise<AxiosResponse<Blob>> => {
+  const apiUrl = `excel`
+  //console.log(apiUrl)
+  return callWebService(getUserListEndpoint.url + apiUrl, {
+    method: getUserListEndpoint.method,
+    headers: {
+      Authorization: 'Bearer ' + getToken(),
+    },
+    responseType: 'blob',
+  })
+}
+
+export { getUserDetail, createUser, DownloadUserExcel }

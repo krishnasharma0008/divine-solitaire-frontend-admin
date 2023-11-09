@@ -25,7 +25,7 @@ export default function LoginPage() {
         }
         notify(NOTIFICATION_MESSAGES.LOGIN_SUCCESS)
         setToken(res.data.token)
-        setUserName(res.data.fname)
+        setUserName(res.data.fname === null ? '' : res.data.fname)
         push('/')
       })
       .catch((err) => {
