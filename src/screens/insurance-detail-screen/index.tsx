@@ -499,15 +499,15 @@ const InsuranceDetailScreen: React.FC = () => {
                     Reject
                   </button>
                 )}
-                {state.polstatus !== 'Active' && (
-                  <button
-                    type="submit"
-                    onClick={onSubmitHandler('Approve')}
-                    className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
-                  >
-                    Approve
-                  </button>
-                )}
+                {/* {state.polstatus !== 'Active' && ( */}
+                <button
+                  type="submit"
+                  onClick={onSubmitHandler('Approve')}
+                  className="rounded-md bg-Chinese-Black-sidebar py-2 text-sm font-semibold text-white shadow-sm hover:bg-Chinese-Black-sidebar focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 px-12"
+                >
+                  {state.polstatus === 'Active' ? 'Update' : 'Approve'}
+                </button>
+                {/* )} */}
               </>
             )}
             {/* {state.polstatus === 'In Process' && (
