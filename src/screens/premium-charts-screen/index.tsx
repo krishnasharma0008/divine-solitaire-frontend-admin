@@ -28,7 +28,18 @@ const PremiumChartsScreen: React.FC = () => {
         })
         .catch((err) => {
           console.error('Error uploading file', err)
-          notifyErr('Error uploading file')
+
+          // if (err.response) {
+          //   const { data, status } = err.response
+          //   notifyErr(`Server error: ${status} - ${data.message}`)
+          // }
+          //  else if (err.request) {
+          //   notifyErr('No response from the server. Please try again.')
+          // } else {
+          //   notifyErr('An unexpected error occurred. Please try again.')
+          // }
+          //notifyErr('Error uploading file')
+          notifyErr('Something went wrong, Please chech your file')
           hideLoader()
         })
     } else {
