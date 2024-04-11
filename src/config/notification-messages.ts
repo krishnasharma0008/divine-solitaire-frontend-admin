@@ -10,6 +10,11 @@ const NOTIFICATION_MESSAGES = {
 
   PREMIUM_CHART_SUCESS: 'Premium Chart Uploaded Sucessfully',
   PREMIUM_CHART_FAIL: 'Premium Chart Uploaded Failed',
+
+  ECHANGE_RATE_CREATE_SUCCESS: 'Exchange Rate Created',
+  ECHANGE_RATE_CREATE_FAILED: 'Unable To Create Exchange Rate',
+  ECHANGE_RATE_UPDATE_SUCCESS: 'Exchange Rate Updated',
+  ECHANGE_RATE_UPDATE_FAILED: 'Unable To Update Exchange Rate',
 }
 
 export default NOTIFICATION_MESSAGES

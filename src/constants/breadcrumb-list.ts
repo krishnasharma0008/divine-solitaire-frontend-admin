@@ -11,6 +11,7 @@ enum URLs {
   SPECIAL_PRODUCTS_DETAIL = '/admin/specialproducts-detail',
   STORE_LOCATOR = '/admin/storelocator',
   PREMIUM_CHARTS = '/admin/premium-charts',
+  EXCHANGE_RATE = '/admin/exchange-rate',
   DASHBOARD_CLICKED = '/#',
 }
 
@@ -27,6 +28,7 @@ interface Page {
   SPECIALPRODUCTS: BreadCrumb
   STORELOCATOR: BreadCrumb
   PREMIUM_CHARTS: BreadCrumb
+  EXCHANGE_RATE: BreadCrumb
 }
 
 const PAGES: Page = {
@@ -37,6 +39,7 @@ const PAGES: Page = {
   SPECIALPRODUCTS: { text: 'Special Products', url: URLs.SPECIAL_PRODUCTS },
   STORELOCATOR: { text: 'Store Locator', url: URLs.STORE_LOCATOR },
   PREMIUM_CHARTS: { text: 'Premium Charts', url: URLs.PREMIUM_CHARTS },
+  EXCHANGE_RATE: { text: 'Exchange Rates', url: URLs.EXCHANGE_RATE },
 }
 
 const breadcrumbList: {
@@ -53,6 +56,7 @@ const breadcrumbList: {
   [URLs.SPECIAL_PRODUCTS_DETAIL]: [PAGES.DASHBOARD, PAGES.SPECIALPRODUCTS],
   [URLs.STORE_LOCATOR]: [PAGES.DASHBOARD, PAGES.STORELOCATOR],
   [URLs.PREMIUM_CHARTS]: [PAGES.DASHBOARD, PAGES.PREMIUM_CHARTS],
+  [URLs.EXCHANGE_RATE]: [PAGES.DASHBOARD, PAGES.EXCHANGE_RATE],
 }
 
 export default breadcrumbList

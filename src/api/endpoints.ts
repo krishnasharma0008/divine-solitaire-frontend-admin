@@ -74,3 +74,23 @@ export const createPremiumChartEndpoint: Endpoint = {
   method: HTTP_METHOD.POST,
   url: '/secadmin/premiumdia/syncslab',
 }
+
+export const getExchangeRateListEndpoint: Endpoint = {
+  method: HTTP_METHOD.GET,
+  url: '/secadmin/exchangerate/',
+}
+
+export const createExchangeRateEndpoint: Endpoint = {
+  method: HTTP_METHOD.PUT,
+  url: '/secadmin/exchangerate/',
+}
+
+export const ActivateExchangeRateEndpoint: Endpoint = {
+  method: HTTP_METHOD.POST,
+  url: '/secadmin/exchangerate/actv/',
+}
+
+export const DeleteExchangeRateEndpoint: Endpoint = {
+  method: HTTP_METHOD.POST,
+  url: '/secadmin/exchangerate/',
+}

@@ -4,3 +4,4 @@ export { default as INSURANCE_DOWNLOAD_OPTIONS } from './insurance-download-opti
 export { default as USER_SEARCH_LIST } from './user-search-list'
 export { default as INSURANCE_SEARCH_LIST } from './insurance-search-list'
 export { default as RESALE_SEARCH_LIST } from './resale-search-list'
+export { default as EXCHANGE_RATE_SEARCH_LIST } from './exchange-rate-search-list'

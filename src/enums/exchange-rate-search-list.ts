@@ -1,0 +1,6 @@
+enum EXCHANGE_RATE_SEARCH_LIST {
+  DATE_OF_REQUEST = 'Date',
+  RATE = 'Rate',
+}
+
+export default EXCHANGE_RATE_SEARCH_LIST

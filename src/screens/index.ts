@@ -10,3 +10,5 @@ export { default as SpecialProductsDetailScreen } from './special-products-detai
 export { default as StoreLocatorScreen } from './store-locator-screen'
 export { default as StoreLocatorDetailScreen } from './store-locator-detail-screen'
 export { default as PremiumChartsScreen } from './premium-charts-screen'
+export { default as ExchangeRateScreen } from './exchange-rate-screen'
+export { default as ExchangeRateDetailScreen } from './exchange-rate-detail-screen'

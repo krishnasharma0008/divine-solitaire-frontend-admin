@@ -14,6 +14,7 @@ import {
   StoreLocatorIcon,
   UserIcon,
   UploadIcon,
+  ExchangeRateIcon,
 } from '@/components/icons'
 //import Download from '@/components/icons/download-icon'
 import { URLs } from '@/constants'
@@ -48,6 +49,12 @@ const sidebarProps: Omit<SidebarProps, 'pageName'> = {
       url: '/admin/premium-charts',
       icon: UploadIcon,
       name: URLs.PREMIUM_CHARTS,
+    },
+    {
+      title: 'Exchange Rate',
+      url: '/admin/exchange-rate',
+      icon: ExchangeRateIcon,
+      name: URLs.EXCHANGE_RATE,
     },
     // {
     //   title: 'Active Notifications',
