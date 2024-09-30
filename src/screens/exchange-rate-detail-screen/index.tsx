@@ -152,10 +152,10 @@ const ExchangeRateDetailScreen: React.FC = () => {
             <InputText
               className="w-80"
               containerClass="w-80"
-              label="1 USD equals United Arab Emirates Dirham"
+              label="1 United Arab Emirates Dirham equals USD"
               name="rateAED"
               onChange={onChangeHandlerCreator('usd_to_aed')}
-              placeholder="1 United States Dollar equals United Arab Emirates Dirham"
+              placeholder="1 United Arab Emirates Dirham equals USD"
               type="number"
               value={`${state.usd_to_aed}`}
               disabled={!editMode}
