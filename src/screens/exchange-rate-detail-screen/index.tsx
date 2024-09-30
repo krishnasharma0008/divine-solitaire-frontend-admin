@@ -26,6 +26,7 @@ interface ExchangeRateDetailAction {
 const initialState: ExchangeRateDetail = {
   edate: '',
   erate: '',
+  erateAED: '',
   isactive: false,
 }
 
@@ -87,6 +88,7 @@ const ExchangeRateDetailScreen: React.FC = () => {
   const onSubmitHandler = (isActive: boolean) => {
     const payload: ExchangeRateDetail = {
       erate: parseFloat(`${state.erate || 0}`),
+      erateAED: parseFloat(`${state.erateAED || 0}`),
       edate: new Date(state.edate || Date.now()).toISOString(),
       isactive: isActive,
     }
@@ -125,25 +127,37 @@ const ExchangeRateDetailScreen: React.FC = () => {
         {/* <div>
           <h1 className="py-2 font-medium text-base">Product Details:</h1>
         </div> */}
-        <div className="flex-row pt-5">
-          <div className="flex justify-between pt-5 ">
+        <div className="flex pt-5 w-full">
+          <div className="w-full flex flex-col gap-y-8 pt-5 items-center justify-center">
             <DatePicker
               showIcon={editMode}
               onChange={onDateChangeHandler('edate')}
               label="Date"
               value={state.edate ? new Date(dayjs.utc(state.edate).format(DateFormat)) : null}
-              className=""
+              className="w-80 mb-4"
               icon={CalendarIcon}
             />
             <InputText
-              className="w-96"
-              containerClass="w-96"
+              className="w-80"
+              containerClass="w-80"
               label="1 United States Dollar equals Indian Rupee"
               name="rate"
               onChange={onChangeHandlerCreator('erate')}
-              placeholder="1 United States Dollar equals Indian Rupee"
+              placeholder="1 USD equals Indian Rupee"
               type="number"
               value={`${state.erate}`}
+              disabled={!editMode}
+              step="0.001"
+            />
+            <InputText
+              className="w-80"
+              containerClass="w-80"
+              label="1 USD equals United Arab Emirates Dirham"
+              name="rateAED"
+              onChange={onChangeHandlerCreator('erateAED')}
+              placeholder="1 United States Dollar equals United Arab Emirates Dirham"
+              type="number"
+              value={`${state.erateAED}`}
               disabled={!editMode}
               step="0.001"
             />

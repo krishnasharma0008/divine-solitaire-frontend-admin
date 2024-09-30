@@ -87,11 +87,11 @@ export default function ExchangeRatelist() {
       selector: (row) => row.erate,
       sortable: true,
     },
-    // {
-    //   name: 'Active',
-    //   selector: (row) => row.isactive,
-    //   sortable: true,
-    // },
+    {
+      name: 'USD $',
+      //selector: (row) => row.isactive,
+      sortable: true,
+    },
     {
       name: 'Status Request',
       cell: (row) => (

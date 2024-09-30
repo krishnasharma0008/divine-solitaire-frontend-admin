@@ -3,4 +3,5 @@ export interface ExchangeRateDetail {
   isactive: boolean
   edate: Date | string
   erate: number | string
+  erateAED: number | string
 }

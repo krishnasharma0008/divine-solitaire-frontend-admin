@@ -11,7 +11,7 @@ const Dropdown: React.FC<InputTextProps> = ({ options, label, disabled, selected
       <Select
         label={label}
         className={`border rounded [&+label]:-mt-3.5 [&>span]:px-2 [&>span]:!pt-0 border !border-blue-gray-200 [&+label]:!text-black  ${className}`}
-        color="gray"
+        //color="gray"
         disabled={disabled}
         variant="static"
         selected={selected}
