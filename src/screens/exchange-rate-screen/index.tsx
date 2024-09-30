@@ -89,7 +89,7 @@ export default function ExchangeRatelist() {
     },
     {
       name: 'USD $',
-      //selector: (row) => row.isactive,
+      selector: (row) => row.usd_to_uae,
       sortable: true,
     },
     {

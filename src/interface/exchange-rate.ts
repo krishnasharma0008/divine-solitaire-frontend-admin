@@ -2,5 +2,5 @@ export interface ExchangeRate {
   id: number
   isactive: string
   edate: null | Date
-  erate: null | number
+  usd_to_uae: null | number
 }

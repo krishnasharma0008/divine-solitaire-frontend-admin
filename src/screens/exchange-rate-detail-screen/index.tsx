@@ -26,7 +26,7 @@ interface ExchangeRateDetailAction {
 const initialState: ExchangeRateDetail = {
   edate: '',
   erate: '',
-  erateAED: '',
+  usd_to_uae: '',
   isactive: false,
 }
 
@@ -88,7 +88,7 @@ const ExchangeRateDetailScreen: React.FC = () => {
   const onSubmitHandler = (isActive: boolean) => {
     const payload: ExchangeRateDetail = {
       erate: parseFloat(`${state.erate || 0}`),
-      erateAED: parseFloat(`${state.erateAED || 0}`),
+      usd_to_uae: parseFloat(`${state.usd_to_uae || 0}`),
       edate: new Date(state.edate || Date.now()).toISOString(),
       isactive: isActive,
     }
@@ -154,10 +154,10 @@ const ExchangeRateDetailScreen: React.FC = () => {
               containerClass="w-80"
               label="1 USD equals United Arab Emirates Dirham"
               name="rateAED"
-              onChange={onChangeHandlerCreator('erateAED')}
+              onChange={onChangeHandlerCreator('usd_to_uae')}
               placeholder="1 United States Dollar equals United Arab Emirates Dirham"
               type="number"
-              value={`${state.erateAED}`}
+              value={`${state.usd_to_uae}`}
               disabled={!editMode}
               step="0.001"
             />
