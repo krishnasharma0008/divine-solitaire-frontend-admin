@@ -3,5 +3,5 @@ export interface ExchangeRateDetail {
   isactive: boolean
   edate: Date | string
   erate: number | string
-  usd_to_uae: number | string
+  usd_to_aed: number | string
 }
