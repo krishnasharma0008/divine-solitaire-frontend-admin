@@ -27,6 +27,8 @@ const initialState: SpecialProductsDetail = {
   mount_details: '',
   gross_weight: '',
   net_weight: '',
+  usd_price: '',
+  usd_uae_price: '',
 }
 
 const SpecialProductsDetailReducer = (state: SpecialProductsDetail, action: SpecialProductsDetailAction) => {
@@ -100,6 +102,8 @@ const SpecialProductDetailScreen: React.FC = () => {
       gross_weight: parseFloat(`${state.gross_weight || 0}`),
       net_weight: parseFloat(`${state.net_weight || 0}`),
       isactive: state.isactive,
+      usd_price: parseFloat(`${state.usd_price || 0}`),
+      usd_uae_price: parseFloat(`${state.usd_uae_price || 0}`),
     }
 
     if (query?.id && query?.id !== 'new') {
@@ -170,12 +174,36 @@ const SpecialProductDetailScreen: React.FC = () => {
             <InputText
               className="w-96"
               containerClass="w-96"
-              label="Retail Price"
+              label="Retail Price INR"
               name="price"
               onChange={onChangeHandlerCreator('price')}
-              placeholder="Retail Price"
+              placeholder="Retail Price INR"
               type="number"
               value={`${state.price}`}
+              disabled={!editMode}
+            />
+          </div>
+        </div>
+        <div className="flex-row pt-1">
+          <div className="flex justify-between pt-5 ">
+            <InputText
+              className="w-96"
+              containerClass="w-96"
+              label="Retail Price US"
+              name="usd_price"
+              onChange={onChangeHandlerCreator('usd_price')}
+              type="number"
+              value={`${state.usd_price}`}
+              disabled={!editMode}
+            />
+            <InputText
+              className="w-96"
+              containerClass="w-96"
+              label="Retail Price AED"
+              name="usd_uae_price"
+              onChange={onChangeHandlerCreator('usd_uae_price')}
+              type="number"
+              value={`${state.usd_uae_price}`}
               disabled={!editMode}
             />
           </div>

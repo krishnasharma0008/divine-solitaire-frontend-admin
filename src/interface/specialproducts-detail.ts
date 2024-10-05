@@ -8,4 +8,6 @@ export interface SpecialProductsDetail {
   mount_details: string
   gross_weight: number | string
   net_weight: number | string
+  usd_price: number | string
+  usd_uae_price: number | string
 }

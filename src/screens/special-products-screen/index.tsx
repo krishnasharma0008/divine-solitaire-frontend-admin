@@ -44,7 +44,7 @@ const SpecialProductsList: React.FC = () => {
       selector: (row) => row.design_type || '',
     },
     {
-      name: 'Retail Price',
+      name: 'Retail Price IN',
       selector: (row) => row.price || 0.0,
       sortable: true,
     },
